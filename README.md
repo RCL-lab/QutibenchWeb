@@ -28,3 +28,6 @@ in implementing machine learning systems.
 
 # Contributing
 See the [website](https://rcl-lab.github.io/qutibench/contributing/meta/2020/04/09/Contributing.html) for instructions on contributing.
+
+## Webmaster Info
+All info on how to customize the site is located on the [fastpages github](https://github.com/fastai/fastpages). The platform is fairly new, so as changes are added to the faspages repo it's not a bad idea to update this website to reflect that. Updating instructions are available also through the fastpages github.

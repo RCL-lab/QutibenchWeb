@@ -4,7 +4,7 @@ title: About This Work
 permalink: /about/
 ---
 
-![logo](images/QuTiBench_Logo.png)
+![logo](../images/QuTiBench_Logo.png)
 
 # QuTiBench
 Neural Networks have become one of the most successful universal machine learning algorithms. 
@@ -33,4 +33,4 @@ We invite the community to contribute to QuTiBench in order to be able to suppor
 in implementing machine learning systems.
 
 # Contributing
-See the [website](https://rcl-lab.github.io/qutibench/contributing/meta/2020/04/09/Contributing.html) for instructions on contributing.
+See the [website](https://rcl-lab.github.io/Qutibench_Web/contributing/meta/2020/04/09/Contributing.html) for instructions on contributing.

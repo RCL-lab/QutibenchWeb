@@ -3,26 +3,26 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>About Me | QuTiBench</title>
+<title>About This Work | QuTiBench</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="About Me" />
+<meta property="og:title" content="About This Work" />
 <meta property="og:locale" content="en_US" />
 <link rel="canonical" href="https://rcl-lab.github.io/Qutibench_Web/about/" />
 <meta property="og:url" content="https://rcl-lab.github.io/Qutibench_Web/about/" />
 <meta property="og:site_name" content="QuTiBench" />
 <script type="application/ld+json">
-{"@type":"WebSite","url":"https://rcl-lab.github.io/Qutibench_Web/about/","name":"QuTiBench","headline":"About Me","@context":"https://schema.org"}</script>
+{"@type":"WebSite","url":"https://rcl-lab.github.io/Qutibench_Web/about/","name":"QuTiBench","headline":"About This Work","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Qutibench_Web/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://rcl-lab.github.io/Qutibench_Web/feed.xml" title="QuTiBench" /><link rel="shortcut icon" type="image/x-icon" href="/Qutibench_Web/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>About Me | QuTiBench</title>
+<title>About This Work | QuTiBench</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="About Me" />
+<meta property="og:title" content="About This Work" />
 <meta property="og:locale" content="en_US" />
 <link rel="canonical" href="https://rcl-lab.github.io/Qutibench_Web/about/" />
 <meta property="og:url" content="https://rcl-lab.github.io/Qutibench_Web/about/" />
 <meta property="og:site_name" content="QuTiBench" />
 <script type="application/ld+json">
-{"@type":"WebSite","url":"https://rcl-lab.github.io/Qutibench_Web/about/","name":"QuTiBench","headline":"About Me","@context":"https://schema.org"}</script>
+{"@type":"WebSite","url":"https://rcl-lab.github.io/Qutibench_Web/about/","name":"QuTiBench","headline":"About This Work","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -69,7 +69,7 @@ window.onload = wrap_img;
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/Qutibench_Web/about/">About Me</a><a class="page-link" href="/Qutibench_Web/search/">Search</a><a class="page-link" href="/Qutibench_Web/categories/">Tags</a></div>
+        <div class="trigger"><a class="page-link" href="/Qutibench_Web/about/">About This Work</a><a class="page-link" href="/Qutibench_Web/search/">Search</a><a class="page-link" href="/Qutibench_Web/categories/">Tags</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -77,21 +77,40 @@ window.onload = wrap_img;
         <article class="post">
 
   <header class="post-header">
-    <h1 class="post-title">About Me</h1>
+    <h1 class="post-title">About This Work</h1>
   </header>
 
   <div class="post-content">
-    <p>This is where you put the contents of your <em>About</em> page. Like all your pages, it’s in <a href="https://guides.github.com/features/mastering-markdown/">Markdown</a> format.</p>
+    <p><img src="images/QuTiBench_Logo.png" alt="logo" /></p>
 
-<p>This website is powered by <strong><a href="https://github.com/fastai/fastpages">fastpages</a></strong> <sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>.</p>
+<h1 id="qutibench">QuTiBench</h1>
+<p>Neural Networks have become one of the most successful universal machine learning algorithms. 
+They play a key role in enabling machine vision and speech recognition, and are increasingly 
+adopted in other application domains. 
+While the underlying computation is structurally simple, their computational complexity is enormous 
+and comes along with equally challenging memory requirements both in regards to capacity and access bandwidth. 
+This limits deployment in particular within energy constrained, embedded environments.<br />
+In order to address these implementation challenges, a broad spectrum of new customized and heterogeneous 
+hardware architectures have emerged, sometime referred to as deep learning processing units, 
+often accompanied with co-designed algorithms to extract maximum benefit out of the hardware. 
+Furthermore, numerous optimization techniques are being explored to reduce 
+compute and memory requirements while maintaining accuracy.
+This results in an abundance of algorithmic and architectural choices, some of which fit specific use cases 
+better than others.</p>
 
-<div class="footnotes">
-  <ol>
-    <li id="fn:1">
-      <p>a blogging platform that natively supports Jupyter notebooks in addition to other formats. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
+<p>For system level designers, there is currently no good way to compare the variety of hardware, algorithm and 
+optimization options. While there are many benchmarking efforts in this field, they cover only subsections of 
+the embedded design space.  None of the existing benchmarks support essential algorithmic optimizations such as 
+quantization, an important technique to stay on chip, or specialized heterogeneous hardware architectures. 
+We propose a novel benchmark suite, named QuTiBench, that addresses this need.<br />
+QuTiBench is a novel multi-tiered benchmarking methodology that supports algorithmic optimizations such as 
+quantization and helps system developers understand the benefits and limitations of these novel compute architectures 
+in regards to specific neural networks and will help drive future innovation.<br />
+We invite the community to contribute to QuTiBench in order to be able to support the full spectrum of choices 
+in implementing machine learning systems.</p>
+
+<h1 id="contributing">Contributing</h1>
+<p>See the <a href="https://rcl-lab.github.io/qutibench/contributing/meta/2020/04/09/Contributing.html">website</a> for instructions on contributing.</p>
 
   </div>
 

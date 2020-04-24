@@ -125,8 +125,6 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h2"><a href="#Just-some-needed-functions">Just some needed functions </a></li>
-<li class="toc-entry toc-h2"><a href="#Loading-Hardware-platforms-and-Neural-networks-csv">Loading Hardware platforms and Neural networks csv </a></li>
 <li class="toc-entry toc-h1"><a href="#Overview-of-the-experiments-done">Overview of the experiments done </a></li>
 <li class="toc-entry toc-h1"><a href="#Calculate-the-Arithmetic-intensity-(x-axis)-for-each-NN-based-on-Fwd-ops-and-Total-params">Calculate the Arithmetic intensity (x axis) for each NN based on Fwd ops and Total params </a>
 <ul>
@@ -163,24 +161,6 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Just-some-needed-functions">
-<a class="anchor" href="#Just-some-needed-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Just some needed functions<a class="anchor-link" href="#Just-some-needed-functions"> </a>
-</h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Loading-Hardware-platforms-and-Neural-networks-csv">
-<a class="anchor" href="#Loading-Hardware-platforms-and-Neural-networks-csv" aria-hidden="true"><span class="octicon octicon-link"></span></a>Loading Hardware platforms and Neural networks csv<a class="anchor-link" href="#Loading-Hardware-platforms-and-Neural-networks-csv"> </a>
-</h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Overview-of-the-experiments-done">
 <a class="anchor" href="#Overview-of-the-experiments-done" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview of the experiments done<a class="anchor-link" href="#Overview-of-the-experiments-done"> </a>
 </h1>
@@ -190,19 +170,6 @@ window.onload = wrap_img;
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Data/imagenet.csv'</span><span class="p">,</span> <span class="s1">'Data/mnist.csv'</span><span class="p">,</span> <span class="s1">'Data/cifar10.csv'</span><span class="p">]</span>
-<span class="n">dataframes</span> <span class="o">=</span> <span class="n">load_and_display</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataframes</span><span class="p">)):</span>    
-    <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">dataframes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">

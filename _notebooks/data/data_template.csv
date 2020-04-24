@@ -1,0 +1,1 @@
+NN_Topology,HWType,Precision,Op mode,batch/thread/stream,lat-comp,fps-system,fps-comp,tp-system,tp-comp,top1 [%],top5 [%],BasePWR [W],IdlePWR [W],FullPwr [W],GOPS,PruningFactor,level

@@ -1,0 +1,14 @@
+,,ImageNet Classification,ImageNet Classification,ImageNet Classification
+Hardware,Platform,ResNet50,GoogLeNetV1,MobileNet
+FPGA,ZCU102-DPU,"[INT8]*[100%,80%,50%,30%]",INT8,na
+FPGA,ZCU104-DPU,INT8,INT8,na
+FPGA,Ultra96-DPU,"[INT8]*[100%,80%,50%,30%]",INT8,INT8
+FPGA,ZCU104-FINN,na,na,na
+FPGA,ZCU104-BISMO,na,na,na
+GPU,TX2-maxn,"FP16,FP32","FP16,FP32",na
+GPU,TX2-maxp,"FP16,FP32","FP16,FP32",na
+GPU,TX2-maxq,"FP16,FP32","FP16,FP32",na
+TPU,TPU-fast clk,na,INT8,INT8
+TPU,TPU-slow clk,na,INT8,INT8
+VLIW,NCS,FP16,na,na
+CPU,U96-Quadcore A53,na,na,na

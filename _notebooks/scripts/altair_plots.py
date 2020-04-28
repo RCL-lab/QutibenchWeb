@@ -158,7 +158,7 @@ def line_chart_no_checkbox(data, condition, selection):
     )
     return chart
 
-def rooflines(dataframe):
+def rooflines(dataframe, neural_network: str):
     #hide_input
     maxX=160000
     width =700 

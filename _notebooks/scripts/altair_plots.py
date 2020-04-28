@@ -123,6 +123,7 @@ def heatmap(dataframe: pd.DataFrame, mouseover_color: str, title: str)->alt.vega
 #hide
 # Checkboxes with on-plot tooltips
 def line_chart_w_checkbox(data, condition, selection):
+    maxX=160000
     width =700 
     height = 500
     chart = alt.Chart(data, width=width,height=height).properties(title='Comparing Hardware Platforms Rooflines and Neural Networks Arithmetic Intensity with checkboxes').mark_line(clip=True).encode(
@@ -141,6 +142,7 @@ def line_chart_w_checkbox(data, condition, selection):
 
 #hide
 def line_chart_no_checkbox(data, condition, selection):
+    maxX=160000
     width =600 
     height = 400
     chart = alt.Chart(data, width=width,height=height).properties(title='Comparing Hardware Platforms Rooflines and Neural Networks Arithmetic Intensity with checkboxes').mark_line(clip=True).encode(
@@ -156,8 +158,9 @@ def line_chart_no_checkbox(data, condition, selection):
     )
     return chart
 
-def rooflines():
+def rooflines(dataframe):
     #hide_input
+    maxX=160000
     width =700 
     height = 500
     data=dataframe
@@ -242,7 +245,7 @@ def rooflines():
 
     # Layer them all together
     Chart = alt.layer(FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart + IMAGENET_chart + MNIST_chart + CIFAR_chart + MASKRCNN_chart + GNMT_chart, selectors, text, data=dataframe, width=700, height=500)
-    return chart
+    return Chart
 
 
 

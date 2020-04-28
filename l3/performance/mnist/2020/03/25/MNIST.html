@@ -675,6 +675,98 @@ window.onload = wrap_img;
 </div>
     
 
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Performance Predictions for MNIST</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mnist_data</span>  <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"processed_csv/mnist_heatmap.csv"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">FileNotFoundError</span>                         Traceback (most recent call last)
+<span class="ansi-green-intense-fg ansi-bold">&lt;ipython-input-4-fb3ab0ebf6b3&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span><span class="ansi-yellow-intense-fg ansi-bold"> </span>mnist_data  <span class="ansi-yellow-intense-fg ansi-bold">=</span> pd<span class="ansi-yellow-intense-fg ansi-bold">.</span>read_csv<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-blue-intense-fg ansi-bold">"processed_csv/mnist_heatmap.csv"</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
+
+<span class="ansi-green-intense-fg ansi-bold">~\AppData\Local\Continuum\anaconda3\lib\site-packages\pandas\io\parsers.py</span> in <span class="ansi-cyan-fg">parser_f</span><span class="ansi-blue-intense-fg ansi-bold">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, squeeze, prefix, mangle_dupe_cols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, dialect, error_bad_lines, warn_bad_lines, delim_whitespace, low_memory, memory_map, float_precision)</span>
+<span class="ansi-green-fg">    674</span>         )
+<span class="ansi-green-fg">    675</span> 
+<span class="ansi-green-intense-fg ansi-bold">--&gt; 676</span><span class="ansi-yellow-intense-fg ansi-bold">         </span><span class="ansi-green-intense-fg ansi-bold">return</span> _read<span class="ansi-yellow-intense-fg ansi-bold">(</span>filepath_or_buffer<span class="ansi-yellow-intense-fg ansi-bold">,</span> kwds<span class="ansi-yellow-intense-fg ansi-bold">)</span>
+<span class="ansi-green-fg">    677</span> 
+<span class="ansi-green-fg">    678</span>     parser_f<span class="ansi-yellow-intense-fg ansi-bold">.</span>__name__ <span class="ansi-yellow-intense-fg ansi-bold">=</span> name
+
+<span class="ansi-green-intense-fg ansi-bold">~\AppData\Local\Continuum\anaconda3\lib\site-packages\pandas\io\parsers.py</span> in <span class="ansi-cyan-fg">_read</span><span class="ansi-blue-intense-fg ansi-bold">(filepath_or_buffer, kwds)</span>
+<span class="ansi-green-fg">    446</span> 
+<span class="ansi-green-fg">    447</span>     <span class="ansi-red-intense-fg ansi-bold"># Create the parser.</span>
+<span class="ansi-green-intense-fg ansi-bold">--&gt; 448</span><span class="ansi-yellow-intense-fg ansi-bold">     </span>parser <span class="ansi-yellow-intense-fg ansi-bold">=</span> TextFileReader<span class="ansi-yellow-intense-fg ansi-bold">(</span>fp_or_buf<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-yellow-intense-fg ansi-bold">**</span>kwds<span class="ansi-yellow-intense-fg ansi-bold">)</span>
+<span class="ansi-green-fg">    449</span> 
+<span class="ansi-green-fg">    450</span>     <span class="ansi-green-intense-fg ansi-bold">if</span> chunksize <span class="ansi-green-intense-fg ansi-bold">or</span> iterator<span class="ansi-yellow-intense-fg ansi-bold">:</span>
+
+<span class="ansi-green-intense-fg ansi-bold">~\AppData\Local\Continuum\anaconda3\lib\site-packages\pandas\io\parsers.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-intense-fg ansi-bold">(self, f, engine, **kwds)</span>
+<span class="ansi-green-fg">    878</span>             self<span class="ansi-yellow-intense-fg ansi-bold">.</span>options<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-blue-intense-fg ansi-bold">"has_index_names"</span><span class="ansi-yellow-intense-fg ansi-bold">]</span> <span class="ansi-yellow-intense-fg ansi-bold">=</span> kwds<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-blue-intense-fg ansi-bold">"has_index_names"</span><span class="ansi-yellow-intense-fg ansi-bold">]</span>
+<span class="ansi-green-fg">    879</span> 
+<span class="ansi-green-intense-fg ansi-bold">--&gt; 880</span><span class="ansi-yellow-intense-fg ansi-bold">         </span>self<span class="ansi-yellow-intense-fg ansi-bold">.</span>_make_engine<span class="ansi-yellow-intense-fg ansi-bold">(</span>self<span class="ansi-yellow-intense-fg ansi-bold">.</span>engine<span class="ansi-yellow-intense-fg ansi-bold">)</span>
+<span class="ansi-green-fg">    881</span> 
+<span class="ansi-green-fg">    882</span>     <span class="ansi-green-intense-fg ansi-bold">def</span> close<span class="ansi-yellow-intense-fg ansi-bold">(</span>self<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
+
+<span class="ansi-green-intense-fg ansi-bold">~\AppData\Local\Continuum\anaconda3\lib\site-packages\pandas\io\parsers.py</span> in <span class="ansi-cyan-fg">_make_engine</span><span class="ansi-blue-intense-fg ansi-bold">(self, engine)</span>
+<span class="ansi-green-fg">   1112</span>     <span class="ansi-green-intense-fg ansi-bold">def</span> _make_engine<span class="ansi-yellow-intense-fg ansi-bold">(</span>self<span class="ansi-yellow-intense-fg ansi-bold">,</span> engine<span class="ansi-yellow-intense-fg ansi-bold">=</span><span class="ansi-blue-intense-fg ansi-bold">"c"</span><span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
+<span class="ansi-green-fg">   1113</span>         <span class="ansi-green-intense-fg ansi-bold">if</span> engine <span class="ansi-yellow-intense-fg ansi-bold">==</span> <span class="ansi-blue-intense-fg ansi-bold">"c"</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
+<span class="ansi-green-intense-fg ansi-bold">-&gt; 1114</span><span class="ansi-yellow-intense-fg ansi-bold">             </span>self<span class="ansi-yellow-intense-fg ansi-bold">.</span>_engine <span class="ansi-yellow-intense-fg ansi-bold">=</span> CParserWrapper<span class="ansi-yellow-intense-fg ansi-bold">(</span>self<span class="ansi-yellow-intense-fg ansi-bold">.</span>f<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-yellow-intense-fg ansi-bold">**</span>self<span class="ansi-yellow-intense-fg ansi-bold">.</span>options<span class="ansi-yellow-intense-fg ansi-bold">)</span>
+<span class="ansi-green-fg">   1115</span>         <span class="ansi-green-intense-fg ansi-bold">else</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
+<span class="ansi-green-fg">   1116</span>             <span class="ansi-green-intense-fg ansi-bold">if</span> engine <span class="ansi-yellow-intense-fg ansi-bold">==</span> <span class="ansi-blue-intense-fg ansi-bold">"python"</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
+
+<span class="ansi-green-intense-fg ansi-bold">~\AppData\Local\Continuum\anaconda3\lib\site-packages\pandas\io\parsers.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-intense-fg ansi-bold">(self, src, **kwds)</span>
+<span class="ansi-green-fg">   1889</span>         kwds<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-blue-intense-fg ansi-bold">"usecols"</span><span class="ansi-yellow-intense-fg ansi-bold">]</span> <span class="ansi-yellow-intense-fg ansi-bold">=</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>usecols
+<span class="ansi-green-fg">   1890</span> 
+<span class="ansi-green-intense-fg ansi-bold">-&gt; 1891</span><span class="ansi-yellow-intense-fg ansi-bold">         </span>self<span class="ansi-yellow-intense-fg ansi-bold">.</span>_reader <span class="ansi-yellow-intense-fg ansi-bold">=</span> parsers<span class="ansi-yellow-intense-fg ansi-bold">.</span>TextReader<span class="ansi-yellow-intense-fg ansi-bold">(</span>src<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-yellow-intense-fg ansi-bold">**</span>kwds<span class="ansi-yellow-intense-fg ansi-bold">)</span>
+<span class="ansi-green-fg">   1892</span>         self<span class="ansi-yellow-intense-fg ansi-bold">.</span>unnamed_cols <span class="ansi-yellow-intense-fg ansi-bold">=</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>_reader<span class="ansi-yellow-intense-fg ansi-bold">.</span>unnamed_cols
+<span class="ansi-green-fg">   1893</span> 
+
+<span class="ansi-green-intense-fg ansi-bold">pandas\_libs\parsers.pyx</span> in <span class="ansi-cyan-fg">pandas._libs.parsers.TextReader.__cinit__</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
+
+<span class="ansi-green-intense-fg ansi-bold">pandas\_libs\parsers.pyx</span> in <span class="ansi-cyan-fg">pandas._libs.parsers.TextReader._setup_parser_source</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
+
+<span class="ansi-red-intense-fg ansi-bold">FileNotFoundError</span>: [Errno 2] File processed_csv/mnist_heatmap.csv does not exist: 'processed_csv/mnist_heatmap.csv'</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
 </div>
 
 <script type="application/vnd.jupyter.widget-state+json">

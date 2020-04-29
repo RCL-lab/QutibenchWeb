@@ -249,7 +249,7 @@ def rooflines(dataframe, neural_network: str):
     return Chart
 
 
-#-------------------------------TABLES-----------------------------------------
+#-------------------------------TABLES OVERVIEW OF THE EXPERIMENTS-----------------------------------------
 
 ## Just some needed functions
 #Function to read from a csv file and return a numpy 2D array
@@ -276,5 +276,5 @@ def tableOverviewExperiments(filenames):
     dataframes = load_and_display(filenames)
     for i in range(len(dataframes)):    
         return display(HTML(dataframes[i].to_html(index=False)))
-    
+#-----------------------------------------------------------------------------------------------------------
     

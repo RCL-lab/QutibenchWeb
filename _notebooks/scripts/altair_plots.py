@@ -275,7 +275,8 @@ def load_and_display(filenames):
 def tableOverviewExperiments(filenames):
     pd.set_option('display.width', 2000)
     dataframes = load_and_display(filenames)
-    for dataframe in dataframes:    
+    for dataframe in dataframes:   
+        display(HTML("<style>.container { width:100% !important; }</style>"))
         return display(HTML(dataframe.to_html(index=False)))
 #-----------------------------------------------------------------------------------------------------------
     

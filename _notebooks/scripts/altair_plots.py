@@ -127,7 +127,7 @@ def line_chart_w_checkbox(data, condition, selection):
     maxX=160000
     width =700 
     height = 500
-    chart = alt.Chart(data, width=width,height=height).properties(title='Comparing Hardware Platforms Rooflines and Neural Networks Arithmetic Intensity with checkboxes').mark_line(clip=True).encode(
+    chart = alt.Chart(data, width=width,height=height).properties(title='Comparing Hardware Platforms Rooflines and Neural Networks Arithmetic Intensity').mark_line(clip=True).encode(
         alt.X('arith_intens:Q', 
               title = 'ARITHMETIC INTENSITY (OPS/BYTE)', 
               scale = alt.Scale(type='log', domain = (0.1,maxX) )
@@ -272,9 +272,9 @@ def load_and_display(filenames):
     return dataframes
 
 def tableOverviewExperiments(filenames):
-    #filenames = ['Data/imagenet.csv', 'Data/mnist.csv', 'Data/cifar10.csv']
+    pd.set_option('display.width', 1000)
     dataframes = load_and_display(filenames)
-    for i in range(len(dataframes)):    
-        return display(HTML(dataframes[i].to_html(index=False)))
+    for dataframe in dataframes:    
+        return display(HTML(dataframe.to_html(index=False)))
 #-----------------------------------------------------------------------------------------------------------
     

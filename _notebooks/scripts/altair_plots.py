@@ -244,11 +244,20 @@ def rooflines(dataframe, neural_network: str):
     # Step 4: Add text, show values about platforms when it's the nearest point to 
     # mouseover, else show blank
     text = (lines).mark_text(align='left', dx=3, dy=-3,clip=True).encode(  text=alt.condition(nearest, 'Name:N', alt.value(' ')))
+    
+    chart_all = (pd.Series([IMAGENET_chart, MNIST_chart, CIFAR_chart, MASKRCNN_chart, 
+                               GNMT_chart], name="charts")).to_frame()
+    chart_all.index = ['imagenet', 'mnist', 'cifar10', 'maskrcnn','gnmt']
+    chart_all.index.name = 'index'
+    
+    chart_filtered = chart_all[chart_all.index.astype(str).str.contains(neural_network)] 
+    if len(chart_filtered.index) == 0:
+        return 'There were no results for the neural network asked. Please insert another network'
+    
+    #Chart = alt.layer(FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart + IMAGENET_chart + MNIST_chart + CIFAR_chart + MASKRCNN_chart+ GNMT_chart
+    Chart = alt.layer(chart_filtered.squeeze() + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, selectors, text, data=dataframe, width=700, height=500)
 
-    # Layer them all together
-    Chart = alt.layer(FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart + IMAGENET_chart + MNIST_chart + CIFAR_chart + MASKRCNN_chart + GNMT_chart, selectors, text, data=dataframe, width=700, height=500)
     return Chart
-
 
 #-------------------------------TABLES OVERVIEW OF THE EXPERIMENTS-----------------------------------------
 

@@ -125,7 +125,7 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#Rooflines-for-all-hardware-platforms-with-Neural-Networks-arithmetic-Intensity">Rooflines for all hardware platforms with Neural Networks arithmetic Intensity </a></li>
+<li class="toc-entry toc-h1"><a href="#Rooflines-for-all-hardware-platforms">Rooflines for all hardware platforms </a></li>
 <li class="toc-entry toc-h1"><a href="#Performance-Predictions-for-IMAGENET,-MNIST-and-CIFAR">Performance Predictions for IMAGENET, MNIST and CIFAR </a></li>
 </ul><!--
 #################################################
@@ -147,14 +147,129 @@ window.onload = wrap_img;
     
 <div class="cell border-box-sizing code_cell rendered">
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th colspan="2" halign="left"></th>
+      <th colspan="3" halign="left">ImageNet Classification</th>
+    </tr>
+    <tr>
+      <th>Hardware</th>
+      <th>Platform</th>
+      <th>ResNet50</th>
+      <th>GoogLeNetV1</th>
+      <th>MobileNet</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>FPGA</td>
+      <td>ZCU102-DPU</td>
+      <td>[INT8]*[100%,80%,50%,30%]</td>
+      <td>INT8</td>
+      <td>na</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>ZCU104-DPU</td>
+      <td>INT8</td>
+      <td>INT8</td>
+      <td>na</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Ultra96-DPU</td>
+      <td>[INT8]*[100%,80%,50%,30%]</td>
+      <td>INT8</td>
+      <td>INT8</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>ZCU104-FINN</td>
+      <td>na</td>
+      <td>na</td>
+      <td>na</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>ZCU104-BISMO</td>
+      <td>na</td>
+      <td>na</td>
+      <td>na</td>
+    </tr>
+    <tr>
+      <td>GPU</td>
+      <td>TX2-maxn</td>
+      <td>FP16,FP32</td>
+      <td>FP16,FP32</td>
+      <td>na</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>TX2-maxp</td>
+      <td>FP16,FP32</td>
+      <td>FP16,FP32</td>
+      <td>na</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>TX2-maxq</td>
+      <td>FP16,FP32</td>
+      <td>FP16,FP32</td>
+      <td>na</td>
+    </tr>
+    <tr>
+      <td>TPU</td>
+      <td>TPU-fast clk</td>
+      <td>na</td>
+      <td>INT8</td>
+      <td>INT8</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>TPU-slow clk</td>
+      <td>na</td>
+      <td>INT8</td>
+      <td>INT8</td>
+    </tr>
+    <tr>
+      <td>VLIW</td>
+      <td>NCS</td>
+      <td>FP16</td>
+      <td>na</td>
+      <td>na</td>
+    </tr>
+    <tr>
+      <td>CPU</td>
+      <td>U96-Quadcore A53</td>
+      <td>na</td>
+      <td>na</td>
+      <td>na</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
     
 
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Rooflines-for-all-hardware-platforms-with-Neural-Networks-arithmetic-Intensity">
-<a class="anchor" href="#Rooflines-for-all-hardware-platforms-with-Neural-Networks-arithmetic-Intensity" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rooflines for all hardware platforms with Neural Networks arithmetic Intensity<a class="anchor-link" href="#Rooflines-for-all-hardware-platforms-with-Neural-Networks-arithmetic-Intensity"> </a>
+<h1 id="Rooflines-for-all-hardware-platforms">
+<a class="anchor" href="#Rooflines-for-all-hardware-platforms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rooflines for all hardware platforms<a class="anchor-link" href="#Rooflines-for-all-hardware-platforms"> </a>
 </h1>
 </div>
 </div>

@@ -3,7 +3,8 @@ import numpy as np
 import pandas as pd
 
 import altair as alt
-
+import csv
+from IPython.display import display, HTML
 #---------------------HEATMAPS----------------------
 
 def heatmap_rect(df: pd.DataFrame, 
@@ -248,8 +249,32 @@ def rooflines(dataframe, neural_network: str):
     return Chart
 
 
+#-------------------------------TABLES-----------------------------------------
 
+## Just some needed functions
+#Function to read from a csv file and return a numpy 2D array
+def read_from_csv(filename):  
+    array= []
+    with open(filename, newline='', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            array.append(row)
+    array = np.asarray(array)
+    return array
 
+def load_and_display(filenames):
+    dataframes=[]
+    for filename in filenames:
+        table = read_from_csv(filename)  # To read from a csv file into a 2D numpy array
+        dataframe = pd.DataFrame(data=table[2:,:], columns=[table[0,0:], table[1,0:]])  #To transform to dataframe the first and second row will be header
+        dataframe.loc[dataframe.duplicated(dataframe.columns[0]) , dataframe.columns[0]] = ''  #To remove duplicates from first column
+        dataframes.append(dataframe)     #To save all dataframes in here
+    return dataframes
 
+def tableOverviewExperiments(filenames):
+    #filenames = ['Data/imagenet.csv', 'Data/mnist.csv', 'Data/cifar10.csv']
+    dataframes = load_and_display(filenames)
+    for i in range(len(dataframes)):    
+        return display(HTML(dataframes[i].to_html(index=False)))
     
     

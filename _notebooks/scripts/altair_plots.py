@@ -1,6 +1,7 @@
 #---------------------Imports-------------------------
 import numpy as np
 import pandas as pd
+pd.set_option('max_colwidth', 80)
 
 import altair as alt
 import csv
@@ -264,15 +265,17 @@ def read_from_csv(filename):
 
 def load_and_display(filenames):
     dataframes=[]
+    pd.set_option('max_colwidth', 80)
     for filename in filenames:
         table = read_from_csv(filename)  # To read from a csv file into a 2D numpy array
         dataframe = pd.DataFrame(data=table[2:,:], columns=[table[0,0:], table[1,0:]])  #To transform to dataframe the first and second row will be header
         dataframe.loc[dataframe.duplicated(dataframe.columns[0]) , dataframe.columns[0]] = ''  #To remove duplicates from first column
         dataframes.append(dataframe)     #To save all dataframes in here
-    pd.set_option('display.max_colwidth', None)
+    
     return dataframes
 
 def tableOverviewExperiments(filenames):
+    pd.set_option('max_colwidth', 80)
     pd.set_option('display.max_colwidth', None)
     dataframes = load_and_display(filenames)
     for dataframe in dataframes:   

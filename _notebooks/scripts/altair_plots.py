@@ -269,10 +269,11 @@ def load_and_display(filenames):
         dataframe = pd.DataFrame(data=table[2:,:], columns=[table[0,0:], table[1,0:]])  #To transform to dataframe the first and second row will be header
         dataframe.loc[dataframe.duplicated(dataframe.columns[0]) , dataframe.columns[0]] = ''  #To remove duplicates from first column
         dataframes.append(dataframe)     #To save all dataframes in here
+    pd.set_option('display.width', 2000)
     return dataframes
 
 def tableOverviewExperiments(filenames):
-    pd.set_option('display.width', 1000)
+    pd.set_option('display.width', 2000)
     dataframes = load_and_display(filenames)
     for dataframe in dataframes:    
         return display(HTML(dataframe.to_html(index=False)))

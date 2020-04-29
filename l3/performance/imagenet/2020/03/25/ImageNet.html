@@ -288,6 +288,128 @@ window.onload = wrap_img;
 </div>
 </div>
 </div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th colspan="2" halign="left"></th>
+      <th colspan="3" halign="left">ImageNet Classification</th>
+    </tr>
+    <tr>
+      <th>Hardware</th>
+      <th>Platform</th>
+      <th>ResNet50</th>
+      <th>GoogLeNetV1</th>
+      <th>MobileNet</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>FPGA</td>
+      <td>ZCU102-DPU</td>
+      <td>[INT8]*[100%,80%,50%,30%]</td>
+      <td>INT8</td>
+      <td>na</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>ZCU104-DPU</td>
+      <td>INT8</td>
+      <td>INT8</td>
+      <td>na</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Ultra96-DPU</td>
+      <td>[INT8]*[100%,80%,50%,30%]</td>
+      <td>INT8</td>
+      <td>INT8</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>ZCU104-FINN</td>
+      <td>na</td>
+      <td>na</td>
+      <td>na</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>ZCU104-BISMO</td>
+      <td>na</td>
+      <td>na</td>
+      <td>na</td>
+    </tr>
+    <tr>
+      <td>GPU</td>
+      <td>TX2-maxn</td>
+      <td>FP16,FP32</td>
+      <td>FP16,FP32</td>
+      <td>na</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>TX2-maxp</td>
+      <td>FP16,FP32</td>
+      <td>FP16,FP32</td>
+      <td>na</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>TX2-maxq</td>
+      <td>FP16,FP32</td>
+      <td>FP16,FP32</td>
+      <td>na</td>
+    </tr>
+    <tr>
+      <td>TPU</td>
+      <td>TPU-fast clk</td>
+      <td>na</td>
+      <td>INT8</td>
+      <td>INT8</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>TPU-slow clk</td>
+      <td>na</td>
+      <td>INT8</td>
+      <td>INT8</td>
+    </tr>
+    <tr>
+      <td>VLIW</td>
+      <td>NCS</td>
+      <td>FP16</td>
+      <td>na</td>
+      <td>na</td>
+    </tr>
+    <tr>
+      <td>CPU</td>
+      <td>U96-Quadcore A53</td>
+      <td>na</td>
+      <td>na</td>
+      <td>na</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">

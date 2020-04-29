@@ -36,7 +36,7 @@
     
         ,"post3": {
             "title": "MNIST Performance",
-            "content": "csv_path = &quot;./data/cleaned_csv/backup.csv&quot; . Rooflines . L3 Performance . Table Statistics . Overview of the experiments . Line Plot . Boxplots . Pareto . Performance Prediction for MNIST .",
+            "content": "csv_path = &quot;./data/cleaned_csv/backup.csv&quot; . Rooflines . L3 Performance . Table Statistics . Overview of the experiments . MNIST Classification . Hardware Platform MLP . FPGA | ZCU102-DPU | na | . | ZCU104-DPU | na | . | Ultra96-DPU | na | . | ZCU104-FINN | [INT2, INT4] * [100%,50%,25%,12.5%] | . | ZCU104-BISMO | [INT2, INT4] * [100%,50%,25%,12.5%] | . GPU | TX2-maxn | [FP16, FP32] * [100%,50%,25%,12.5%] | . | TX2-maxp | [FP16, FP32] * [100%,50%,25%,12.5%] | . | TX2-maxq | [FP16, FP32] * [100%,50%,25%,12.5%] | . TPU | TPU-fast clk | na | . | TPU-slow clk | na | . VLIW | NCS | [FP16] * [100%,50%,25%,12.5%] | . CPU | U96-Quadcore A53 | [INT2, INT4] * [100%,50%,25%,12.5%] | . Line Plot . Boxplots . Pareto . Performance Prediction for MNIST .",
             "url": "https://rcl-lab.github.io/Qutibench_Web/l3/performance/mnist/2020/03/25/MNIST.html",
             "relUrl": "/l3/performance/mnist/2020/03/25/MNIST.html",
             "date": " • Mar 25, 2020"
@@ -47,7 +47,7 @@
     
         ,"post4": {
             "title": "ImageNet Performance",
-            "content": "csv_path = &quot;./data/cleaned_csv/backup.csv&quot; . Roofline . L3 Performance . Table Statistics . Overview of the experiments . Line Plot . Boxplots . Pareto . Performance Predictions for Imagenet .",
+            "content": "csv_path = &quot;./data/cleaned_csv/backup.csv&quot; . Roofline . L3 Performance . Table Statistics . Overview of the experiments . ImageNet Classification . Hardware Platform ResNet50 GoogLeNetV1 MobileNet . FPGA | ZCU102-DPU | [INT8]*[100%,80%,50%,30%] | INT8 | na | . | ZCU104-DPU | INT8 | INT8 | na | . | Ultra96-DPU | [INT8]*[100%,80%,50%,30%] | INT8 | INT8 | . | ZCU104-FINN | na | na | na | . | ZCU104-BISMO | na | na | na | . GPU | TX2-maxn | FP16,FP32 | FP16,FP32 | na | . | TX2-maxp | FP16,FP32 | FP16,FP32 | na | . | TX2-maxq | FP16,FP32 | FP16,FP32 | na | . TPU | TPU-fast clk | na | INT8 | INT8 | . | TPU-slow clk | na | INT8 | INT8 | . VLIW | NCS | FP16 | na | na | . CPU | U96-Quadcore A53 | na | na | na | . Line Plot . Boxplots . Pareto . Performance Predictions for Imagenet .",
             "url": "https://rcl-lab.github.io/Qutibench_Web/l3/performance/imagenet/2020/03/25/ImageNet.html",
             "relUrl": "/l3/performance/imagenet/2020/03/25/ImageNet.html",
             "date": " • Mar 25, 2020"
@@ -58,7 +58,7 @@
     
         ,"post5": {
             "title": "CIFAR Performance",
-            "content": "csv_path = &quot;./data/cleaned_csv/backup.csv&quot; . Rooflines . L3 Performance . Table Statistics . Overview of the experiments . Line Plot . Boxplots . Pareto . Performance Predictions for CIFAR .",
+            "content": "csv_path = &quot;./data/cleaned_csv/backup.csv&quot; . Rooflines . L3 Performance . Table Statistics . Overview of the experiments . CIFAR10 Classification . Hardware Platform CNV . FPGA | ZCU102-DPU | na | . | ZCU104-DPU | na | . | Ultra96-DPU | na | . | ZCU104-FINN | [INT2,INT4]*[100%,50%,25%,12.5%] | . | ZCU104-BISMO | [INT2,INT4]*[100%,50%,25%,12.5%] | . GPU | TX2-maxn | [FP16,FP32]*[100%,50%,25%,12.5%] | . | TX2-maxp | [FP16,FP32]*[100%,50%,25%,12.5%] | . | TX2-maxq | [FP16,FP32]*[100%,50%,25%,12.5%] | . TPU | TPU-fast clk | na | . | TPU-slow clk | na | . VLIW | NCS | [FP16]*[100%,50%,25%,12.5%] | . CPU | U96-Quadcore A53 | [INT2,INT4]*[100%,50%,25%,12.5%] | . Line Plot . Boxplots . Pareto . Performance Predictions for CIFAR .",
             "url": "https://rcl-lab.github.io/Qutibench_Web/l3/performance/cifar/2020/03/25/CIFAR.html",
             "relUrl": "/l3/performance/cifar/2020/03/25/CIFAR.html",
             "date": " • Mar 25, 2020"

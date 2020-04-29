@@ -25,7 +25,7 @@
     
         ,"post2": {
             "title": "Rooflines",
-            "content": "ImageNet Classification . Hardware Platform ResNet50 GoogLeNetV1 MobileNet . FPGA | ZCU102-DPU | [INT8]*[100%,80%,50%,30%] | INT8 | na | . | ZCU104-DPU | INT8 | INT8 | na | . | Ultra96-DPU | [INT8]*[100%,80%,50%,30%] | INT8 | INT8 | . | ZCU104-FINN | na | na | na | . | ZCU104-BISMO | na | na | na | . GPU | TX2-maxn | FP16,FP32 | FP16,FP32 | na | . | TX2-maxp | FP16,FP32 | FP16,FP32 | na | . | TX2-maxq | FP16,FP32 | FP16,FP32 | na | . TPU | TPU-fast clk | na | INT8 | INT8 | . | TPU-slow clk | na | INT8 | INT8 | . VLIW | NCS | FP16 | na | na | . CPU | U96-Quadcore A53 | na | na | na | . Rooflines for all hardware platforms with Neural Networks arithmetic Intensity . Performance Predictions for IMAGENET, MNIST and CIFAR .",
+            "content": "Rooflines for all hardware platforms with Neural Networks arithmetic Intensity . Performance Predictions for IMAGENET, MNIST and CIFAR .",
             "url": "https://rcl-lab.github.io/Qutibench_Web/jupyter/2020/04/02/Rooflines_Arithmetic_Intensity.html",
             "relUrl": "/jupyter/2020/04/02/Rooflines_Arithmetic_Intensity.html",
             "date": " • Apr 2, 2020"

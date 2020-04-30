@@ -7,9 +7,9 @@ import altair as alt
 import csv
 from IPython.display import display, HTML
 
-#---------------------------------------------------
-#---------------------------------------------------
-#---------------------HEATMAPS----------------------
+#--------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------HEATMAPS-------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------
 def heatmap_rect(df: pd.DataFrame, 
                  title: str, 
                  mouseover_color: str, 
@@ -121,7 +121,7 @@ def heatmap(dataframe: pd.DataFrame, mouseover_color: str, title: str)->alt.vega
     return Heatmap
 
 #---------------------------------------------------------------------------------------------------------------------------
-#-------------------------------ROOFLINES--------------------------------------
+#-----------------------------------------------------------ROOFLINES--------------------------------------
 #-------------------------------------------------------------------------------------------------------------------------
 
 #hide
@@ -187,16 +187,16 @@ def rooflines(dataframe, neural_network: str):
 
     #To create all checkboxes with the specifications info for each set
     #Selection('FPGAs:', SelectionDef({ bind: BindCheckbox({ input: 'checkbox' }), fields: ['Ultra96 DPU,ZCU104,ZCU102,ZCU104 FINN,ZCU104 BISMO'], type: 'single' }))
-    FPGA_select   = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="FPGAs Ultra96 DPU ZCU")                 
-    NVIDIA_select = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="INVIDIA TX2 maxn,maxp,maxq")
-    GOOGLE_select = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="GOOGLE TPU,fast,slow")
-    INTEL_select  = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="INTEL NCS")
+    FPGA_select   = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="FPGAs  Ultra96  DPU  ZCU  ")                 
+    NVIDIA_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="INVIDIA  TX2  maxn, maxp, maxq  ")
+    GOOGLE_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="GOOGLE  TPU, fast, slow  ")
+    INTEL_select  = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="INTEL  NCS  ")
 
-    IMAGENET_select = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="IMAGENET ResNet GoogLeNet MobileNet VGG AlexNet")    
-    MNIST_select    = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="MNIST MLP")   
-    CIFAR_select    = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="CIFAR10 CNV")   
-    MASKRCNN_select = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="MASKRCNN")
-    GNMT_select     = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="GNMT")
+    IMAGENET_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="IMAGENET  ResNet  GoogLeNet  MobileNet  VGG  AlexNet  ")
+    MNIST_select    = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="MNIST  MLP  ")   
+    CIFAR_select    = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="CIFAR10  CNV  ")   
+    MASKRCNN_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="MASKRCNN  ")
+    GNMT_select     = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="GNMT  ")
 
     #Color Condiotions for each plot
     #{'condition': {'selection': 'FPGAs:', 'type': 'nominal', 'field': 'Name'}, 'value': 'lightgray'}
@@ -257,7 +257,8 @@ def rooflines(dataframe, neural_network: str):
         return 'There were no results for the neural network asked. Please insert another network'
     
     #Chart = alt.layer(FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart + IMAGENET_chart + MNIST_chart + CIFAR_chart + MASKRCNN_chart+ GNMT_chart
-    Chart = alt.layer(chart_filtered.squeeze() + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, selectors, text, data=dataframe, width=700, height=500)
+    #Chart = alt.layer(chart_filtered.squeeze() + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, selectors, text, data=dataframe, width=700, height=500)
+    Chart = alt.layer(chart_filtered.charts.sum(numeric_only = False) + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, selectors, text, data=dataframe, width=700, height=500)
 
     return Chart
 

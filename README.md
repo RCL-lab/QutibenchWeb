@@ -1,6 +1,6 @@
 ![logo](images/QuTiBench_Logo.png)
 
-# QuTiBench
+# QuTiBenc
 Neural Networks have become one of the most successful universal machine learning algorithms. 
 They play a key role in enabling machine vision and speech recognition, and are increasingly 
 adopted in other application domains. 

@@ -1,6 +1,6 @@
 ![logo](images/QuTiBench_Logo.png)
 
-# QuTiBenc
+# QuTiBench
 Neural Networks have become one of the most successful universal machine learning algorithms. 
 They play a key role in enabling machine vision and speech recognition, and are increasingly 
 adopted in other application domains. 
@@ -31,16 +31,20 @@ See the [website](https://rcl-lab.github.io/qutibench/contributing/meta/2020/04/
 
 
 # About us
-![Michaela Blott](images/michaela_blott.png)
+![Michaela Blott](images/michaela_blott.png =300x300)
+
 Michaela Blott is the principal engineer at Xilinx Inc. She has more than 20 years of experience in FPGA and board-level design and networking. Her main areas of interest include data centers, high-level synthesis tools, and high-speed network processing on FPGAs. Asked about the biases that women in technology still confront, she says she faces less pressure to justify her existence in tech than to justify her decision to be a working mother.
  
-![Miriam Leeser](images/miriam_leeser.png) 
+![Miriam Leeser](images/miriam_leeser.png =300x300) 
+
 Miriam Leeser is a Professor in Electrical and Computer Engineering at Northeastern where she is head of the Reconfigurable and GPU Computing Laboratory.  She received her BS degree in electrical engineering from Cornell University, and Diploma and PhD degrees in computer science from Cambridge University in England. She was on the faculty at Cornell University’s Department of Electrical Engineering before coming to Northeastern, where she is a member of the Computer Engineering research group. Her research includes using heterogeneous architectures for signal and image processing applications including wireless communications as well as implementing computer arithmetic and verifying critical applications. She is a senior member of the IEEE and of the ACM.
     
-![Zachary Neveau](images/zachary_neveau.png)
+![Zachary Neveau](images/zachary_neveau.png =300x300)
+
 Zachary Neveau is a student.
 
-![Alina Vasilciuc](images/alina_vasilciuc.png)
+![Alina Vasilciuc](images/alina_vasilciuc.png =300x300)
+
 Alina Vasilciuc is a student.
 
 # Publications

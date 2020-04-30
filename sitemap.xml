@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://rcl-lab.github.io/Qutibench_Web/2020/01/01/Jupyter_benchmark_template.html</loc>
-<lastmod>2020-01-01T00:00:00-06:00</lastmod>
-</url>
-<url>
 <loc>https://rcl-lab.github.io/Qutibench_Web/l3/performance/cifar/2020/03/25/CIFAR.html</loc>
 <lastmod>2020-03-25T00:00:00-05:00</lastmod>
 </url>

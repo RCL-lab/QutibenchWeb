@@ -6,8 +6,10 @@ pd.set_option('max_colwidth', 80)
 import altair as alt
 import csv
 from IPython.display import display, HTML
-#---------------------HEATMAPS----------------------
 
+#---------------------------------------------------
+#---------------------------------------------------
+#---------------------HEATMAPS----------------------
 def heatmap_rect(df: pd.DataFrame, 
                  title: str, 
                  mouseover_color: str, 
@@ -52,7 +54,7 @@ def heatmap_rect(df: pd.DataFrame,
         strokeWidth=1, 
         invalid = None).add_selection(mouseover_selection).properties(title=title).encode(
         alt.X('x:O', title = 'Models'),
-        alt.Y('y:O', title = 'Hardware Platfroms'),
+        alt.Y('y:O', title = 'Hardware Platforms'),
         color = alt.condition(mouseover_selection, alt.value(mouseover_color), color_selection),
         tooltip = [alt.Tooltip('values:Q', title = 'Input/sec'),
                    alt.Tooltip('x:N', title = 'Model'),
@@ -80,7 +82,7 @@ def heatmap_text(df: pd.DataFrame, color_condition: dict)->alt.vegalite.v4.api.C
     """
     return alt.Chart(df).mark_text(color = 'white').encode(
     alt.X('x:O',  title = 'Models'),
-    alt.Y('y:O',  title = 'Hardware Platfroms' ),
+    alt.Y('y:O',  title = 'Hardware Platforms' ),
     text = alt.Text('values:Q', format = '.0f'),
     color= color_condition,
     tooltip = [
@@ -185,16 +187,16 @@ def rooflines(dataframe, neural_network: str):
 
     #To create all checkboxes with the specifications info for each set
     #Selection('FPGAs:', SelectionDef({ bind: BindCheckbox({ input: 'checkbox' }), fields: ['Ultra96 DPU,ZCU104,ZCU102,ZCU104 FINN,ZCU104 BISMO'], type: 'single' }))
-    FPGA_select   = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="FPGAs Ultra96 DPU ZCU")                 
-    NVIDIA_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="HNVIDIA TX2 maxn,maxp,maxq")
-    GOOGLE_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="GOOGLE TPU,fast,slow")
-    INTEL_select  = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="INTEL NCS")
+    FPGA_select   = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="FPGAs Ultra96 DPU ZCU")                 
+    NVIDIA_select = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="INVIDIA TX2 maxn,maxp,maxq")
+    GOOGLE_select = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="GOOGLE TPU,fast,slow")
+    INTEL_select  = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="INTEL NCS")
 
-    IMAGENET_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="IMAGENET ResNet GoogLeNet MobileNet VGG AlexNet")    
-    MNIST_select    = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="MNIST MLP")   
-    CIFAR_select    = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="CIFAR10 CNV")   
-    MASKRCNN_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="MASKRCNN")
-    GNMT_select     = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="GNMT")
+    IMAGENET_select = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="IMAGENET ResNet GoogLeNet MobileNet VGG AlexNet")    
+    MNIST_select    = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="MNIST MLP")   
+    CIFAR_select    = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="CIFAR10 CNV")   
+    MASKRCNN_select = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="MASKRCNN")
+    GNMT_select     = alt.selection_single( fields=[" Hide"], bind=filter_checkbox, name="GNMT")
 
     #Color Condiotions for each plot
     #{'condition': {'selection': 'FPGAs:', 'type': 'nominal', 'field': 'Name'}, 'value': 'lightgray'}

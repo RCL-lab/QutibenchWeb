@@ -1,0 +1,215 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Notebook to process and clean csv's"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "import altair as alt\n",
+    "import csv"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Performance Predictions for mnist, cifar10 and imagenet - Heatmaps\n",
+    "## Read csv > process data > save to another csv"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#hide\n",
+    "## Reading csv file and converting data to (Neural network, Platform, Value)\n",
+    "df = pd.read_csv('data/performance_predictions_imagenet_mnist_cifar.csv')\n",
+    "df.head()\n",
+    "pd.set_option('display.max_rows', None)\n",
+    "#----- Creating a dataframe with 3 columns x, y gop_frame\n",
+    "cleanedList = [x for x in df.platform if x==x] # to take all the nans out\n",
+    "x, y = np.meshgrid(df.model, cleanedList) \n",
+    "gop_frame, _ = np.meshgrid(df.gop_frame, cleanedList)\n",
+    "\n",
+    "#to crate a 1D array from each variable, creating a dataframe with 3 columns\n",
+    "source = pd.DataFrame({'x': x.ravel(),     \n",
+    "                       'y': y.ravel(),\n",
+    "                       'gop_frame':gop_frame.ravel()}) #auxilary column\n",
+    "\n",
+    "#---Adding a fourth column: top_second  ---- auxilary column\n",
+    "tops_second= []    #creating a lsit which will contain all top_second columns from the dataframe\n",
+    "columns = list(df) # creating a list of dataframe columns \n",
+    "  \n",
+    "for i in columns:   \n",
+    "    if 'top_second' in i:\n",
+    "        tops_second.append(df[i])\n",
+    "        \n",
+    "source['top_second'] = pd.concat(tops_second,ignore_index=True)\n",
+    "\n",
+    "#------Adding a fith column: values-----------\n",
+    "source['values'] = source.top_second * 1000 / source.gop_frame\n",
+    "\n",
+    "#---Drop auxilary columns: gop_frame top_scond----\n",
+    "source = source.drop(columns=['gop_frame','top_second'])\n",
+    "source = source.round(0)\n",
+    "source.head()\n",
+    "\n",
+    "#Separate dataframe into: IMAGENET, MNIST, CIFAR10 dataframes\n",
+    "df_imagenet = source[source['x'].str.contains('GoogleNetv|MobileNetv1|ResNet50|EfficientNet')]\n",
+    "df_cifar10 = source[source['x'].str.contains('CNV')]\n",
+    "df_MNIST = source[source['x'].str.contains('MLP')]\n",
+    "\n",
+    "#Saving above dataframes to csv file\n",
+    "df_imagenet.to_csv('data/processed_csv/performance_prediction_imagenet.csv', index = False)\n",
+    "df_cifar10.to_csv('data/processed_csv/performance_prediction_cifar10.csv', index = False)\n",
+    "df_MNIST.to_csv('data/processed_csv/performance_prediction_mnist.csv', index = False)\n",
+    "source.to_csv('data/processed_csv/performance_prediction_imagenet_mnist_cifar10.csv', index = False)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# --------------------------------------------------\n",
+    "# --------------------------------------------------\n",
+    "# --------------------Rooflines----------------"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#hide\n",
+    "## Loading Hardware platforms and Neural networks csv\n",
+    "data = pd.read_csv('Data/peakPerfBandHardPlatf.csv', sep=',')\n",
+    "df = pd.DataFrame(data)\n",
+    "\n",
+    "df_topology=pd.read_csv('Data/topology_details.csv',)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "## Calculate the Arithmetic intensity (x axis) for each NN based on Fwd ops and Total params\n",
+    "i=0.1\n",
+    "n_bytes=1 \n",
+    "calc_arith = lambda operations, params, n_bytes: operations/(params*n_bytes)\n",
+    "\n",
+    "for index, row in df_topology.iterrows():             #nditer is a iterator object    \n",
+    "    arith_intens = calc_arith(row['Fwd Ops'], row['Total Params'], n_bytes)   #calculate the arith intensity with the lambda function\n",
+    "    df_topology.at[index, 'arith_intens'] = arith_intens              #saving it to the dataframe\n",
+    "    \n",
+    "#to duplicate the dataframe so each row with (Platform, arith_intens) will be filled with 100 and then 0s to plot the vertical line later    \n",
+    "df_topology = pd.concat([df_topology, df_topology])\n",
+    "df_topology = pd.concat([df_topology, df_topology])\n",
+    "df_topology = df_topology.drop(columns=['Total Params','Fwd Ops']) #deleting unnecessary columns (Fwd ops and Total params)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "## Preparing the NNs dataset to be ploted as vertical lines later\n",
+    "# creating a y list [100,100,100,100....0.0001,0.0001,0.0001...] to plot a vertical line later\n",
+    "df_topology['performance'] = [100] * round((len(df_topology.index))/4)  +  [25] * round((len(df_topology.index))/4) + [75] * round((len(df_topology.index))/4) +[0.000001] * round((len(df_topology.index))/4) "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "## Calculating the rooflines (y axis) for each hardware platform (dataframe = df_topology + df)\n",
+    "#--------------------------------Calculating the values to plot for the roofline model-----------\n",
+    "maxX=160000\n",
+    "x_axis = np.arange(0.1,maxX,1) #to create a list that represents the x axis with numbers between 0 and 1000\n",
+    "dataframe = pd.DataFrame(columns=['Name','arith_intens','performance']) \n",
+    "\n",
+    "for index, row in df.iterrows():             #nditer is a iterator object \n",
+    "    dataframe = dataframe.append([pd.Series([df.at[index,'Name'],1,row['Bandwidth'] ],dataframe.columns)], ignore_index=True)\n",
+    "    for i in np.nditer(x_axis):\n",
+    "        point = row['Bandwidth'] * i\n",
+    "        if point > row['Peak_Performance']:\n",
+    "            dataframe = dataframe.append([pd.Series([df.at[index,'Name'],i,row['Peak_Performance']],dataframe.columns)], ignore_index=True)\n",
+    "            dataframe = dataframe.append([pd.Series([df.at[index,'Name'],maxX, df.at[index,'Peak_Performance']],dataframe.columns)], ignore_index=True)\n",
+    "            break"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "## Merging NNs dataset with Hardware Platforms dataset\n",
+    "dataframe = pd.concat([dataframe,df_topology])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dataframe.to_csv('data/processed_csv/rooflines_hardware_neural_networks.csv', index = False)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# ---------------Rooflines-------------------------\n",
+    "# -------------------------------------------------------\n",
+    "# -------------------------------------------------------"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

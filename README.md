@@ -40,9 +40,11 @@ Michaela Blott is the principal engineer at Xilinx Inc. She has more than 20 yea
 Miriam Leeser is a Professor in Electrical and Computer Engineering at Northeastern where she is head of the Reconfigurable and GPU Computing Laboratory.  She received her BS degree in electrical engineering from Cornell University, and Diploma and PhD degrees in computer science from Cambridge University in England. She was on the faculty at Cornell University’s Department of Electrical Engineering before coming to Northeastern, where she is a member of the Computer Engineering research group. Her research includes using heterogeneous architectures for signal and image processing applications including wireless communications as well as implementing computer arithmetic and verifying critical applications. She is a senior member of the IEEE and of the ACM.
     
 ![Zachary Neveau](images/zachary_neveau.png =300x300)
+
 Zachary Neveau is a student.
 
 ![Alina Vasilciuc](images/alina_vasilciuc.png =300x300)
+
 Alina Vasilciuc is a student.
 
 # Publications

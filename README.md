@@ -32,7 +32,7 @@ See the [website](https://rcl-lab.github.io/qutibench/contributing/meta/2020/04/
 ## Webmaster Info
 All info on how to customize the site is located on the [fastpages github](https://github.com/fastai/fastpages). The platform is fairly new, so as changes are added to the faspages repo it's not a bad idea to update this website to reflect that. Updating instructions are available also through the fastpages github.
 
-## About us
+# About us
 
 ![Michaela Blott](images/michaela_blott.png)
 Michaela Blott is the principal engineer at Xilinx Inc. She has more than 20 years of experience in FPGA and board-level design and networking. Her main areas of interest include data centers, high-level synthesis tools, and high-speed network processing on FPGAs. Asked about the biases that women in technology still confront, she says she faces less pressure to justify her existence in tech than to justify her decision to be a working mother.
@@ -46,7 +46,7 @@ Zachary Neveau is a student.
 ![Alina Vasilciuc](images/alina_vasilciuc.png)
 Alina Vasilciuc is a student.
 
-## Publications
+# Publications
 
 Blott, Michaela, et al. "QuTiBench: Benchmarking neural networks on heterogeneous hardware." 
 ACM Journal on Emerging Technologies in Computing Systems (JETC) 15.4 (2019): 1-38.

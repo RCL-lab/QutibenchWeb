@@ -45,3 +45,17 @@ Zachary Neveau is a student.
 
 ![Alina Vasilciuc](images/alina_vasilciuc.png)
 Alina Vasilciuc is a student.
+
+## Publications
+
+Blott, Michaela, et al. "QuTiBench: Benchmarking neural networks on heterogeneous hardware." 
+ACM Journal on Emerging Technologies in Computing Systems (JETC) 15.4 (2019): 1-38.
+https://arxiv.org/pdf/1909.05009.pdf
+
+Michaela Blott, Johannes Kath, Lisa Halder, Yaman Umuroglu, Nicholas Fraser, Giulio Gambardella, 
+Miriam Leeser, and Linda Doyle. 2020. 
+"Evaluation of Optimized CNNs on FPGA and non-FPGA based Accelerators using a Novel Benchmarking Approach." In The 
+2020 ACM/SIGDA International Symposium on Field-Programmable Gate Arrays (FPGA ’20).
+Association for Computing Machinery, New York, NY, USA, 317. 
+https://dl.acm.org/doi/10.1145/3373087.3375348
+Poster available here: https://github.com/michaelablott/QuTiBench/blob/master/Publications/FPGA2020_EvalCNNs_Poster.pdf

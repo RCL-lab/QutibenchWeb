@@ -288,7 +288,7 @@ def load_and_display(filenames):
 
 def tableOverviewExperiments(filenames):
     pd.set_option('max_colwidth', 80)
-    pd.set_option('display.max_colwidth', None)
+    #pd.set_option('display.max_colwidth', None)
     dataframes = load_and_display(filenames)
     for dataframe in dataframes:   
         return display(HTML(dataframe.to_html(index=False)))

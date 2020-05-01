@@ -30,24 +30,6 @@ in implementing machine learning systems.
 See the [website](https://rcl-lab.github.io/qutibench/contributing/meta/2020/04/09/Contributing.html) for instructions on contributing.
 
 
-# About us
-<img src="images/michaela_blott.png" alt="drawing" style="width:200px;height:200px"/>
-
-Michaela Blott is the principal engineer at Xilinx Inc. She has more than 20 years of experience in FPGA and board-level design and networking. Her main areas of interest include data centers, high-level synthesis tools, and high-speed network processing on FPGAs. Asked about the biases that women in technology still confront, she says she faces less pressure to justify her existence in tech than to justify her decision to be a working mother.
- 
-
-<img src="images/miriam_leeser.png" alt="drawing" style="width:200px;height:200px"/>
-
-Miriam Leeser is a Professor in Electrical and Computer Engineering at Northeastern where she is head of the Reconfigurable and GPU Computing Laboratory.  She received her BS degree in electrical engineering from Cornell University, and Diploma and PhD degrees in computer science from Cambridge University in England. She was on the faculty at Cornell University’s Department of Electrical Engineering before coming to Northeastern, where she is a member of the Computer Engineering research group. Her research includes using heterogeneous architectures for signal and image processing applications including wireless communications as well as implementing computer arithmetic and verifying critical applications. She is a senior member of the IEEE and of the ACM.
- 
-<img src="images/zachary_neveau.png" alt="drawing" style="width:200px;height:200px"/> 
-
-Zachary Neveau is a student.
-
-<img src="images/alina_vasilciuc.png" alt="drawing" style="width:200px;height:200px"/> 
-
-Alina Vasilciuc is a student.
-
 # Publications
 Blott, Michaela, et al. "QuTiBench: Benchmarking neural networks on heterogeneous hardware." 
 ACM Journal on Emerging Technologies in Computing Systems (JETC) 15.4 (2019): 1-38.

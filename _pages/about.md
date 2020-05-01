@@ -57,6 +57,6 @@ Zachary Neveu is an undergraduate student at Northeastern University.
 
 
 
-<img align="left" src="../images/alina_vasilciuc.png" alt="drawing" style="width:200px;height:200px"/> 
+<img src="../images/alina_vasilciuc.png" alt="drawing" style="width:200px;height:200px"/> 
 
 Alina Vasilciuc is an undergraduate student at Nova University of Lisbon.

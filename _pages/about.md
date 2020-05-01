@@ -50,13 +50,16 @@ Miriam Leeser is a Professor in Electrical and Computer Engineering at Northeast
 <img align="left" src="../images/zach_neveu.jpg" alt="drawing" style="width:200px;height:250px"/> 
 
 Zachary Neveu is an undergraduate student at Northeastern University.
-
-
-
-
-
-
-
+ 
+  
+   
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 <img src="../images/alina_vasilciuc.png" alt="drawing" style="width:200px;height:200px"/> 
 
 Alina Vasilciuc is an undergraduate student at Nova University of Lisbon.

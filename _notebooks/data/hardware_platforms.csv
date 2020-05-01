@@ -1,0 +1,14 @@
+Hardware Platforms,INT2,INT4,INT8,FP16,FP32,Memory Bandwidth,Memory Capacity,Power
+,[TOP/sec],[TOP/sec],[TOP/sec],[TOP/sec],[TOP/sec],[GBps],[GB],[Watt]
+Ultra96-DPU,na,na,0.96,na,na,4.26,2,na
+ZCU104-DPU,na,na,4.6,na,na,19.2,4,na
+ZCU102-DPU,na,na,6.71,na,na,19.2,4,na
+ZCU104-FINN,30.7,8.8,na,na,na,19.2,4,na
+ZCU104-BISMO,30.7,8.8,na,na,na,19.2,4,na
+TX2 - maxn,na,na,na,1.33,0.67,59.7,8,15
+TX2 - maxp,na,na,na,1.15,0.57,59.7,8,15
+TX2 - maxq,na,na,na,0.87,0.44,59.7,8,15
+TPU-fast,na,na,4,na,na,25.6,1,2
+TPU-slow,na,na,2,na,na,25.6,1,2
+NCS (MyriadX),na,na,1,0.5,na,12.8,2,1
+U96-Quadcore A53-INT8,0.192,0.192,0.192,na,na,4.26,2,na

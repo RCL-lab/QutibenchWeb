@@ -35,6 +35,12 @@ in implementing machine learning systems.
 # Contributing
 See the [website](https://rcl-lab.github.io/Qutibench_Web/contributing/meta/2020/04/09/Contributing.html) for instructions on contributing.
 
+# Publications
+Blott, Michaela, et al. "QuTiBench: Benchmarking neural networks on heterogeneous hardware." ACM Journal on Emerging Technologies in Computing Systems (JETC) 15.4 (2019): 1-38. https://arxiv.org/pdf/1909.05009.pdf
+
+Michaela Blott, Johannes Kath, Lisa Halder, Yaman Umuroglu, Nicholas Fraser, Giulio Gambardella, Miriam Leeser, and Linda Doyle. 2020. "Evaluation of Optimized CNNs on FPGA and non-FPGA based Accelerators using a Novel Benchmarking Approach." In The 2020 ACM/SIGDA International Symposium on Field-Programmable Gate Arrays (FPGA ’20). Association for Computing Machinery, New York, NY, USA, 317. https://dl.acm.org/doi/10.1145/3373087.3375348 Poster available here: https://github.com/michaelablott/QuTiBench/blob/master/Publications/FPGA2020_EvalCNNs_Poster.pdf
+
+
 # About us
 
 ### Michaela Blott
@@ -47,13 +53,13 @@ Contact:
 <img align="left" src="../images/miriam_leeser.png" alt="drawing" style="width:200px;height:250px;padding-right: 10px;"/>
 
 Markup :  Miriam Leeser is a Professor in Electrical and Computer Engineering at Northeastern where she is head of the Reconfigurable and GPU Computing Laboratory.  She received her BS degree in electrical engineering from Cornell University, and Diploma and PhD degrees in computer science from Cambridge University in England. She was on the faculty at Cornell University’s Department of Electrical Engineering before coming to Northeastern, where she is a member of the Computer Engineering research group. Her research includes using heterogeneous architectures for signal and image processing applications including wireless communications as well as implementing computer arithmetic and verifying critical applications. She is a senior member of the IEEE and of the ACM.
-Contact:
+Contact: <a href="https://coe.northeastern.edu/Research/rcl/members/MEL/index.html">mel@coe.neu.edu</a>
 
 ### Zachary Neveu 
 <img align="left" src="../images/zach_neveu.jpg" alt="drawing" style="width:200px;height:250px;padding-right: 10px;"/> 
 
 Markup :  Zachary Neveu is an undergraduate student at Northeastern University.
-Contact: 
+Contact: zachary.neveu@gmail.com
 <br />  
 <br />  
 <br /> 

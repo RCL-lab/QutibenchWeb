@@ -11,4 +11,4 @@ GPU,TX2-maxq,"[FP16, FP32] * [100%,50%,25%,12.5%]","[16,32]"
 TPU,TPU-fast clk,na,na
 TPU,TPU-slow clk,na,na
 VLIW,NCS,"[FP16] * [100%,50%,25%,12.5%]",[16]
-CPU,U96-Quadcore A53,"[INT2, INT4] * [100%,50%,25%,12.5%]","[1,4]"
+CPU,U96-Quadcore A53,"[INT2, INT4] * [100%,50%,25%,12.5%]","[2,4]"

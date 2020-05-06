@@ -37,19 +37,20 @@ See the [website](https://rcl-lab.github.io/Qutibench_Web/contributing/meta/2020
 
 # About us
 
-Michaela Blott
+### Michaela Blott
 <img align="left" src="../images/michaela_blott.png" alt="drawing" style="width:200px;height:200px"/>
 
-Michaela Blott is the principal engineer at Xilinx Inc. She has more than 20 years of experience in FPGA and board-level design and networking. Her main areas of interest include data centers, high-level synthesis tools, and high-speed network processing on FPGAs. Asked about the biases that women in technology still confront, she says she faces less pressure to justify her existence in tech than to justify her decision to be a working mother.
+Markup :  Michaela Blott is the principal engineer at Xilinx Inc. She has more than 20 years of experience in FPGA and board-level design and networking. Her main areas of interest include data centers, high-level synthesis tools, and high-speed network processing on FPGAs. Asked about the biases that women in technology still confront, she says she faces less pressure to justify her existence in tech than to justify her decision to be a working mother.
  
-
+### Miriam Leeser
 <img align="left" src="../images/miriam_leeser.png" alt="drawing" style="width:200px;height:250px"/>
 
-Miriam Leeser is a Professor in Electrical and Computer Engineering at Northeastern where she is head of the Reconfigurable and GPU Computing Laboratory.  She received her BS degree in electrical engineering from Cornell University, and Diploma and PhD degrees in computer science from Cambridge University in England. She was on the faculty at Cornell University’s Department of Electrical Engineering before coming to Northeastern, where she is a member of the Computer Engineering research group. Her research includes using heterogeneous architectures for signal and image processing applications including wireless communications as well as implementing computer arithmetic and verifying critical applications. She is a senior member of the IEEE and of the ACM.
+Markup :  Miriam Leeser is a Professor in Electrical and Computer Engineering at Northeastern where she is head of the Reconfigurable and GPU Computing Laboratory.  She received her BS degree in electrical engineering from Cornell University, and Diploma and PhD degrees in computer science from Cambridge University in England. She was on the faculty at Cornell University’s Department of Electrical Engineering before coming to Northeastern, where she is a member of the Computer Engineering research group. Her research includes using heterogeneous architectures for signal and image processing applications including wireless communications as well as implementing computer arithmetic and verifying critical applications. She is a senior member of the IEEE and of the ACM.
  
+### Zachary Neveu 
 <img align="left" src="../images/zach_neveu.jpg" alt="drawing" style="width:200px;height:250px"/> 
 
-Zachary Neveu is an undergraduate student at Northeastern University.
+Markup :  Zachary Neveu is an undergraduate student at Northeastern University.
  
   
    
@@ -59,7 +60,7 @@ Zachary Neveu is an undergraduate student at Northeastern University.
  
  
  
- 
+### Alina Vasilciuc 
 <img align="right" src="../images/alina_vasilciuc.png" alt="drawing" style="width:200px;height:200px"/> 
 
-Alina Vasilciuc is an undergraduate student at Nova University of Lisbon.
+Markup :  Alina Vasilciuc is an undergraduate student at Nova University of Lisbon, currently working on her Master’s degree in collaboration with Xilinx Research, where she is currently doing an internship.

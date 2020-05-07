@@ -69,7 +69,7 @@ Contact: zachary.neveu@gmail.com
  
  
 ### Alina Vasilciuc 
-<img align="right" src="../images/alina_vasilciuc.png" alt="drawing" style="width:200px;height:200px;padding-right: 15px;"/> 
+<img align="left" src="../images/alina_vasilciuc.png" alt="drawing" style="width:200px;height:200px;padding-right: 15px;"/> 
 
 Alina Vasilciuc is an undergraduate student at Nova University of Lisbon, currently working on her Master’s degree in collaboration with Xilinx Research, where she is currently doing an internship.
 Contact: alina.vasilciuc@hotmail.com

@@ -394,6 +394,110 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<table>
+<thead>
+<tr>
+<th style="text-align:right"></th>
+<th style="text-align:left">Hardware</th>
+<th style="text-align:left">Platform</th>
+<th style="text-align:left">CNV</th>
+<th style="text-align:left">Batch/Stream/Thread</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">0</td>
+<td style="text-align:left">FPGA</td>
+<td style="text-align:left">ZCU102-DPU</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">[1,2,3,4,5,6,7,8]</td>
+</tr>
+<tr>
+<td style="text-align:right">1</td>
+<td style="text-align:left">FPGA</td>
+<td style="text-align:left">ZCU104-DPU</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">[1,2,3,4,5,6,7,8]</td>
+</tr>
+<tr>
+<td style="text-align:right">2</td>
+<td style="text-align:left">FPGA</td>
+<td style="text-align:left">Ultra96-DPU</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">[1,2,3,4,5,6,7,8]</td>
+</tr>
+<tr>
+<td style="text-align:right">3</td>
+<td style="text-align:left">FPGA</td>
+<td style="text-align:left">ZCU104-FINN</td>
+<td style="text-align:left">[INT2,INT4]*[100%,50%,25%,12.5%]</td>
+<td style="text-align:left">[1,2,4,8,16,32,64,128,256,512,10000]</td>
+</tr>
+<tr>
+<td style="text-align:right">4</td>
+<td style="text-align:left">FPGA</td>
+<td style="text-align:left">ZCU104-BISMO</td>
+<td style="text-align:left">[INT2,INT4]*[100%,50%,25%,12.5%]</td>
+<td style="text-align:left">[2,4,8,16,32,64,128]</td>
+</tr>
+<tr>
+<td style="text-align:right">5</td>
+<td style="text-align:left">GPU</td>
+<td style="text-align:left">TX2-maxn</td>
+<td style="text-align:left">[FP16,FP32]*[100%,50%,25%,12.5%]</td>
+<td style="text-align:left">[1,2,4,8,16,32,64,128]</td>
+</tr>
+<tr>
+<td style="text-align:right">6</td>
+<td style="text-align:left">GPU</td>
+<td style="text-align:left">TX2-maxp</td>
+<td style="text-align:left">[FP16,FP32]*[100%,50%,25%,12.5%]</td>
+<td style="text-align:left">[1,2,4,8,16,32,64,128]</td>
+</tr>
+<tr>
+<td style="text-align:right">7</td>
+<td style="text-align:left">GPU</td>
+<td style="text-align:left">TX2-maxq</td>
+<td style="text-align:left">[FP16,FP32]*[100%,50%,25%,12.5%]</td>
+<td style="text-align:left">[1,2,4,8,16,32,64,128]</td>
+</tr>
+<tr>
+<td style="text-align:right">8</td>
+<td style="text-align:left">TPU</td>
+<td style="text-align:left">TPU-fast clk</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">[1]</td>
+</tr>
+<tr>
+<td style="text-align:right">9</td>
+<td style="text-align:left">TPU</td>
+<td style="text-align:left">TPU-slow clk</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">[1]</td>
+</tr>
+<tr>
+<td style="text-align:right">10</td>
+<td style="text-align:left">VLIW</td>
+<td style="text-align:left">NCS</td>
+<td style="text-align:left">[FP16]*[100%,50%,25%,12.5%]</td>
+<td style="text-align:left">[1,2,4,8,16,32,64,128]</td>
+</tr>
+<tr>
+<td style="text-align:right">11</td>
+<td style="text-align:left">CPU</td>
+<td style="text-align:left">U96-Quadcore A53</td>
+<td style="text-align:left">[INT2,INT4]*[100%,50%,25%,12.5%]</td>
+<td style="text-align:left">[2,4,8,16,32,64,128]</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Line-Plot">
 <a class="anchor" href="#Line-Plot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Line Plot<a class="anchor-link" href="#Line-Plot"> </a>
 </h3>

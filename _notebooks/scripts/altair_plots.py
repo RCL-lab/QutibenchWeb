@@ -292,6 +292,6 @@ def tableOverviewExperiments(filenames):
     dataframes = load_and_display(filenames)
     for dataframe in dataframes:   
         #return display(HTML(dataframe.to_html(index=False)))
-        return display(dataframe)
+        return dataframe
 #-----------------------------------------------------------------------------------------------------------
     

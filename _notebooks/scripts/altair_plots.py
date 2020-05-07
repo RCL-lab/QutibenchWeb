@@ -55,7 +55,7 @@ def heatmap_rect(df: pd.DataFrame,
         invalid = None).add_selection(mouseover_selection).properties(title=title).encode(
         alt.X('x:O', title = 'Models'),
         alt.Y('y:O', title = 'Hardware Platforms'),
-        color = alt.condition(mouseover_selection, alt.value(mouseover_color), color_selection),
+        color = color_selection, #alt.condition(mouseover_selection, alt.value(mouseover_color), color_selection), #this is because of color staying in before hoovering with mouse
         tooltip = [alt.Tooltip('values:Q', title = 'Input/sec'),
                    alt.Tooltip('x:N', title = 'Model'),
                    alt.Tooltip('y:N', title = 'Hardware Platform'),

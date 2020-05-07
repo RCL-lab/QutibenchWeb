@@ -381,106 +381,107 @@ window.onload = wrap_img;
         vertical-align: top;
     }
 
-    .dataframe thead tr th {
-        text-align: left;
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
   <thead>
-    <tr>
+    <tr style="text-align: right;">
       <th></th>
-      <th colspan="2" halign="left"></th>
+      <th>Unnamed: 0</th>
+      <th>Unnamed: 1</th>
       <th>MNIST Classification</th>
-      <th></th>
-    </tr>
-    <tr>
-      <th></th>
-      <th>Hardware</th>
-      <th>Platform</th>
-      <th>MLP</th>
-      <th>Batch/Stream/Thread</th>
+      <th>Unnamed: 3</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
+      <td>Hardware</td>
+      <td>Platform</td>
+      <td>MLP</td>
+      <td>Batch/Stream/Thread</td>
+    </tr>
+    <tr>
+      <th>1</th>
       <td>FPGA</td>
       <td>ZCU102-DPU</td>
       <td>na</td>
       <td>[1,2,3,4,5,6,7,8]</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td></td>
+      <th>2</th>
+      <td>FPGA</td>
       <td>ZCU104-DPU</td>
       <td>na</td>
       <td>[1,2,3,4,5,6,7,8]</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td></td>
+      <th>3</th>
+      <td>FPGA</td>
       <td>Ultra96-DPU</td>
       <td>na</td>
       <td>[1,2,3,4,5,6,7,8]</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td></td>
+      <th>4</th>
+      <td>FPGA</td>
       <td>ZCU104-FINN</td>
       <td>[INT2, INT4] * [100%,50%,25%,12.5%]</td>
       <td>[1,2,4,8,16,32,64,128,256,512,10000]</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td></td>
+      <th>5</th>
+      <td>FPGA</td>
       <td>ZCU104-BISMO</td>
       <td>[INT2, INT4] * [100%,50%,25%,12.5%]</td>
       <td>[2,4,8,16,32,64,128]</td>
     </tr>
     <tr>
-      <th>5</th>
+      <th>6</th>
       <td>GPU</td>
       <td>TX2-maxn</td>
       <td>[FP16, FP32] * [100%,50%,25%,12.5%]</td>
-      <td></td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td></td>
+      <th>7</th>
+      <td>GPU</td>
       <td>TX2-maxp</td>
       <td>[FP16, FP32] * [100%,50%,25%,12.5%]</td>
       <td>[1,2,4,8,16,32,64,128]</td>
     </tr>
     <tr>
-      <th>7</th>
-      <td></td>
+      <th>8</th>
+      <td>GPU</td>
       <td>TX2-maxq</td>
       <td>[FP16, FP32] * [100%,50%,25%,12.5%]</td>
-      <td></td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>8</th>
+      <th>9</th>
       <td>TPU</td>
       <td>TPU-fast clk</td>
       <td>na</td>
       <td>[1]</td>
     </tr>
     <tr>
-      <th>9</th>
-      <td></td>
+      <th>10</th>
+      <td>TPU</td>
       <td>TPU-slow clk</td>
       <td>na</td>
       <td>[1]</td>
     </tr>
     <tr>
-      <th>10</th>
+      <th>11</th>
       <td>VLIW</td>
       <td>NCS</td>
       <td>[FP16] * [100%,50%,25%,12.5%]</td>
       <td>[1,2,4,8,16,32,64,128]</td>
     </tr>
     <tr>
-      <th>11</th>
+      <th>12</th>
       <td>CPU</td>
       <td>U96-Quadcore A53</td>
       <td>[INT2, INT4] * [100%,50%,25%,12.5%]</td>

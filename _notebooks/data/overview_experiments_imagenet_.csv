@@ -1,3 +1,4 @@
+,,ImageNet Classification,ImageNet Classification,ImageNet Classification,
 Hardware,Platform,ResNet50,GoogLeNetV1,MobileNet,Batch/Stream/Thread
 FPGA,ZCU102-DPU,"[INT8]*[100%,80%,50%,30%]",INT8,na,"[1,2,3,4,5,6,7,8]"
 FPGA,ZCU104-DPU,INT8,INT8,na,"[1,2,3,4,5,6,7,8]"

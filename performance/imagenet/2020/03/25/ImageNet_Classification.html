@@ -353,36 +353,139 @@ window.onload = wrap_img;
     
 <div class="cell border-box-sizing code_cell rendered">
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>|    | Hardware   | Platform         | ResNet50                  | GoogLeNetV1   | MobileNet   | Batch/Stream/Thread                  |
-|---:|:-----------|:-----------------|:--------------------------|:--------------|:------------|:-------------------------------------|
-|  0 | FPGA       | ZCU102-DPU       | [INT8]*[100%,80%,50%,30%] | INT8          | na          | [1,2,3,4,5,6,7,8]                    |
-|  1 | FPGA       | ZCU104-DPU       | INT8                      | INT8          | na          | [1,2,3,4,5,6,7,8]                    |
-|  2 | FPGA       | Ultra96-DPU      | [INT8]*[100%,80%,50%,30%] | INT8          | INT8        | [1,2,3,4,5,6,7,8]                    |
-|  3 | FPGA       | ZCU104-FINN      | na                        | na            | na          | [1,2,4,8,16,32,64,128,256,512,10000] |
-|  4 | FPGA       | ZCU104-BISMO     | na                        | na            | na          | [2,4,8,16,32,64,128]                 |
-|  5 | GPU        | TX2-maxn         | FP16,FP32                 | FP16,FP32     | na          | [1,2,4,8,16,32,64,128]               |
-|  6 | GPU        | TX2-maxp         | FP16,FP32                 | FP16,FP32     | na          | [1,2,4,8,16,32,64,128]               |
-|  7 | GPU        | TX2-maxq         | FP16,FP32                 | FP16,FP32     | na          | [1,2,4,8,16,32,64,128]               |
-|  8 | TPU        | TPU-fast clk     | na                        | INT8          | INT8        | [1]                                  |
-|  9 | TPU        | TPU-slow clk     | na                        | INT8          | INT8        | [1]                                  |
-| 10 | VLIW       | NCS              | FP16                      | na            | na          | [1,2,4,8,16,32,64,128]               |
-| 11 | CPU        | U96-Quadcore A53 | na                        | na            | na          | [2,4,8,16,32,64,128]                 |
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<table>
+<thead>
+<tr>
+<th style="text-align:right"></th>
+<th style="text-align:left">Hardware</th>
+<th style="text-align:left">Platform</th>
+<th style="text-align:left">ResNet50</th>
+<th style="text-align:left">GoogLeNetV1</th>
+<th style="text-align:left">MobileNet</th>
+<th style="text-align:left">Batch/Stream/Thread</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">0</td>
+<td style="text-align:left">FPGA</td>
+<td style="text-align:left">ZCU102-DPU</td>
+<td style="text-align:left">[INT8]*[100%,80%,50%,30%]</td>
+<td style="text-align:left">INT8</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">[1,2,3,4,5,6,7,8]</td>
+</tr>
+<tr>
+<td style="text-align:right">1</td>
+<td style="text-align:left">FPGA</td>
+<td style="text-align:left">ZCU104-DPU</td>
+<td style="text-align:left">INT8</td>
+<td style="text-align:left">INT8</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">[1,2,3,4,5,6,7,8]</td>
+</tr>
+<tr>
+<td style="text-align:right">2</td>
+<td style="text-align:left">FPGA</td>
+<td style="text-align:left">Ultra96-DPU</td>
+<td style="text-align:left">[INT8]*[100%,80%,50%,30%]</td>
+<td style="text-align:left">INT8</td>
+<td style="text-align:left">INT8</td>
+<td style="text-align:left">[1,2,3,4,5,6,7,8]</td>
+</tr>
+<tr>
+<td style="text-align:right">3</td>
+<td style="text-align:left">FPGA</td>
+<td style="text-align:left">ZCU104-FINN</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">[1,2,4,8,16,32,64,128,256,512,10000]</td>
+</tr>
+<tr>
+<td style="text-align:right">4</td>
+<td style="text-align:left">FPGA</td>
+<td style="text-align:left">ZCU104-BISMO</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">[2,4,8,16,32,64,128]</td>
+</tr>
+<tr>
+<td style="text-align:right">5</td>
+<td style="text-align:left">GPU</td>
+<td style="text-align:left">TX2-maxn</td>
+<td style="text-align:left">FP16,FP32</td>
+<td style="text-align:left">FP16,FP32</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">[1,2,4,8,16,32,64,128]</td>
+</tr>
+<tr>
+<td style="text-align:right">6</td>
+<td style="text-align:left">GPU</td>
+<td style="text-align:left">TX2-maxp</td>
+<td style="text-align:left">FP16,FP32</td>
+<td style="text-align:left">FP16,FP32</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">[1,2,4,8,16,32,64,128]</td>
+</tr>
+<tr>
+<td style="text-align:right">7</td>
+<td style="text-align:left">GPU</td>
+<td style="text-align:left">TX2-maxq</td>
+<td style="text-align:left">FP16,FP32</td>
+<td style="text-align:left">FP16,FP32</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">[1,2,4,8,16,32,64,128]</td>
+</tr>
+<tr>
+<td style="text-align:right">8</td>
+<td style="text-align:left">TPU</td>
+<td style="text-align:left">TPU-fast clk</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">INT8</td>
+<td style="text-align:left">INT8</td>
+<td style="text-align:left">[1]</td>
+</tr>
+<tr>
+<td style="text-align:right">9</td>
+<td style="text-align:left">TPU</td>
+<td style="text-align:left">TPU-slow clk</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">INT8</td>
+<td style="text-align:left">INT8</td>
+<td style="text-align:left">[1]</td>
+</tr>
+<tr>
+<td style="text-align:right">10</td>
+<td style="text-align:left">VLIW</td>
+<td style="text-align:left">NCS</td>
+<td style="text-align:left">FP16</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">[1,2,4,8,16,32,64,128]</td>
+</tr>
+<tr>
+<td style="text-align:right">11</td>
+<td style="text-align:left">CPU</td>
+<td style="text-align:left">U96-Quadcore A53</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">na</td>
+<td style="text-align:left">[2,4,8,16,32,64,128]</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">

@@ -194,7 +194,7 @@ def rooflines(dataframe, neural_network: str):
 
     IMAGENET_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="IMAGENET  ResNet  GoogLeNet  MobileNet  VGG  AlexNet  ")
     MNIST_select    = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="MNIST  MLP  ")   
-    CIFAR_select    = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="CIFAR10  CNV  ")   
+    CIFAR_select    = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="CIFAR-10  CNV  ")   
     MASKRCNN_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="MASKRCNN  ")
     GNMT_select     = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="GNMT  ")
 

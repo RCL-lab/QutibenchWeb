@@ -69,6 +69,8 @@ Contact: zachary.neveu@gmail.com
  <br />
  <br />
  <br />
+ <br />
+ <br />
  
 ### Alina Vasilciuc 
 <img align="left" src="../images/alina_vasilciuc.png" alt="drawing" style="width:200px;height:165px;padding-right: 15px;"/> 

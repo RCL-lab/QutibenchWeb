@@ -36,10 +36,11 @@ in implementing machine learning systems.
 See the [website](https://rcl-lab.github.io/Qutibench_Web/contributing/meta/2020/04/09/Contributing.html) for instructions on contributing.
 
 # Publications
-Blott, Michaela, et al. "QuTiBench: Benchmarking neural networks on heterogeneous hardware." ACM Journal on Emerging Technologies in Computing Systems (JETC) 15.4 (2019): 1-38. https://arxiv.org/pdf/1909.05009.pdf
+Blott, Michaela, et al. "QuTiBench: Benchmarking neural networks on heterogeneous hardware." ACM Journal on Emerging Technologies in Computing Systems (JETC) 15.4 (2019): 1-38. [https://arxiv.org/pdf/1909.05009.pdf ](https://arxiv.org/pdf/1909.05009.pdf)
 
-Michaela Blott, Johannes Kath, Lisa Halder, Yaman Umuroglu, Nicholas Fraser, Giulio Gambardella, Miriam Leeser, and Linda Doyle. 2020. "Evaluation of Optimized CNNs on FPGA and non-FPGA based Accelerators using a Novel Benchmarking Approach." In The 2020 ACM/SIGDA International Symposium on Field-Programmable Gate Arrays (FPGA ’20). Association for Computing Machinery, New York, NY, USA, 317. https://dl.acm.org/doi/10.1145/3373087.3375348 Poster available here: https://github.com/michaelablott/QuTiBench/blob/master/Publications/FPGA2020_EvalCNNs_Poster.pdf
+Michaela Blott, Johannes Kath, Lisa Halder, Yaman Umuroglu, Nicholas Fraser, Giulio Gambardella, Miriam Leeser, and Linda Doyle. 2020. "Evaluation of Optimized CNNs on FPGA and non-FPGA based Accelerators using a Novel Benchmarking Approach." In The 2020 ACM/SIGDA International Symposium on Field-Programmable Gate Arrays (FPGA ’20). Association for Computing Machinery, New York, NY, USA, 317. [https://dl.acm.org/doi/10.1145/3373087.3375348 ](https://dl.acm.org/doi/10.1145/3373087.3375348) Poster available [here](https://github.com/michaelablott/QuTiBench/blob/master/Publications/FPGA2020_EvalCNNs_Poster.pdf)
 
+[http://test.com](http://test.com)
 
 # About us
 
@@ -66,7 +67,7 @@ Contact: <a href="https://coe.northeastern.edu/Research/rcl/members/MEL/index.ht
 ### Zachary Neveu 
 <img align="center" src="../images/zach_neveu.jpg" alt="drawing" style="width:200px;height:250px;padding-right: 15px;"/> 
 
-Markup :  Zachary Neveu is an undergraduate student at Northeastern University.
+Zachary Neveu was an undergraduate student at Northeastern University and now works at [Modulate.ai](https://modulate.ai).
 Contact: zachary.neveu@gmail.com
 <br />  
 <br />  

@@ -1,4 +1,4 @@
-NN_Topology,HWType,Precision,Op mode,batch/thread/stream,lat-comp,fps-system,fps-comp,tp-system,tp-comp,top1,top5 [%],BasePWR [W],IdlePWR [W],FullPwr [W],GOPS,PruningFactor,level,hw_quant_prun_net,norm-lat-comp,quant_model,hw_precision_net_prun
+NN_Topology,HWType,Precision,Op mode,batch/thread/stream,lat-comp,fps-system,fps-comp,tp-system,tp-comp,top1,top5 [%],Base_Pwr_W,Idle_Pwr_W,Full_Pwr_W,GOPS,PruningFactor,level,hw_quant_prun_net,norm-lat-comp,quant_model,hw_precision_net_prun
 MNv1,TPU,INT8,slow,1,4.08249,127.256,244.949,398.31127999999995,766.69037,69.5674,87.7058,0.253,0.253,0.462,,100.0,l3,TPU_INT8_100%_MNv1,1.0,INT8_TPU,TPU_INT8_MNv1_100.0
 MNv1,TPU,INT8,fast,1,2.5704700000000003,166.533,389.034,521.24829,1217.67642,69.5674,87.7058,0.253,0.253,0.532,,100.0,l3,TPU_INT8_100%_MNv1,0.6296328956102771,INT8_TPU,TPU_INT8_MNv1_100.0
 GNv1,TPU,INT8,slow,1,5.72131,99.741,174.785,312.18933,547.07705,69.2434,88.4458,0.253,0.253,0.46299999999999997,,100.0,l3,TPU_INT8_100%_GNv1,0.0060993215525402345,INT8_TPU,TPU_INT8_GNv1_100.0

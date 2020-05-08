@@ -164,29 +164,61 @@ window.onload = wrap_img;
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ol>
-<li>
-<p>Copy the file <code>data/data_template.csv</code> file and rename it with the name of your machine learning benchmark, e.g. <code>data/imagenet.csv</code>.</p>
-</li>
-<li>
-<p>Enter your data in this new <code>.csv</code> file, leaving columns blank if data is not available</p>
-</li>
-<li>
-<p>Copy <code>2020-01-01-Jupyter_benchmark_template.ipynb</code> and rename it in the format <code>yyyy-mm-dd-benchmark_name.ipynb</code> e.g. <code>2020-01-01-imagenet.ipynb</code>.</p>
-</li>
-<li>
-<p>Using jupyter Notebook/Lab, open the new notebook. Update the metadata in the first cell, (categories, title, subtitle) as well as the <code>csv_path</code> variable to point to your new data. If you would like to add an image, include it in the <code>images/</code> folder of the repo and include a link in the metadata under the <code>image</code> field.</p>
-</li>
-<li>
-<p>Run all cells of the notebook (there's a shortcut for this) and ensure that all plots are displaying as they should.</p>
-</li>
-<li>
-<p>Commit your new work in <code>git</code>, and push/open a pull request in the repository. Once changes are merged they will go live on the website within a few minutes.</p>
-</li>
+<li>Create a csv file with the following columns: </li>
+</ol>
+<p><code>NN_Topology,HWType,Precision,Op mode,batch/thread/stream,lat-comp,fps-system,fps-comp,tp-system,tp-comp,top1 [%],top5 [%],BasePWR [W],IdlePWR [W],FullPwr [W],GOPS,PruningFactor,level</code></p>
+<ol>
+<li>Rename the csv file with the name of your machine learning benchmark, e.g. <code>imagenet.csv</code>.</li>
+</ol>
+<ol>
+<li>Enter your data in this new <code>.csv</code> file, leaving columns blank if data is not available</li>
+</ol>
+<ol>
+<li>Open '<a href="https://github.com/michaelablott/QuTibench_Contributions">https://github.com/michaelablott/QuTibench_Contributions</a>' webpage.</li>
+</ol>
+<ol>
+<li>Under 'Issues' tab click on 'New Issue'. Fill up the form and attach your csv file. </li>
+</ol>
+<ol>
+<li>Submit the issue.</li>
+</ol>
+<ol>
+<li>The csv file data will be processed and deployed to this website after a brief while.</li>
+</ol>
+<ol>
+<li>Thank you for taking the time and contributing. </li>
 </ol>
 
 </div>
 </div>
 </div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#1. Copy the file `data/data_template.csv` file and rename it with the name of your machine learning benchmark, e.g. `data/imagenet.csv`.</span>
+
+<span class="c1">#2. Enter your data in this new `.csv` file, leaving columns blank if data is not available</span>
+
+<span class="c1">#3. Copy `2020-01-01-Jupyter_benchmark_template.ipynb` and rename it in the format `yyyy-mm-dd-benchmark_name.ipynb` e.g. `2020-01-01-imagenet.ipynb`.</span>
+
+<span class="c1">#4. Using jupyter Notebook/Lab, open the new notebook. Update the metadata in the first cell, (categories, title, subtitle) as well as the `csv_path` variable to point to your new data. If you would like to add an image, include it in the `images/` folder of the repo and include a link in the metadata under the `image` field.</span>
+
+<span class="c1">#5. Run all cells of the notebook (there's a shortcut for this) and ensure that all plots are displaying as they should.</span>
+
+<span class="c1">#6. Commit your new work in `git`, and push/open a pull request in the repository. Once changes are merged they will go live on the website within a few minutes.</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
 </div>
 
 <script type="application/vnd.jupyter.widget-state+json">

@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      2 min read
+      1 min read
     
 </span></p>
 
@@ -374,23 +374,128 @@ window.onload = wrap_img;
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>|    | Hardware   | Platform         | CNV                              | Batch/Stream/Thread                  |
-|---:|:-----------|:-----------------|:---------------------------------|:-------------------------------------|
-|  0 | FPGA       | ZCU102-DPU       | na                               | [1,2,3,4,5,6,7,8]                    |
-|  1 | FPGA       | ZCU104-DPU       | na                               | [1,2,3,4,5,6,7,8]                    |
-|  2 | FPGA       | Ultra96-DPU      | na                               | [1,2,3,4,5,6,7,8]                    |
-|  3 | FPGA       | ZCU104-FINN      | [INT2,INT4]*[100%,50%,25%,12.5%] | [1,2,4,8,16,32,64,128,256,512,10000] |
-|  4 | FPGA       | ZCU104-BISMO     | [INT2,INT4]*[100%,50%,25%,12.5%] | [2,4,8,16,32,64,128]                 |
-|  5 | GPU        | TX2-maxn         | [FP16,FP32]*[100%,50%,25%,12.5%] | [1,2,4,8,16,32,64,128]               |
-|  6 | GPU        | TX2-maxp         | [FP16,FP32]*[100%,50%,25%,12.5%] | [1,2,4,8,16,32,64,128]               |
-|  7 | GPU        | TX2-maxq         | [FP16,FP32]*[100%,50%,25%,12.5%] | [1,2,4,8,16,32,64,128]               |
-|  8 | TPU        | TPU-fast clk     | na                               | [1]                                  |
-|  9 | TPU        | TPU-slow clk     | na                               | [1]                                  |
-| 10 | VLIW       | NCS              | [FP16]*[100%,50%,25%,12.5%]      | [1,2,4,8,16,32,64,128]               |
-| 11 | CPU        | U96-Quadcore A53 | [INT2,INT4]*[100%,50%,25%,12.5%] | [2,4,8,16,32,64,128]                 |
-</pre>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left"></th>
+      <th>CIFAR-10 Classification</th>
+      <th></th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>Hardware</th>
+      <th>Platform</th>
+      <th>CNV</th>
+      <th>Batch/Stream/Thread</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>FPGA</td>
+      <td>ZCU102-DPU</td>
+      <td>na</td>
+      <td>[1,2,3,4,5,6,7,8]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>ZCU104-DPU</td>
+      <td>na</td>
+      <td>[1,2,3,4,5,6,7,8]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td></td>
+      <td>Ultra96-DPU</td>
+      <td>na</td>
+      <td>[1,2,3,4,5,6,7,8]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td></td>
+      <td>ZCU104-FINN</td>
+      <td>[INT2,INT4]*[100%,50%,25%,12.5%]</td>
+      <td>[1,2,4,8,16,32,64,128,256,512,10000]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td></td>
+      <td>ZCU104-BISMO</td>
+      <td>[INT2,INT4]*[100%,50%,25%,12.5%]</td>
+      <td>[2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>GPU</td>
+      <td>TX2-maxn</td>
+      <td>[FP16,FP32]*[100%,50%,25%,12.5%]</td>
+      <td>[1,2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td></td>
+      <td>TX2-maxp</td>
+      <td>[FP16,FP32]*[100%,50%,25%,12.5%]</td>
+      <td>[1,2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td></td>
+      <td>TX2-maxq</td>
+      <td>[FP16,FP32]*[100%,50%,25%,12.5%]</td>
+      <td>[1,2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>TPU</td>
+      <td>TPU-fast clk</td>
+      <td>na</td>
+      <td>[1]</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td></td>
+      <td>TPU-slow clk</td>
+      <td>na</td>
+      <td>[1]</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>VLIW</td>
+      <td>NCS</td>
+      <td>[FP16]*[100%,50%,25%,12.5%]</td>
+      <td>[1,2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>CPU</td>
+      <td>U96-Quadcore A53</td>
+      <td>[INT2,INT4]*[100%,50%,25%,12.5%]</td>
+      <td>[2,4,8,16,32,64,128]</td>
+    </tr>
+  </tbody>
+</table>
 </div>
+</div>
+
 </div>
 
 </div>

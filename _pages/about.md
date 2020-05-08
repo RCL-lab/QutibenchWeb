@@ -66,7 +66,9 @@ Contact: <a href="https://coe.northeastern.edu/Research/rcl/members/MEL/index.ht
 Zachary Neveu was an undergraduate student at Northeastern University and now works at [Modulate.ai](https://modulate.ai).
 <br />
 Contact: zachary.neveu@gmail.com
- 
+ <br />
+ <br />
+ <br />
  
 ### Alina Vasilciuc 
 <img align="left" src="../images/alina_vasilciuc.png" alt="drawing" style="width:200px;height:165px;padding-right: 15px;"/> 

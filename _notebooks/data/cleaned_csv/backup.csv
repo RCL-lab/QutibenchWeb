@@ -1,4 +1,4 @@
-NN_Topology,HWType,Precision,Op mode,batch/thread/stream,lat-comp,fps-system,fps-comp,tp-system,tp-comp,top1 [%],top5 [%],BasePWR [W],IdlePWR [W],FullPwr [W],GOPS,PruningFactor,level
+NN_Topology,HWType,Precision,Op mode,batch/thread/stream,lat-comp,fps-system,fps-comp,tp-system,tp-comp,top1 [%],top5 [%],BasePWR [W],IdlePWR_[W],FullPwr_[W],GOPS,PruningFactor,level
 CNV,NCS,FP16,na,1,4.97914,151.555,200.838,,,87.02,,0.53,1.2,1.728796,0.469449728,100%,l3
 CNV,NCS,FP16,na,2,8.93829,162.738,223.757,,,87.02,,0.53,1.2,1.7803,0.938899456,100%,l3
 CNV,NCS,FP16,na,4,16.8473,171.284,237.426,,,87.02,,0.53,1.2,1.82302425,1.877798912,100%,l3

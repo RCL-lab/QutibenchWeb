@@ -33,7 +33,7 @@ We invite the community to contribute to QuTiBench in order to be able to suppor
 in implementing machine learning systems.
 
 # Contributing
-See the [website](https://rcl-lab.github.io/Qutibench_Web/contributing/meta/2020/04/09/Contributing.html) for instructions on contributing.
+See the [website](https://rcl-lab.github.io/Qutibench_Web/contributing/meta/2020/04/09/Contributing_Measurements.html) for instructions on contributing.
 
 # Publications
 Blott, Michaela, et al. "QuTiBench: Benchmarking neural networks on heterogeneous hardware." ACM Journal on Emerging Technologies in Computing Systems (JETC) 15.4 (2019): 1-38. [https://arxiv.org/pdf/1909.05009.pdf ](https://arxiv.org/pdf/1909.05009.pdf)
@@ -50,26 +50,26 @@ div{
 }
 </style>
 ### Michaela Blott
-<img align="center" src="../images/michaela_blott.png" alt="drawing" style="width:200px;height:200px;padding-right: 15px;"/>
+<img align="left" src="../images/michaela_blott.png" alt="drawing" style="width:200px;height:200px;padding-right: 15px;"/>
 <div>Michaela Blott is a Distinguished Engineer at Xilinx Research in Dublin, Ireland, where she heads a team of international scientists driving exciting research to define new application domains for Xilinx devices, such as machine learning, in both embedded and hyperscale deployments. She earned her Master’s degree from the University of Kaiserslautern in Germany and brings over 25 years of computer architecture, FPGA and board design, in research institutions (ETH Zurich and Bell Labs) and development organizations. She is heavily involved with the international research community serving as the technical co-chair of FPL’2018, workshop organizer (H2RC), industry advisor on numerous EU projects, and member of numerous technical program committees (FPL, ISFPGA, DATE, etc.).</div>
 <br />
 Contact: mblott@xilinx.com
  
 ### Miriam Leeser
-<img align="center" src="../images/miriam_leeser.png" alt="drawing" style="width:200px;height:250px;padding-right: 15px;"/>
+<img align="left" src="../images/miriam_leeser.png" alt="drawing" style="width:200px;height:250px;padding-right: 15px;"/>
 <div>Miriam Leeser is a Professor in Electrical and Computer Engineering at Northeastern where she is head of the Reconfigurable and GPU Computing Laboratory.  She received her BS degree in electrical engineering from Cornell University, and Diploma and PhD degrees in computer science from Cambridge University in England. She was on the faculty at Cornell University’s Department of Electrical Engineering before coming to Northeastern, where she is a member of the Computer Engineering research group. Her research includes using heterogeneous architectures for signal and image processing applications including wireless communications as well as implementing computer arithmetic and verifying critical applications. She is a senior member of the IEEE and of the ACM.</div>
 <br />
 Contact: <a href="https://coe.northeastern.edu/Research/rcl/members/MEL/index.html">mel@coe.neu.edu</a>
 
 ### Zachary Neveu 
-<img align="center" src="../images/zach_neveu.jpg" alt="drawing" style="width:200px;height:250px;padding-right: 15px;"/> 
+<img align="left" src="../images/zach_neveu.jpg" alt="drawing" style="width:200px;height:250px;padding-right: 15px;"/> 
 Zachary Neveu was an undergraduate student at Northeastern University and now works at [Modulate.ai](https://modulate.ai).
 <br />
 Contact: zachary.neveu@gmail.com
  
  
 ### Alina Vasilciuc 
-<img align="center" src="../images/alina_vasilciuc.png" alt="drawing" style="width:200px;height:165px;padding-right: 15px;"/> 
+<img align="left" src="../images/alina_vasilciuc.png" alt="drawing" style="width:200px;height:165px;padding-right: 15px;"/> 
 <div>Alina Vasilciuc is an undergraduate student at Nova University of Lisbon, currently working on her Master’s degree in collaboration with Xilinx Research, where she is currently doing an internship.</div>
 <br />
 Contact: alina.vasilciuc@hotmail.com

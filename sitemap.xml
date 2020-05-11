@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://rcl-lab.github.io/Qutibench_Web/performance/rooflines/performance%20prediction/cifar-10/2020/03/25/CIFAR-10_Classification.html</loc>
+<loc>https://rcl-lab.github.io/Qutibench_Web/rooflines/performance%20prediction/cifar-10/2020/03/25/CIFAR-10_Classification.html</loc>
 <lastmod>2020-03-25T00:00:00-05:00</lastmod>
 </url>
 <url>
@@ -13,7 +13,7 @@
 <lastmod>2020-03-25T00:00:00-05:00</lastmod>
 </url>
 <url>
-<loc>https://rcl-lab.github.io/Qutibench_Web/contributing/meta/2020/04/09/Contributing_Measurements.html</loc>
+<loc>https://rcl-lab.github.io/Qutibench_Web/contributing/2020/04/09/Contributing_Measurements.html</loc>
 <lastmod>2020-04-09T00:00:00-05:00</lastmod>
 </url>
 <url>

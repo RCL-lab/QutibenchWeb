@@ -38,9 +38,10 @@ See the [website](https://rcl-lab.github.io/Qutibench_Web/contributing/meta/2020
 # Publications
 Blott, Michaela, et al. "QuTiBench: Benchmarking neural networks on heterogeneous hardware." ACM Journal on Emerging Technologies in Computing Systems (JETC) 15.4 (2019): 1-38. [https://arxiv.org/pdf/1909.05009.pdf ](https://arxiv.org/pdf/1909.05009.pdf)
 
-Michaela Blott, Johannes Kath, Lisa Halder, Yaman Umuroglu, Nicholas Fraser, Giulio Gambardella, Miriam Leeser, and Linda Doyle. 2020. "Evaluation of Optimized CNNs on FPGA and non-FPGA based Accelerators using a Novel Benchmarking Approach." In The 2020 ACM/SIGDA International Symposium on Field-Programmable Gate Arrays (FPGA ’20). Association for Computing Machinery, New York, NY, USA, 317. [https://dl.acm.org/doi/10.1145/3373087.3375348 ](https://dl.acm.org/doi/10.1145/3373087.3375348) Poster available [here](https://github.com/michaelablott/QuTiBench/blob/master/Publications/FPGA2020_EvalCNNs_Poster.pdf)
+Michaela Blott, Johannes Kath, Lisa Halder, Yaman Umuroglu, Nicholas Fraser, Giulio Gambardella, Miriam Leeser, and Linda Doyle. 2020. "Evaluation of Optimized CNNs on FPGA and non-FPGA based Accelerators using a Novel Benchmarking Approach." In The 2020 ACM/SIGDA International Symposium on Field-Programmable Gate Arrays (FPGA ’20). Association for Computing Machinery, New York, NY, USA, 317. [https://dl.acm.org/doi/10.1145/3373087.3375348 ](https://dl.acm.org/doi/10.1145/3373087.3375348).
+<br />
+Poster available [here](https://github.com/michaelablott/QuTiBench/blob/master/Publications/FPGA2020_EvalCNNs_Poster.pdf)
 
-[http://test.com](http://test.com)
 
 # About us
 
@@ -52,7 +53,7 @@ Contact: mblott@xilinx.com
  
 ### Miriam Leeser
 <img align="left" src="../images/miriam_leeser.png" alt="drawing" style="width:200px;height:250px;padding-right: 15px;"/>
-Miriam Leeser is a Professor in Electrical and Computer Engineering at Northeastern where she is head of the Reconfigurable and GPU Computing Laboratory.  She received her BS degree in electrical engineering from Cornell University, and Diploma and PhD degrees in computer science from Cambridge University in England. She was on the faculty at Cornell University’s Department of Electrical Engineering before coming to Northeastern, where she is a member of the Computer Engineering research group. Her research includes using heterogeneous architectures for signal and image processing applications including wireless communications as well as implementing computer arithmetic and verifying critical applications. She is a senior member of the IEEE and of the ACM.
+Miriam Leeser is Professor of Electrical and Computer Engineering at Northeastern University.  Her research interests are in hardware accelerators, including FPGAs and GPUs, as well as  floating point implementations, unsupervised learning, medical imaging, privacy preserving data processing and wireless networking and security.  She received her BS degree in Electrical Engineering from Cornell University, and Diploma and Ph.D. Degrees in Computer Science from Cambridge University in England.  She has been a faculty member at Northeastern since 1996, where she is head of the Reconfigurable and GPU Computing Laboratory and a member of the Computer Engineering group.  She is a senior member of ACM, IEEE and SWE. Throughout her career she has been funded by both government agencies and companies, including DARPA, NSF, Google, MathWorks and Microsoft. She received the prestigious Fulbright Scholar Award in 2018.
 <br />
 Contact: <a href="https://coe.northeastern.edu/Research/rcl/members/MEL/index.html">mel@coe.neu.edu</a>
 

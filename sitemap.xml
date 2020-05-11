@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://rcl-lab.github.io/Qutibench_Web/theoretical%20analysis/rooflines/performance%20prediction/cifar-10/overview/2020/03/25/CIFAR-10_Classification.html</loc>
+<loc>https://rcl-lab.github.io/Qutibench_Web/performance/rooflines/performance%20prediction/cifar-10/2020/03/25/CIFAR-10_Classification.html</loc>
 <lastmod>2020-03-25T00:00:00-05:00</lastmod>
 </url>
 <url>
-<loc>https://rcl-lab.github.io/Qutibench_Web/performance/imagenet/theoretical%20analysis/performance%20prediction/overview/experimental/rooflines/2020/03/25/ImageNet_Classification.html</loc>
+<loc>https://rcl-lab.github.io/Qutibench_Web/rooflines/performance%20prediction/imagenet/2020/03/25/ImageNet_Classification.html</loc>
 <lastmod>2020-03-25T00:00:00-05:00</lastmod>
 </url>
 <url>
-<loc>https://rcl-lab.github.io/Qutibench_Web/performance/mnist/theoretical%20analysis/performance%20prediction/overview/experimental/rooflines/2020/03/25/MNIST_Classification.html</loc>
+<loc>https://rcl-lab.github.io/Qutibench_Web/mnist/performance%20prediction/rooflines/2020/03/25/MNIST_Classification.html</loc>
 <lastmod>2020-03-25T00:00:00-05:00</lastmod>
 </url>
 <url>
@@ -17,7 +17,7 @@
 <lastmod>2020-04-09T00:00:00-05:00</lastmod>
 </url>
 <url>
-<loc>https://rcl-lab.github.io/Qutibench_Web/cifar-10/imagenet/mnist/overview/2020/04/30/Overview_of_experiments.html</loc>
+<loc>https://rcl-lab.github.io/Qutibench_Web/cifar-10/imagenet/mnist/overview%20of%20experiments/2020/04/30/Overview_of_experiments.html</loc>
 <lastmod>2020-04-30T00:00:00-05:00</lastmod>
 </url>
 <url>
@@ -25,7 +25,7 @@
 <lastmod>2020-04-30T00:00:00-05:00</lastmod>
 </url>
 <url>
-<loc>https://rcl-lab.github.io/Qutibench_Web/rooflines/theoretical%20analysis/performance%20prediction/mnist/cifar10/imagenet/2020/05/09/Theoretical_Analysis.html</loc>
+<loc>https://rcl-lab.github.io/Qutibench_Web/rooflines/theoretical%20analysis/performance%20prediction/mnist/cifar-10/imagenet/tables%20for%20topologies/tables%20for%20hardware%20platforms/2020/05/09/Theoretical_Analysis.html</loc>
 <lastmod>2020-05-09T00:00:00-05:00</lastmod>
 </url>
 <url>

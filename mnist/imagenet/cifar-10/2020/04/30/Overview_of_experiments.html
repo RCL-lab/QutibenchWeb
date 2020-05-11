@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Overview of the Experiments | QuTiBench</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Overview of the Experiments" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="An overview of all conducted measurements" />
+<meta property="og:description" content="An overview of all conducted measurements" />
+<link rel="canonical" href="https://rcl-lab.github.io/Qutibench_Web/mnist/imagenet/cifar-10/2020/04/30/Overview_of_experiments.html" />
+<meta property="og:url" content="https://rcl-lab.github.io/Qutibench_Web/mnist/imagenet/cifar-10/2020/04/30/Overview_of_experiments.html" />
+<meta property="og:site_name" content="QuTiBench" />
+<meta property="og:image" content="https://rcl-lab.github.io/Qutibench_Web/images/overview_symbol.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-04-30T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"An overview of all conducted measurements","mainEntityOfPage":{"@type":"WebPage","@id":"https://rcl-lab.github.io/Qutibench_Web/mnist/imagenet/cifar-10/2020/04/30/Overview_of_experiments.html"},"@type":"BlogPosting","url":"https://rcl-lab.github.io/Qutibench_Web/mnist/imagenet/cifar-10/2020/04/30/Overview_of_experiments.html","headline":"Overview of the Experiments","dateModified":"2020-04-30T00:00:00-05:00","datePublished":"2020-04-30T00:00:00-05:00","image":"https://rcl-lab.github.io/Qutibench_Web/images/overview_symbol.png","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Qutibench_Web/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://rcl-lab.github.io/Qutibench_Web/feed.xml" title="QuTiBench" /><link rel="shortcut icon" type="image/x-icon" href="/Qutibench_Web/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Overview of the Experiments | QuTiBench</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Overview of the Experiments" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="An overview of all conducted measurements" />
+<meta property="og:description" content="An overview of all conducted measurements" />
+<link rel="canonical" href="https://rcl-lab.github.io/Qutibench_Web/mnist/imagenet/cifar-10/2020/04/30/Overview_of_experiments.html" />
+<meta property="og:url" content="https://rcl-lab.github.io/Qutibench_Web/mnist/imagenet/cifar-10/2020/04/30/Overview_of_experiments.html" />
+<meta property="og:site_name" content="QuTiBench" />
+<meta property="og:image" content="https://rcl-lab.github.io/Qutibench_Web/images/overview_symbol.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-04-30T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"An overview of all conducted measurements","mainEntityOfPage":{"@type":"WebPage","@id":"https://rcl-lab.github.io/Qutibench_Web/mnist/imagenet/cifar-10/2020/04/30/Overview_of_experiments.html"},"@type":"BlogPosting","url":"https://rcl-lab.github.io/Qutibench_Web/mnist/imagenet/cifar-10/2020/04/30/Overview_of_experiments.html","headline":"Overview of the Experiments","dateModified":"2020-04-30T00:00:00-05:00","datePublished":"2020-04-30T00:00:00-05:00","image":"https://rcl-lab.github.io/Qutibench_Web/images/overview_symbol.png","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://rcl-lab.github.io/Qutibench_Web/feed.xml" title="QuTiBench" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Qutibench_Web/">QuTiBench</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Qutibench_Web/about/">About This Work</a><a class="page-link" href="/Qutibench_Web/search/">Search</a><a class="page-link" href="/Qutibench_Web/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Overview of the Experiments</h1><p class="page-description">An overview of all conducted measurements</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-04-30T00:00:00-05:00" itemprop="datePublished">
+        Apr 30, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      2 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Qutibench_Web/categories/#MNIST">MNIST</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/Qutibench_Web/categories/#ImageNet">ImageNet</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/Qutibench_Web/categories/#CIFAR-10">CIFAR-10</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/RCL-lab/Qutibench_Web/tree/master/_notebooks/2020-04-30-Overview_of_experiments.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/Qutibench_Web/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/RCL-lab/Qutibench_Web/blob/master/_notebooks/2020-04-30-Overview_of_experiments.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/Qutibench_Web/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Introduction">Introduction </a></li>
+<li class="toc-entry toc-h1"><a href="#Tables">Tables </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#MNIST">MNIST </a></li>
+<li class="toc-entry toc-h3"><a href="#ImageNet">ImageNet </a></li>
+<li class="toc-entry toc-h3"><a href="#CIFAR-10">CIFAR-10 </a></li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-04-30-Overview_of_experiments.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Introduction">
+<a class="anchor" href="#Introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction<a class="anchor-link" href="#Introduction"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This page presents a brief overview of all conducted experiments as a cross product of hardware platform (including deployment settings), and topology (including quantization and pruning information) whereby each Machine Learning task has its own table.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Tables">
+<a class="anchor" href="#Tables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tables<a class="anchor-link" href="#Tables"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Each Machine Learning task has its own table. In each table, within the rows, we show the type of hardware platforms that we used for this task (for example FPGA or GPU) and then more specifically the exact name of the different hardware platforms. For each hardware platform, we list the sweep of specific deployment parameters (batch sizes, operating modes etc) that were used for the experimentation in separate columns. In the columns, we show CNN topologies. When a CNN topology was implemented on a given hardware platform, we show in the corresponding cell the precisions (quantization information) and the channel pruning scale. Otherwise, “na” indicates that the topology wasn’t executed on this specific hardware platform. Many combinations between topology and hardware platform are not supported by the vendors dedicated software environments. INTx depicts a fixed point integer representation with x bits. FPy represents a floating point representation with y bits, for example FP32 is singe precision floating point. Tables follow below.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="MNIST">
+<a class="anchor" href="#MNIST" aria-hidden="true"><span class="octicon octicon-link"></span></a>MNIST<a class="anchor-link" href="#MNIST"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Hardware</th>
+      <th>Platform</th>
+      <th>MLP</th>
+      <th>Batch/Stream/Thread</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>FPGA</th>
+      <th>ZCU102-DPU</th>
+      <th>na</th>
+      <th>[1,2,3,4,5,6,7,8]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>FPGA</td>
+      <td>ZCU104-DPU</td>
+      <td>na</td>
+      <td>[1,2,3,4,5,6,7,8]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>Ultra96-DPU</td>
+      <td>na</td>
+      <td>[1,2,3,4,5,6,7,8]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td></td>
+      <td>ZCU104-FINN</td>
+      <td>[INT2, INT4] * [100%,50%,25%,12.5%]</td>
+      <td>[1,2,4,8,16,32,64,128,256,512,10000]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td></td>
+      <td>ZCU104-BISMO</td>
+      <td>[INT2, INT4] * [100%,50%,25%,12.5%]</td>
+      <td>[2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>GPU</td>
+      <td>TX2-maxn</td>
+      <td>[FP16, FP32] * [100%,50%,25%,12.5%]</td>
+      <td>[1,2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td></td>
+      <td>TX2-maxp</td>
+      <td>[FP16, FP32] * [100%,50%,25%,12.5%]</td>
+      <td>[1,2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td></td>
+      <td>TX2-maxq</td>
+      <td>[FP16, FP32] * [100%,50%,25%,12.5%]</td>
+      <td>[1,2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>TPU</td>
+      <td>TPU-fast clk</td>
+      <td>na</td>
+      <td>[1]</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td></td>
+      <td>TPU-slow clk</td>
+      <td>na</td>
+      <td>[1]</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>VLIW</td>
+      <td>NCS</td>
+      <td>[FP16] * [100%,50%,25%,12.5%]</td>
+      <td>[1,2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>CPU</td>
+      <td>U96-Quadcore A53</td>
+      <td>[INT2, INT4] * [100%,50%,25%,12.5%]</td>
+      <td>[2,4,8,16,32,64,128]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="ImageNet">
+<a class="anchor" href="#ImageNet" aria-hidden="true"><span class="octicon octicon-link"></span></a>ImageNet<a class="anchor-link" href="#ImageNet"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Hardware</th>
+      <th>Platform</th>
+      <th>ResNet50</th>
+      <th>GoogLeNetV1</th>
+      <th>MobileNet</th>
+      <th>Batch/Stream/Thread</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>FPGA</th>
+      <th>ZCU102-DPU</th>
+      <th>[INT8]*[100%,80%,50%,30%]</th>
+      <th>INT8</th>
+      <th>na</th>
+      <th>[1,2,3,4,5,6,7,8]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>FPGA</td>
+      <td>ZCU104-DPU</td>
+      <td>INT8</td>
+      <td>INT8</td>
+      <td>na</td>
+      <td>[1,2,3,4,5,6,7,8]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>Ultra96-DPU</td>
+      <td>[INT8]*[100%,80%,50%,30%]</td>
+      <td>INT8</td>
+      <td>INT8</td>
+      <td>[1,2,3,4,5,6,7,8]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td></td>
+      <td>ZCU104-FINN</td>
+      <td>na</td>
+      <td>na</td>
+      <td>na</td>
+      <td>[1,2,4,8,16,32,64,128,256,512,10000]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td></td>
+      <td>ZCU104-BISMO</td>
+      <td>na</td>
+      <td>na</td>
+      <td>na</td>
+      <td>[2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>GPU</td>
+      <td>TX2-maxn</td>
+      <td>FP16,FP32</td>
+      <td>FP16,FP32</td>
+      <td>na</td>
+      <td>[1,2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td></td>
+      <td>TX2-maxp</td>
+      <td>FP16,FP32</td>
+      <td>FP16,FP32</td>
+      <td>na</td>
+      <td>[1,2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td></td>
+      <td>TX2-maxq</td>
+      <td>FP16,FP32</td>
+      <td>FP16,FP32</td>
+      <td>na</td>
+      <td>[1,2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>TPU</td>
+      <td>TPU-fast clk</td>
+      <td>na</td>
+      <td>INT8</td>
+      <td>INT8</td>
+      <td>[1]</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td></td>
+      <td>TPU-slow clk</td>
+      <td>na</td>
+      <td>INT8</td>
+      <td>INT8</td>
+      <td>[1]</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>VLIW</td>
+      <td>NCS</td>
+      <td>FP16</td>
+      <td>na</td>
+      <td>na</td>
+      <td>[1,2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>CPU</td>
+      <td>U96-Quadcore A53</td>
+      <td>na</td>
+      <td>na</td>
+      <td>na</td>
+      <td>[2,4,8,16,32,64,128]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="CIFAR-10">
+<a class="anchor" href="#CIFAR-10" aria-hidden="true"><span class="octicon octicon-link"></span></a>CIFAR-10<a class="anchor-link" href="#CIFAR-10"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Hardware</th>
+      <th>Platform</th>
+      <th>CNV</th>
+      <th>Batch/Stream/Thread</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>FPGA</th>
+      <th>ZCU102-DPU</th>
+      <th>na</th>
+      <th>[1,2,3,4,5,6,7,8]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>FPGA</td>
+      <td>ZCU104-DPU</td>
+      <td>na</td>
+      <td>[1,2,3,4,5,6,7,8]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>Ultra96-DPU</td>
+      <td>na</td>
+      <td>[1,2,3,4,5,6,7,8]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td></td>
+      <td>ZCU104-FINN</td>
+      <td>[INT2,INT4]*[100%,50%,25%,12.5%]</td>
+      <td>[1,2,4,8,16,32,64,128,256,512,10000]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td></td>
+      <td>ZCU104-BISMO</td>
+      <td>[INT2,INT4]*[100%,50%,25%,12.5%]</td>
+      <td>[2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>GPU</td>
+      <td>TX2-maxn</td>
+      <td>[FP16,FP32]*[100%,50%,25%,12.5%]</td>
+      <td>[1,2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td></td>
+      <td>TX2-maxp</td>
+      <td>[FP16,FP32]*[100%,50%,25%,12.5%]</td>
+      <td>[1,2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td></td>
+      <td>TX2-maxq</td>
+      <td>[FP16,FP32]*[100%,50%,25%,12.5%]</td>
+      <td>[1,2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>TPU</td>
+      <td>TPU-fast clk</td>
+      <td>na</td>
+      <td>[1]</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td></td>
+      <td>TPU-slow clk</td>
+      <td>na</td>
+      <td>[1]</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>VLIW</td>
+      <td>NCS</td>
+      <td>[FP16]*[100%,50%,25%,12.5%]</td>
+      <td>[1,2,4,8,16,32,64,128]</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>CPU</td>
+      <td>U96-Quadcore A53</td>
+      <td>[INT2,INT4]*[100%,50%,25%,12.5%]</td>
+      <td>[2,4,8,16,32,64,128]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="RCL-lab/Qutibench_Web"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/Qutibench_Web/mnist/imagenet/cifar-10/2020/04/30/Overview_of_experiments.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Qutibench_Web/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Qutibench_Web/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Qutibench_Web/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p></p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/RCL-Lab" title="RCL-Lab"><svg class="svg-icon grey"><use xlink:href="/Qutibench_Web/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

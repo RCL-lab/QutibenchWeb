@@ -62,6 +62,12 @@ Contact: <a href="https://coe.northeastern.edu/Research/rcl/members/MEL/index.ht
 
 ### Johannes Kath
 
+### Lisa Halder
+<img align='left' src="../images/BildLisa.jpg" alt="drawing" style= "width:285px;height:214px;padding-right: 15px;"/>
+Lisa Halder studied Communications and Computer Engineering at Ulm University. During her Master's degree she was an intern at Xilinx and wrote her thesis about benchmarking of Neural Networks on heterogeneous architectures as collaboration with Xilinx Research. She now works as Software Developer at Institut Dr. Förster GmbH & Co. KG.
+<br />
+Contact: lisa.halder@gmx.de
+
 ### Zachary Neveu 
 <img align="left" src="../images/zach_neveu.jpg" alt="drawing" style="width:200px;height:250px;padding-right: 15px;"/> 
 Zachary Neveu was an undergraduate student at Northeastern University and now works at [Modulate.ai](https://modulate.ai).

@@ -1,6 +1,10 @@
 import pandas as pd
 import numpy as np
 import csv
+
+#This script loads unprocessed csv's and processes them
+#This is done for the Rooflines and for the Heatmaps
+
 #---------------------------------------------HEATMAPS--------------------------------------------------------------------------------
 def dataframe_contains(input_df: pd.DataFrame, column: str, value: str)->pd.DataFrame:
     """
@@ -86,10 +90,10 @@ def clean_csv_performance_predictions(path_csv: str):
     #path_imagenet = path + '/performance_prediction_' + tasks[0] + '.csv'
 
     #Saving above dataframes to csv file
-    df_imagenet.to_csv('c:/Users/alinav/Documents/GitHub/Qutibench_Web/_notebooks/data/processed_csv/performance_prediction_imagenet.csv', index = False)
-    df_cifar10.to_csv('c:/Users/alinav/Documents/GitHub/Qutibench_Web/_notebooks/data/processed_csv/performance_prediction_cifar10.csv', index = False)
-    df_mnist.to_csv('c:/Users/alinav/Documents/GitHub/Qutibench_Web/_notebooks/data/processed_csv/performance_prediction_mnist.csv', index = False)
-    source.to_csv('c:/Users/alinav/Documents/GitHub/Qutibench_Web/_notebooks/data/processed_csv/performance_prediction_imagenet_mnist_cifar10.csv', index = False)
+    df_imagenet.to_csv('c:/Users/alinav/Documents/GitHub/Qutibench_Web/_notebooks/data/cleaned_csv/performance_prediction_imagenet.csv', index = False)
+    df_cifar10.to_csv('c:/Users/alinav/Documents/GitHub/Qutibench_Web/_notebooks/data/cleaned_csv/performance_prediction_cifar10.csv', index = False)
+    df_mnist.to_csv('c:/Users/alinav/Documents/GitHub/Qutibench_Web/_notebooks/data/cleaned_csv/performance_prediction_mnist.csv', index = False)
+    source.to_csv('c:/Users/alinav/Documents/GitHub/Qutibench_Web/_notebooks/data/cleaned_csv/performance_prediction_imagenet_mnist_cifar10.csv', index = False)
     
 #-------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -162,7 +166,7 @@ def clean_csv_rooflines(path_topologies, path_hardware):
         FIRST_POINT = True
         for i in np.nditer(x_axis):
             y_point = row['Bandwidth'] * i
-            if FIRST_POINT & (y_point > 0.07) :
+            if FIRST_POINT & (y_point > 0.05) :
                 df_hardw_clean = df_hardw_clean.append([pd.Series([row['Name'],i, y_point],df_hardw_clean.columns)], ignore_index=True)
                 FIRST_POINT=False
             if y_point > row['Peak_Performance']:
@@ -175,4 +179,16 @@ def clean_csv_rooflines(path_topologies, path_hardware):
     df_result = pd.concat([df_hardw_clean,df_topology])
 
     ##Save
-    df_result.to_csv('c:/Users/alinav/Documents/GitHub/Qutibench_Web/_notebooks/data/processed_csv/rooflines_hardware_neural_networks.csv', index = False)
+    df_result.to_csv('c:/Users/alinav/Documents/GitHub/Qutibench_Web/_notebooks/data/cleaned_csv/rooflines_hardware_neural_networks.csv', index = False)
+#----------------------------------------------------------------------------------------------------------------------------------------    
+#--------------------RAW MEASUREMENTS---------------------------------------    
+
+def get_df_by_column(filename, column):
+    df_mnist = pd.read_csv(filename)
+    unique_column_values = df_mnist[column].unique()
+    dataframes = []
+    for value in unique_column_values:
+        dataframe = df_mnist[df_mnist[column] == value]
+        dataframes.append(dataframe)
+    
+    return dataframes

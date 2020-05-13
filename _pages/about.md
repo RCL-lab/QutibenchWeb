@@ -64,7 +64,7 @@ Contact: <a href="https://coe.northeastern.edu/Research/rcl/members/MEL/index.ht
 <img align='left' src="../images/Johannes.jpg" alt="drawing" style= "width:215px;height:320px;padding-right: 15px;"/>
 Johannes Kath is an undergraduate student of Information Systems Technology at Dresden University of Technology. During an internship at Xilinx Research Labs he worked on benchmarking and optimization of Neural Networks on heterogeneous architectures as part of his Master's Degree.
 <br />
-Contact:
+Contact:johannes.kath@mailbox.tu-dresden.de
 
 ### Lisa Halder
 <img align='left' src="../images/BildLisa.jpg" alt="drawing" style= "width:285px;height:214px;padding-right: 15px;"/>

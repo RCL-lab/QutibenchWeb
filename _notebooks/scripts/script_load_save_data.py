@@ -184,11 +184,29 @@ def clean_csv_rooflines(path_topologies, path_hardware):
 #--------------------RAW MEASUREMENTS---------------------------------------    
 
 def get_df_by_column(filename, column):
-    df_mnist = pd.read_csv(filename)
-    unique_column_values = df_mnist[column].unique()
+    """
+    This function:
+        This function:
+            -from the csv file gets a dataframe;
+            -breaks that datframe into smaller dataframes according to unique values of the column given.
+        
+    Parameters
+    ----------
+    filename:  str
+        Path to csv file containing the dataframe
+    column: str
+        The dataframe will be subsetted/broken according to this column's unique values   
+
+    Returns
+    -------
+    datarames: list of dataframes
+        Subsets of the bigger dataframe, subsetted by the column's unique values
+    """    
+    df = pd.read_csv(filename)
+    unique_column_values = df[column].unique()
     dataframes = []
     for value in unique_column_values:
-        dataframe = df_mnist[df_mnist[column] == value]
+        dataframe = df[df[column] == value]
         dataframes.append(dataframe)
     
     return dataframes

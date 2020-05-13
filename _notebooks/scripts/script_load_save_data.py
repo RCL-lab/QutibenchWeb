@@ -149,20 +149,22 @@ def clean_csv_rooflines(path_topologies, path_hardware):
     #will be filled with 100 and then 0s to plot the vertical line later    
     df_topology = pd.concat([df_topology, df_topology])
     df_topology = pd.concat([df_topology, df_topology])
-    df_topology = df_topology.drop(columns=['Total Params','Fwd Ops']) #deleting unnecessary columns (Fwd ops and Total params)
+    #deleting unnecessary columns (Fwd ops and Total params)
+    df_topology = df_topology.drop(columns=['Total Params','Fwd Ops']) 
 
     ## Preparing the NNs dataset to be ploted as vertical lines later
     # creating a y list [100,100,100,...75,75,...25,25,25...0.0001,0.0001] to plot a vertical line later
     df_topology['performance'] = [100]*round((len(df_topology.index))/4)   +   [25]*round((len(df_topology.index))/4)  +  [75]*round((len(df_topology.index))/4)  +   [0.1]*round((len(df_topology.index))/4) 
 
-
-    ## Calculating the rooflines (y axis) for each hardware platform (dataframe = df_topology + df)
+    ## Calculating the rooflines (y axis) for each hardware platform
     #--------------------------------Calculating the values to plot for the roofline model-----------
     maxX=160000
-    x_axis = np.arange(0.1,maxX,1) #to create a list that represents the x axis with numbers between 0 and 1000
+    #to create a list that represents the x axis with numbers between 0 and 1000
+    x_axis = np.arange(0.1,maxX,1) 
     df_hardw_clean = pd.DataFrame(columns=['Name','arith_intens','performance']) 
-
-    for index, row in df_hardware.iterrows():             #nditer is a iterator object 
+    #Create hardware dataframe (df_hardw_clean) based on df_hardware
+    #Each hardware platform will have 3 coordinates (x,y), initial point, turning point and final point
+    for index, row in df_hardware.iterrows():             
         FIRST_POINT = True
         for i in np.nditer(x_axis):
             y_point = row['Bandwidth'] * i
@@ -180,6 +182,7 @@ def clean_csv_rooflines(path_topologies, path_hardware):
 
     ##Save
     df_result.to_csv('c:/Users/alinav/Documents/GitHub/Qutibench_Web/_notebooks/data/cleaned_csv/rooflines_hardware_neural_networks.csv', index = False)
+
 #----------------------------------------------------------------------------------------------------------------------------------------    
 #--------------------RAW MEASUREMENTS---------------------------------------    
 
@@ -210,3 +213,4 @@ def get_df_by_column(filename, column):
         dataframes.append(dataframe)
     
     return dataframes
+#---------------------------------------------------------------------------------------------------------------------------------------

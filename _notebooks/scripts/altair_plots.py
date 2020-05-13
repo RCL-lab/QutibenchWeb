@@ -291,7 +291,6 @@ def tableOverviewExperiments(filenames):
     #pd.set_option('display.max_colwidth', None)
     dataframes = load_and_display(filenames)
     for dataframe in dataframes:   
-        #return display(HTML(dataframe.to_html(index=False)))
-        return dataframe
+        return display(HTML(dataframe.to_html(index=False)))
 #-----------------------------------------------------------------------------------------------------------
     

@@ -33,7 +33,7 @@ We invite the community to contribute to QuTiBench in order to be able to suppor
 in implementing machine learning systems.
 
 # Contributing
-See the [website](https://rcl-lab.github.io/Qutibench_Web/contributing/meta/2020/04/09/Contributing_Measurements.html) for instructions on contributing.
+See the [website](https://rcl-lab.github.io/Qutibench_Web/contributing/2020/04/09/Contributing_Measurements.html) for instructions on contributing.
 
 # Publications
 Blott, Michaela, et al. "QuTiBench: Benchmarking neural networks on heterogeneous hardware." ACM Journal on Emerging Technologies in Computing Systems (JETC) 15.4 (2019): 1-38. [https://arxiv.org/pdf/1909.05009.pdf ](https://arxiv.org/pdf/1909.05009.pdf)
@@ -61,6 +61,10 @@ Contact: <a href="https://coe.northeastern.edu/Research/rcl/members/MEL/index.ht
 
 
 ### Johannes Kath
+<img align='left' src="../images/Johannes.jpg" alt="drawing" style= "width:215px;height:320px;padding-right: 15px;"/>
+Johannes Kath is an undergraduate student of Information Systems Technology at Dresden University of Technology. During an internship at Xilinx Research Labs he worked on benchmarking and optimization of Neural Networks on heterogeneous architectures as part of his Master's Degree.
+<br />
+Contact:
 
 ### Lisa Halder
 <img align='left' src="../images/BildLisa.jpg" alt="drawing" style= "width:285px;height:214px;padding-right: 15px;"/>

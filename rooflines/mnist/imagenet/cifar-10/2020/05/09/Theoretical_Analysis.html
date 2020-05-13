@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      3 min read
+      4 min read
     
 </span></p>
 
@@ -139,13 +139,9 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h1"><a href="#Introduction">Introduction </a></li>
 <li class="toc-entry toc-h1"><a href="#Tables">Tables </a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#Tables-for-Topologies">Tables for Topologies </a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#Accuracy">Accuracy </a></li>
-<li class="toc-entry toc-h4"><a href="#Compute-and-Memory-Requirements">Compute and Memory Requirements </a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#Tables-for-Platforms">Tables for Platforms </a></li>
+<li class="toc-entry toc-h3"><a href="#CNNs-and-Their-Accuracy-Over-All-Pruning-and-Quantization-Variants">CNNs and Their Accuracy Over All Pruning and Quantization Variants </a></li>
+<li class="toc-entry toc-h3"><a href="#CNNs-and-Their-Compute-and-Memory-Requirements">CNNs and Their Compute and Memory Requirements </a></li>
+<li class="toc-entry toc-h2"><a href="#Hardware-Platforms">Hardware Platforms </a></li>
 <li class="toc-entry toc-h2"><a href="#Overview-of-Theoretical-Evaluation">Overview of Theoretical Evaluation </a></li>
 </ul>
 </li>
@@ -185,7 +181,9 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This webpage presents the Theoretical analysis. Lorem ipsum..</p>
+<p>This page presents a Theoretical Analysis of both hardware platforms as well as algorithms in the form of compute and memory requirements for all CNN topologies.</p>
+<p>It will be presented some tables</p>
+<p>Using Roofline models, insights on performance predictions can be obtained from the combination of hardware platforms with algorithm requirements.</p>
 
 </div>
 </div>
@@ -202,8 +200,8 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Tables-for-Topologies">
-<a class="anchor" href="#Tables-for-Topologies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tables for Topologies<a class="anchor-link" href="#Tables-for-Topologies"> </a>
+<h3 id="CNNs-and-Their-Accuracy-Over-All-Pruning-and-Quantization-Variants">
+<a class="anchor" href="#CNNs-and-Their-Accuracy-Over-All-Pruning-and-Quantization-Variants" aria-hidden="true"><span class="octicon octicon-link"></span></a>CNNs and Their Accuracy Over All Pruning and Quantization Variants<a class="anchor-link" href="#CNNs-and-Their-Accuracy-Over-All-Pruning-and-Quantization-Variants"> </a>
 </h3>
 </div>
 </div>
@@ -211,16 +209,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Accuracy">
-<a class="anchor" href="#Accuracy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Accuracy<a class="anchor-link" href="#Accuracy"> </a>
-</h4>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>This table shows...</p>
+<p>Table below provides a complete overview of all CNNs that were included in the experimentation and their corresponding accuracy over all Pruning and Quantization Variants.</p>
 
 </div>
 </div>
@@ -235,25 +224,10 @@ window.onload = wrap_img;
 <div class="output_area">
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead tr th {
-        text-align: left;
-    }
-</style>
+<div class="output_html rendered_html output_subarea ">
 <table border="1" class="dataframe">
   <thead>
     <tr>
-      <th></th>
       <th></th>
       <th>INT2</th>
       <th>INT4</th>
@@ -262,7 +236,6 @@ window.onload = wrap_img;
       <th>FP32</th>
     </tr>
     <tr>
-      <th></th>
       <th></th>
       <th>top1 (top5) [%]</th>
       <th>top1 (top5) [%]</th>
@@ -273,7 +246,6 @@ window.onload = wrap_img;
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
       <td>GoogLeNetv1</td>
       <td>nm</td>
       <td>nm</td>
@@ -282,7 +254,6 @@ window.onload = wrap_img;
       <td>66.96 (87.84)</td>
     </tr>
     <tr>
-      <th>1</th>
       <td>MobileNetv1</td>
       <td>nm</td>
       <td>nm</td>
@@ -291,7 +262,6 @@ window.onload = wrap_img;
       <td>nm</td>
     </tr>
     <tr>
-      <th>2</th>
       <td>EfficientNet small</td>
       <td>nm</td>
       <td>nm</td>
@@ -300,7 +270,6 @@ window.onload = wrap_img;
       <td>nm</td>
     </tr>
     <tr>
-      <th>3</th>
       <td>EfficientNet medium</td>
       <td>nm</td>
       <td>nm</td>
@@ -309,7 +278,6 @@ window.onload = wrap_img;
       <td>nm</td>
     </tr>
     <tr>
-      <th>4</th>
       <td>EfficientNet large</td>
       <td>nm</td>
       <td>nm</td>
@@ -318,7 +286,6 @@ window.onload = wrap_img;
       <td>nm</td>
     </tr>
     <tr>
-      <th>5</th>
       <td>ResNet-50 100%</td>
       <td>nm</td>
       <td>nm</td>
@@ -327,7 +294,6 @@ window.onload = wrap_img;
       <td>75.15 (92.11)</td>
     </tr>
     <tr>
-      <th>6</th>
       <td>ResNet-50 80%</td>
       <td>nm</td>
       <td>nm</td>
@@ -336,7 +302,6 @@ window.onload = wrap_img;
       <td>nm</td>
     </tr>
     <tr>
-      <th>7</th>
       <td>ResNet-50 50%</td>
       <td>nm</td>
       <td>nm</td>
@@ -345,7 +310,6 @@ window.onload = wrap_img;
       <td>nm</td>
     </tr>
     <tr>
-      <th>8</th>
       <td>ResNet-50 30%</td>
       <td>nm</td>
       <td>nm</td>
@@ -354,7 +318,6 @@ window.onload = wrap_img;
       <td>nm</td>
     </tr>
     <tr>
-      <th>9</th>
       <td>CNV 100%</td>
       <td>86.86</td>
       <td>87.4</td>
@@ -363,7 +326,6 @@ window.onload = wrap_img;
       <td>87.06</td>
     </tr>
     <tr>
-      <th>10</th>
       <td>CNV 50%</td>
       <td>84.29</td>
       <td>84.88</td>
@@ -372,7 +334,6 @@ window.onload = wrap_img;
       <td>85.6</td>
     </tr>
     <tr>
-      <th>11</th>
       <td>CNV 25%</td>
       <td>79.89</td>
       <td>81.09</td>
@@ -381,7 +342,6 @@ window.onload = wrap_img;
       <td>83.25</td>
     </tr>
     <tr>
-      <th>12</th>
       <td>CNV 12.5%</td>
       <td>73.64</td>
       <td>75.85</td>
@@ -390,7 +350,6 @@ window.onload = wrap_img;
       <td>77.84</td>
     </tr>
     <tr>
-      <th>13</th>
       <td>MLP 100%</td>
       <td>98.75</td>
       <td>98.77</td>
@@ -399,7 +358,6 @@ window.onload = wrap_img;
       <td>97.31</td>
     </tr>
     <tr>
-      <th>14</th>
       <td>MLP 50%</td>
       <td>98.49</td>
       <td>98.62</td>
@@ -408,7 +366,6 @@ window.onload = wrap_img;
       <td>97.46</td>
     </tr>
     <tr>
-      <th>15</th>
       <td>MLP 25%</td>
       <td>98.04</td>
       <td>98.29</td>
@@ -417,7 +374,6 @@ window.onload = wrap_img;
       <td>97.44</td>
     </tr>
     <tr>
-      <th>16</th>
       <td>MLP 12.5%</td>
       <td>96.85</td>
       <td>97.54</td>
@@ -427,7 +383,6 @@ window.onload = wrap_img;
     </tr>
   </tbody>
 </table>
-</div>
 </div>
 
 </div>
@@ -441,16 +396,16 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Compute-and-Memory-Requirements">
-<a class="anchor" href="#Compute-and-Memory-Requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compute and Memory Requirements<a class="anchor-link" href="#Compute-and-Memory-Requirements"> </a>
-</h4>
+<h3 id="CNNs-and-Their-Compute-and-Memory-Requirements">
+<a class="anchor" href="#CNNs-and-Their-Compute-and-Memory-Requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>CNNs and Their Compute and Memory Requirements<a class="anchor-link" href="#CNNs-and-Their-Compute-and-Memory-Requirements"> </a>
+</h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This table shows...</p>
+<p>Next table shows Compute and Memory Requirements for all CNNs in number of operations ([GOPs]), Model Size ([ME]) and Operational Intensity ([OI]) in operations per byte read or written from memory.</p>
 
 </div>
 </div>
@@ -465,25 +420,10 @@ window.onload = wrap_img;
 <div class="output_area">
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead tr th {
-        text-align: left;
-    }
-</style>
+<div class="output_html rendered_html output_subarea ">
 <table border="1" class="dataframe">
   <thead>
     <tr>
-      <th></th>
       <th></th>
       <th>Total OPs</th>
       <th>Total Model Size</th>
@@ -494,7 +434,6 @@ window.onload = wrap_img;
       <th>OI (FP32)</th>
     </tr>
     <tr>
-      <th></th>
       <th></th>
       <th>GOPs</th>
       <th>[ME]</th>
@@ -507,7 +446,6 @@ window.onload = wrap_img;
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
       <td>GoogLeNetv1</td>
       <td>3.1</td>
       <td>6</td>
@@ -518,7 +456,6 @@ window.onload = wrap_img;
       <td>130.87</td>
     </tr>
     <tr>
-      <th>1</th>
       <td>MobileNetv1</td>
       <td>1.1</td>
       <td>4.2</td>
@@ -529,7 +466,6 @@ window.onload = wrap_img;
       <td>67.22</td>
     </tr>
     <tr>
-      <th>2</th>
       <td>ResNet-50 100%</td>
       <td>7.7</td>
       <td>25.5</td>
@@ -540,7 +476,6 @@ window.onload = wrap_img;
       <td>75.68</td>
     </tr>
     <tr>
-      <th>3</th>
       <td>ResNet-50 80%</td>
       <td>6.5</td>
       <td>23.7</td>
@@ -551,7 +486,6 @@ window.onload = wrap_img;
       <td>67.91</td>
     </tr>
     <tr>
-      <th>4</th>
       <td>ResNet-50 50%</td>
       <td>3.8</td>
       <td>15.8</td>
@@ -562,7 +496,6 @@ window.onload = wrap_img;
       <td>59.37</td>
     </tr>
     <tr>
-      <th>5</th>
       <td>ResNet-50 30%</td>
       <td>2.5</td>
       <td>10.1</td>
@@ -573,7 +506,6 @@ window.onload = wrap_img;
       <td>60.64</td>
     </tr>
     <tr>
-      <th>6</th>
       <td>EfficientNet Edge L</td>
       <td>4.7</td>
       <td>5.4</td>
@@ -584,7 +516,6 @@ window.onload = wrap_img;
       <td>217.59</td>
     </tr>
     <tr>
-      <th>7</th>
       <td>EfficientNet Edge M</td>
       <td>7.4</td>
       <td>6.9</td>
@@ -595,7 +526,6 @@ window.onload = wrap_img;
       <td>268.12</td>
     </tr>
     <tr>
-      <th>8</th>
       <td>EfficientNet Edge S</td>
       <td>19.4</td>
       <td>10.6</td>
@@ -606,7 +536,6 @@ window.onload = wrap_img;
       <td>457.08</td>
     </tr>
     <tr>
-      <th>9</th>
       <td>CNV 100%</td>
       <td>0.47</td>
       <td>6.16</td>
@@ -617,7 +546,6 @@ window.onload = wrap_img;
       <td>19.06</td>
     </tr>
     <tr>
-      <th>10</th>
       <td>CNV 50%</td>
       <td>0.12</td>
       <td>1.54</td>
@@ -628,7 +556,6 @@ window.onload = wrap_img;
       <td>19.27</td>
     </tr>
     <tr>
-      <th>11</th>
       <td>CNV 25%</td>
       <td>0.03</td>
       <td>0.39</td>
@@ -639,7 +566,6 @@ window.onload = wrap_img;
       <td>19.69</td>
     </tr>
     <tr>
-      <th>12</th>
       <td>CNV 12.5%</td>
       <td>0.01</td>
       <td>0.1</td>
@@ -650,7 +576,6 @@ window.onload = wrap_img;
       <td>20.79</td>
     </tr>
     <tr>
-      <th>13</th>
       <td>MLP 100%</td>
       <td>0.02</td>
       <td>10.01</td>
@@ -661,7 +586,6 @@ window.onload = wrap_img;
       <td>0.5</td>
     </tr>
     <tr>
-      <th>14</th>
       <td>MLP 50%</td>
       <td>0.01</td>
       <td>2.91</td>
@@ -672,7 +596,6 @@ window.onload = wrap_img;
       <td>0.5</td>
     </tr>
     <tr>
-      <th>15</th>
       <td>MLP 25%</td>
       <td>0</td>
       <td>0.93</td>
@@ -683,7 +606,6 @@ window.onload = wrap_img;
       <td>0.5</td>
     </tr>
     <tr>
-      <th>16</th>
       <td>MLP 12.5%</td>
       <td>0</td>
       <td>0.33</td>
@@ -695,7 +617,6 @@ window.onload = wrap_img;
     </tr>
   </tbody>
 </table>
-</div>
 </div>
 
 </div>
@@ -709,8 +630,8 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Tables-for-Platforms">
-<a class="anchor" href="#Tables-for-Platforms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tables for Platforms<a class="anchor-link" href="#Tables-for-Platforms"> </a>
+<h2 id="Hardware-Platforms">
+<a class="anchor" href="#Hardware-Platforms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hardware Platforms<a class="anchor-link" href="#Hardware-Platforms"> </a>
 </h2>
 </div>
 </div>
@@ -718,7 +639,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>These tables show...</p>
+<p>Table below summarizes all included hardware platforms, each with its corresponding peak performance for diferent datatypes (INTx, FPx), its Memory bandwidth and capacity as well as thermal design power.</p>
 
 </div>
 </div>
@@ -733,25 +654,10 @@ window.onload = wrap_img;
 <div class="output_area">
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead tr th {
-        text-align: left;
-    }
-</style>
+<div class="output_html rendered_html output_subarea ">
 <table border="1" class="dataframe">
   <thead>
     <tr>
-      <th></th>
       <th>Hardware Platforms</th>
       <th>INT2</th>
       <th>INT4</th>
@@ -763,7 +669,6 @@ window.onload = wrap_img;
       <th>Power</th>
     </tr>
     <tr>
-      <th></th>
       <th></th>
       <th>[TOP/sec]</th>
       <th>[TOP/sec]</th>
@@ -777,7 +682,6 @@ window.onload = wrap_img;
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
       <td>Ultra96-DPU</td>
       <td>na</td>
       <td>na</td>
@@ -789,7 +693,6 @@ window.onload = wrap_img;
       <td>na</td>
     </tr>
     <tr>
-      <th>1</th>
       <td>ZCU104-DPU</td>
       <td>na</td>
       <td>na</td>
@@ -801,7 +704,6 @@ window.onload = wrap_img;
       <td>na</td>
     </tr>
     <tr>
-      <th>2</th>
       <td>ZCU102-DPU</td>
       <td>na</td>
       <td>na</td>
@@ -813,7 +715,6 @@ window.onload = wrap_img;
       <td>na</td>
     </tr>
     <tr>
-      <th>3</th>
       <td>ZCU104-FINN</td>
       <td>30.7</td>
       <td>8.8</td>
@@ -825,7 +726,6 @@ window.onload = wrap_img;
       <td>na</td>
     </tr>
     <tr>
-      <th>4</th>
       <td>ZCU104-BISMO</td>
       <td>30.7</td>
       <td>8.8</td>
@@ -837,7 +737,6 @@ window.onload = wrap_img;
       <td>na</td>
     </tr>
     <tr>
-      <th>5</th>
       <td>TX2 - maxn</td>
       <td>na</td>
       <td>na</td>
@@ -849,7 +748,6 @@ window.onload = wrap_img;
       <td>15</td>
     </tr>
     <tr>
-      <th>6</th>
       <td>TX2 - maxp</td>
       <td>na</td>
       <td>na</td>
@@ -861,7 +759,6 @@ window.onload = wrap_img;
       <td>15</td>
     </tr>
     <tr>
-      <th>7</th>
       <td>TX2 - maxq</td>
       <td>na</td>
       <td>na</td>
@@ -873,7 +770,6 @@ window.onload = wrap_img;
       <td>15</td>
     </tr>
     <tr>
-      <th>8</th>
       <td>TPU-fast</td>
       <td>na</td>
       <td>na</td>
@@ -885,7 +781,6 @@ window.onload = wrap_img;
       <td>2</td>
     </tr>
     <tr>
-      <th>9</th>
       <td>TPU-slow</td>
       <td>na</td>
       <td>na</td>
@@ -897,7 +792,6 @@ window.onload = wrap_img;
       <td>2</td>
     </tr>
     <tr>
-      <th>10</th>
       <td>NCS (MyriadX)</td>
       <td>na</td>
       <td>na</td>
@@ -909,7 +803,6 @@ window.onload = wrap_img;
       <td>1</td>
     </tr>
     <tr>
-      <th>11</th>
       <td>U96-Quadcore A53-INT8</td>
       <td>0.192</td>
       <td>0.192</td>
@@ -922,7 +815,6 @@ window.onload = wrap_img;
     </tr>
   </tbody>
 </table>
-</div>
 </div>
 
 </div>
@@ -979,10 +871,10 @@ window.onload = wrap_img;
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-c0263f78e0e24d669d5b8c3dc8df1771"></div>
+<div id="altair-viz-f675d107c125487dbb4dd0d1396a3bed"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
-    const outputDiv = document.getElementById("altair-viz-c0263f78e0e24d669d5b8c3dc8df1771");
+    const outputDiv = document.getElementById("altair-viz-f675d107c125487dbb4dd0d1396a3bed");
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
       "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
@@ -1081,10 +973,10 @@ window.onload = wrap_img;
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-d9da3df89bd146f78a737516c9778009"></div>
+<div id="altair-viz-e3609b6f04884d28bca9b5dd8545f8a7"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
-    const outputDiv = document.getElementById("altair-viz-d9da3df89bd146f78a737516c9778009");
+    const outputDiv = document.getElementById("altair-viz-e3609b6f04884d28bca9b5dd8545f8a7");
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
       "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
@@ -1166,10 +1058,10 @@ window.onload = wrap_img;
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-f5db8fe64b404c478bd7940af2c15407"></div>
+<div id="altair-viz-3a1a287cc3b84b4a8c0510ed21103242"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
-    const outputDiv = document.getElementById("altair-viz-f5db8fe64b404c478bd7940af2c15407");
+    const outputDiv = document.getElementById("altair-viz-3a1a287cc3b84b4a8c0510ed21103242");
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
       "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
@@ -1251,10 +1143,10 @@ window.onload = wrap_img;
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-c73ee3558f9d4841bb93e3ed0dd6d60e"></div>
+<div id="altair-viz-7cf429b5bb204c72a2e5c582ac870c28"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
-    const outputDiv = document.getElementById("altair-viz-c73ee3558f9d4841bb93e3ed0dd6d60e");
+    const outputDiv = document.getElementById("altair-viz-7cf429b5bb204c72a2e5c582ac870c28");
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
       "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
@@ -1295,7 +1187,7 @@ window.onload = wrap_img;
         .catch(showError)
         .then(() => displayChart(vegaEmbed));
     }
-  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "layer": [{"mark": {"type": "rect", "invalid": null, "stroke": "black", "strokeWidth": 1}, "encoding": {"color": {"type": "quantitative", "field": "values", "scale": {"scheme": "lightmulti", "type": "log"}, "title": "Input/second"}, "tooltip": [{"type": "quantitative", "field": "values", "title": "Input/sec"}, {"type": "nominal", "field": "x", "title": "Model"}, {"type": "nominal", "field": "y", "title": "Hardware Platform"}], "x": {"type": "ordinal", "field": "x", "title": "Models"}, "y": {"type": "ordinal", "field": "y", "title": "Hardware Platforms"}}, "height": 350, "selection": {"selector006": {"type": "single", "on": "mouseover", "nearest": true}}, "title": "Performance Prediction for CIFAR-10", "width": 700}, {"mark": {"type": "text", "color": "white"}, "encoding": {"color": {"condition": {"value": "black", "test": "(datum.values > 1)"}, "value": "white"}, "text": {"type": "quantitative", "field": "values", "format": ".0f"}, "tooltip": [{"type": "quantitative", "field": "values", "format": ".0f", "title": "Input/sec"}, {"type": "nominal", "field": "x", "title": "Model"}, {"type": "nominal", "field": "y", "title": "Hardware Platform"}], "x": {"type": "ordinal", "field": "x", "title": "Models"}, "y": {"type": "ordinal", "field": "y", "title": "Hardware Platforms"}}}], "data": {"name": "data-e171d6336f8066b9f2438759011bb7aa"}, "$schema": "https://vega.github.io/schema/vega-lite/v4.0.2.json", "datasets": {"data-e171d6336f8066b9f2438759011bb7aa": [{"x": "CNV 100%-INT2", "y": "Ultra96-INT8", "values": 2043.0}, {"x": "CNV 100%-INT4", "y": "Ultra96-INT8", "values": 1382.0}, {"x": "CNV 100%-FP16", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 100%-FP32", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 50%-INT2", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 50%-INT4", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 50%-FP16", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 50%-FP32", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 25%-INT2", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 25%-INT4", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 25%-FP16", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 25%-FP32", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 12.5%-INT2", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 12.5%-INT4", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 12.5%-FP16", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 12.5%-FP32", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 100%-INT2", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 100%-INT4", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 100%-FP16", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 100%-FP32", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 50%-INT2", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 50%-INT4", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 50%-FP16", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 50%-FP32", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 25%-INT2", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 25%-INT4", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 25%-FP16", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 25%-FP32", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 12.5%-INT2", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 12.5%-INT4", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 12.5%-FP16", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 12.5%-FP32", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 100%-INT2", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 100%-INT4", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 100%-FP16", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 100%-FP32", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 50%-INT2", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 50%-INT4", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 50%-FP16", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 50%-FP32", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 25%-INT2", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 25%-INT4", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 25%-FP16", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 25%-FP32", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 12.5%-INT2", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 12.5%-INT4", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 12.5%-FP16", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 12.5%-FP32", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 100%-INT2", "y": "ZCU104-FINN-INT2", "values": 12458.0}, {"x": "CNV 100%-INT4", "y": "ZCU104-FINN-INT2", "values": 6229.0}, {"x": "CNV 100%-FP16", "y": "ZCU104-FINN-INT2", "values": null}, {"x": "CNV 100%-FP32", "y": "ZCU104-FINN-INT2", "values": null}, {"x": "CNV 50%-INT2", "y": "ZCU104-FINN-INT2", "values": 49331.0}, {"x": "CNV 50%-INT4", "y": "ZCU104-FINN-INT2", "values": 24666.0}, {"x": "CNV 50%-FP16", "y": "ZCU104-FINN-INT2", "values": null}, {"x": "CNV 50%-FP32", "y": "ZCU104-FINN-INT2", "values": null}, {"x": "CNV 25%-INT2", "y": "ZCU104-FINN-INT2", "values": 201600.0}, {"x": "CNV 25%-INT4", "y": "ZCU104-FINN-INT2", "values": 100800.0}, {"x": "CNV 25%-FP16", "y": "ZCU104-FINN-INT2", "values": null}, {"x": "CNV 25%-FP32", "y": "ZCU104-FINN-INT2", "values": null}, {"x": "CNV 12.5%-INT2", "y": "ZCU104-FINN-INT2", "values": 638592.0}, {"x": "CNV 12.5%-INT4", "y": "ZCU104-FINN-INT2", "values": 319296.0}, {"x": "CNV 12.5%-FP16", "y": "ZCU104-FINN-INT2", "values": null}, {"x": "CNV 12.5%-FP32", "y": "ZCU104-FINN-INT2", "values": null}, {"x": "CNV 100%-INT2", "y": "ZCU104-FINN-INT4", "values": 12458.0}, {"x": "CNV 100%-INT4", "y": "ZCU104-FINN-INT4", "values": 6229.0}, {"x": "CNV 100%-FP16", "y": "ZCU104-FINN-INT4", "values": null}, {"x": "CNV 100%-FP32", "y": "ZCU104-FINN-INT4", "values": null}, {"x": "CNV 50%-INT2", "y": "ZCU104-FINN-INT4", "values": 49331.0}, {"x": "CNV 50%-INT4", "y": "ZCU104-FINN-INT4", "values": 24666.0}, {"x": "CNV 50%-FP16", "y": "ZCU104-FINN-INT4", "values": null}, {"x": "CNV 50%-FP32", "y": "ZCU104-FINN-INT4", "values": null}, {"x": "CNV 25%-INT2", "y": "ZCU104-FINN-INT4", "values": 201600.0}, {"x": "CNV 25%-INT4", "y": "ZCU104-FINN-INT4", "values": 100800.0}, {"x": "CNV 25%-FP16", "y": "ZCU104-FINN-INT4", "values": null}, {"x": "CNV 25%-FP32", "y": "ZCU104-FINN-INT4", "values": null}, {"x": "CNV 12.5%-INT2", "y": "ZCU104-FINN-INT4", "values": 638592.0}, {"x": "CNV 12.5%-INT4", "y": "ZCU104-FINN-INT4", "values": 319296.0}, {"x": "CNV 12.5%-FP16", "y": "ZCU104-FINN-INT4", "values": null}, {"x": "CNV 12.5%-FP32", "y": "ZCU104-FINN-INT4", "values": null}, {"x": "CNV 100%-INT2", "y": "ZCU104-BISMO-INT2", "values": 12458.0}, {"x": "CNV 100%-INT4", "y": "ZCU104-BISMO-INT2", "values": 6229.0}, {"x": "CNV 100%-FP16", "y": "ZCU104-BISMO-INT2", "values": null}, {"x": "CNV 100%-FP32", "y": "ZCU104-BISMO-INT2", "values": null}, {"x": "CNV 50%-INT2", "y": "ZCU104-BISMO-INT2", "values": 49331.0}, {"x": "CNV 50%-INT4", "y": "ZCU104-BISMO-INT2", "values": 24666.0}, {"x": "CNV 50%-FP16", "y": "ZCU104-BISMO-INT2", "values": null}, {"x": "CNV 50%-FP32", "y": "ZCU104-BISMO-INT2", "values": null}, {"x": "CNV 25%-INT2", "y": "ZCU104-BISMO-INT2", "values": 201600.0}, {"x": "CNV 25%-INT4", "y": "ZCU104-BISMO-INT2", "values": 100800.0}, {"x": "CNV 25%-FP16", "y": "ZCU104-BISMO-INT2", "values": null}, {"x": "CNV 25%-FP32", "y": "ZCU104-BISMO-INT2", "values": null}, {"x": "CNV 12.5%-INT2", "y": "ZCU104-BISMO-INT2", "values": 638592.0}, {"x": "CNV 12.5%-INT4", "y": "ZCU104-BISMO-INT2", "values": 319296.0}, {"x": "CNV 12.5%-FP16", "y": "ZCU104-BISMO-INT2", "values": null}, {"x": "CNV 12.5%-FP32", "y": "ZCU104-BISMO-INT2", "values": null}, {"x": "CNV 100%-INT2", "y": "ZCU104-BISMO-INT4", "values": 12458.0}, {"x": "CNV 100%-INT4", "y": "ZCU104-BISMO-INT4", "values": 6229.0}, {"x": "CNV 100%-FP16", "y": "ZCU104-BISMO-INT4", "values": null}, {"x": "CNV 100%-FP32", "y": "ZCU104-BISMO-INT4", "values": null}, {"x": "CNV 50%-INT2", "y": "ZCU104-BISMO-INT4", "values": 49331.0}, {"x": "CNV 50%-INT4", "y": "ZCU104-BISMO-INT4", "values": 24666.0}, {"x": "CNV 50%-FP16", "y": "ZCU104-BISMO-INT4", "values": null}, {"x": "CNV 50%-FP32", "y": "ZCU104-BISMO-INT4", "values": null}, {"x": "CNV 25%-INT2", "y": "ZCU104-BISMO-INT4", "values": 201600.0}, {"x": "CNV 25%-INT4", "y": "ZCU104-BISMO-INT4", "values": 100800.0}, {"x": "CNV 25%-FP16", "y": "ZCU104-BISMO-INT4", "values": null}, {"x": "CNV 25%-FP32", "y": "ZCU104-BISMO-INT4", "values": null}, {"x": "CNV 12.5%-INT2", "y": "ZCU104-BISMO-INT4", "values": 638592.0}, {"x": "CNV 12.5%-INT4", "y": "ZCU104-BISMO-INT4", "values": 319296.0}, {"x": "CNV 12.5%-FP16", "y": "ZCU104-BISMO-INT4", "values": null}, {"x": "CNV 12.5%-FP32", "y": "ZCU104-BISMO-INT4", "values": null}, {"x": "CNV 100%-INT2", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 100%-INT4", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 100%-FP16", "y": "TX2-maxn-FP16", "values": 2830.0}, {"x": "CNV 100%-FP32", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 50%-INT2", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 50%-INT4", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 50%-FP16", "y": "TX2-maxn-FP16", "values": 11083.0}, {"x": "CNV 50%-FP32", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 25%-INT2", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 25%-INT4", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 25%-FP16", "y": "TX2-maxn-FP16", "values": 44333.0}, {"x": "CNV 25%-FP32", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 12.5%-INT2", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 12.5%-INT4", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 12.5%-FP16", "y": "TX2-maxn-FP16", "values": 133000.0}, {"x": "CNV 12.5%-FP32", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 100%-INT2", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 100%-INT4", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 100%-FP16", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 100%-FP32", "y": "TX2-maxn-FP32", "values": 1426.0}, {"x": "CNV 50%-INT2", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 50%-INT4", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 50%-FP16", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 50%-FP32", "y": "TX2-maxn-FP32", "values": 5583.0}, {"x": "CNV 25%-INT2", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 25%-INT4", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 25%-FP16", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 25%-FP32", "y": "TX2-maxn-FP32", "values": 22333.0}, {"x": "CNV 12.5%-INT2", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 12.5%-INT4", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 12.5%-FP16", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 12.5%-FP32", "y": "TX2-maxn-FP32", "values": 67000.0}, {"x": "CNV 100%-INT2", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 100%-INT4", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 100%-FP16", "y": "TX2-maxp-FP16", "values": 2447.0}, {"x": "CNV 100%-FP32", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 50%-INT2", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 50%-INT4", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 50%-FP16", "y": "TX2-maxp-FP16", "values": 9583.0}, {"x": "CNV 50%-FP32", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 25%-INT2", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 25%-INT4", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 25%-FP16", "y": "TX2-maxp-FP16", "values": 38333.0}, {"x": "CNV 25%-FP32", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 12.5%-INT2", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 12.5%-INT4", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 12.5%-FP16", "y": "TX2-maxp-FP16", "values": 115000.0}, {"x": "CNV 12.5%-FP32", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 100%-INT2", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 100%-INT4", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 100%-FP16", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 100%-FP32", "y": "TX2-maxp-FP32", "values": 1213.0}, {"x": "CNV 50%-INT2", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 50%-INT4", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 50%-FP16", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 50%-FP32", "y": "TX2-maxp-FP32", "values": 4750.0}, {"x": "CNV 25%-INT2", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 25%-INT4", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 25%-FP16", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 25%-FP32", "y": "TX2-maxp-FP32", "values": 19000.0}, {"x": "CNV 12.5%-INT2", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 12.5%-INT4", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 12.5%-FP16", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 12.5%-FP32", "y": "TX2-maxp-FP32", "values": 57000.0}, {"x": "CNV 100%-INT2", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 100%-INT4", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 100%-FP16", "y": "TX2-maxq-FP16", "values": 1851.0}, {"x": "CNV 100%-FP32", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 50%-INT2", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 50%-INT4", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 50%-FP16", "y": "TX2-maxq-FP16", "values": 7250.0}, {"x": "CNV 50%-FP32", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 25%-INT2", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 25%-INT4", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 25%-FP16", "y": "TX2-maxq-FP16", "values": 29000.0}, {"x": "CNV 25%-FP32", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 12.5%-INT2", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 12.5%-INT4", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 12.5%-FP16", "y": "TX2-maxq-FP16", "values": 87000.0}, {"x": "CNV 12.5%-FP32", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 100%-INT2", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 100%-INT4", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 100%-FP16", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 100%-FP32", "y": "TX2-maxq-FP32", "values": 936.0}, {"x": "CNV 50%-INT2", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 50%-INT4", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 50%-FP16", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 50%-FP32", "y": "TX2-maxq-FP32", "values": 3667.0}, {"x": "CNV 25%-INT2", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 25%-INT4", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 25%-FP16", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 25%-FP32", "y": "TX2-maxq-FP32", "values": 14667.0}, {"x": "CNV 12.5%-INT2", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 12.5%-INT4", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 12.5%-FP16", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 12.5%-FP32", "y": "TX2-maxq-FP32", "values": 44000.0}, {"x": "CNV 100%-INT2", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 100%-INT4", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 100%-FP16", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 100%-FP32", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 50%-INT2", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 50%-INT4", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 50%-FP16", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 50%-FP32", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 25%-INT2", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 25%-INT4", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 25%-FP16", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 25%-FP32", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 12.5%-INT2", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 12.5%-INT4", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 12.5%-FP16", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 12.5%-FP32", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 100%-INT2", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 100%-INT4", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 100%-FP16", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 100%-FP32", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 50%-INT2", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 50%-INT4", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 50%-FP16", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 50%-FP32", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 25%-INT2", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 25%-INT4", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 25%-FP16", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 25%-FP32", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 12.5%-INT2", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 12.5%-INT4", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 12.5%-FP16", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 12.5%-FP32", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 100%-INT2", "y": "NCS-INT8", "values": null}, {"x": "CNV 100%-INT4", "y": "NCS-INT8", "values": null}, {"x": "CNV 100%-FP16", "y": "NCS-INT8", "values": null}, {"x": "CNV 100%-FP32", "y": "NCS-INT8", "values": null}, {"x": "CNV 50%-INT2", "y": "NCS-INT8", "values": null}, {"x": "CNV 50%-INT4", "y": "NCS-INT8", "values": null}, {"x": "CNV 50%-FP16", "y": "NCS-INT8", "values": null}, {"x": "CNV 50%-FP32", "y": "NCS-INT8", "values": null}, {"x": "CNV 25%-INT2", "y": "NCS-INT8", "values": null}, {"x": "CNV 25%-INT4", "y": "NCS-INT8", "values": null}, {"x": "CNV 25%-FP16", "y": "NCS-INT8", "values": null}, {"x": "CNV 25%-FP32", "y": "NCS-INT8", "values": null}, {"x": "CNV 12.5%-INT2", "y": "NCS-INT8", "values": null}, {"x": "CNV 12.5%-INT4", "y": "NCS-INT8", "values": null}, {"x": "CNV 12.5%-FP16", "y": "NCS-INT8", "values": null}, {"x": "CNV 12.5%-FP32", "y": "NCS-INT8", "values": null}, {"x": "CNV 100%-INT2", "y": "NCS-FP16", "values": null}, {"x": "CNV 100%-INT4", "y": "NCS-FP16", "values": null}, {"x": "CNV 100%-FP16", "y": "NCS-FP16", "values": 1038.0}, {"x": "CNV 100%-FP32", "y": "NCS-FP16", "values": null}, {"x": "CNV 50%-INT2", "y": "NCS-FP16", "values": null}, {"x": "CNV 50%-INT4", "y": "NCS-FP16", "values": null}, {"x": "CNV 50%-FP16", "y": "NCS-FP16", "values": 4111.0}, {"x": "CNV 50%-FP32", "y": "NCS-FP16", "values": null}, {"x": "CNV 25%-INT2", "y": "NCS-FP16", "values": null}, {"x": "CNV 25%-INT4", "y": "NCS-FP16", "values": null}, {"x": "CNV 25%-FP16", "y": "NCS-FP16", "values": 16667.0}, {"x": "CNV 25%-FP32", "y": "NCS-FP16", "values": null}, {"x": "CNV 12.5%-INT2", "y": "NCS-FP16", "values": null}, {"x": "CNV 12.5%-INT4", "y": "NCS-FP16", "values": null}, {"x": "CNV 12.5%-FP16", "y": "NCS-FP16", "values": 50000.0}, {"x": "CNV 12.5%-FP32", "y": "NCS-FP16", "values": null}, {"x": "CNV 100%-INT2", "y": "U96-Quadcore A53-INT8", "values": 409.0}, {"x": "CNV 100%-INT4", "y": "U96-Quadcore A53-INT8", "values": 409.0}, {"x": "CNV 100%-FP16", "y": "U96-Quadcore A53-INT8", "values": 346.0}, {"x": "CNV 100%-FP32", "y": "U96-Quadcore A53-INT8", "values": 173.0}, {"x": "CNV 50%-INT2", "y": "U96-Quadcore A53-INT8", "values": 1600.0}, {"x": "CNV 50%-INT4", "y": "U96-Quadcore A53-INT8", "values": 1600.0}, {"x": "CNV 50%-FP16", "y": "U96-Quadcore A53-INT8", "values": 1368.0}, {"x": "CNV 50%-FP32", "y": "U96-Quadcore A53-INT8", "values": 684.0}, {"x": "CNV 25%-INT2", "y": "U96-Quadcore A53-INT8", "values": 6400.0}, {"x": "CNV 25%-INT4", "y": "U96-Quadcore A53-INT8", "values": 6400.0}, {"x": "CNV 25%-FP16", "y": "U96-Quadcore A53-INT8", "values": 5591.0}, {"x": "CNV 25%-FP32", "y": "U96-Quadcore A53-INT8", "values": 2796.0}, {"x": "CNV 12.5%-INT2", "y": "U96-Quadcore A53-INT8", "values": 19200.0}, {"x": "CNV 12.5%-INT4", "y": "U96-Quadcore A53-INT8", "values": 19200.0}, {"x": "CNV 12.5%-FP16", "y": "U96-Quadcore A53-INT8", "values": 17711.0}, {"x": "CNV 12.5%-FP32", "y": "U96-Quadcore A53-INT8", "values": 8855.0}]}}, {"mode": "vega-lite"});
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "layer": [{"mark": {"type": "rect", "invalid": null, "stroke": "black", "strokeWidth": 1}, "encoding": {"color": {"type": "quantitative", "field": "values", "scale": {"scheme": "lightmulti", "type": "log"}, "title": "Input/second"}, "tooltip": [{"type": "quantitative", "field": "values", "title": "Input/sec"}, {"type": "nominal", "field": "x", "title": "Model"}, {"type": "nominal", "field": "y", "title": "Hardware Platform"}], "x": {"type": "ordinal", "field": "x", "title": "Models"}, "y": {"type": "ordinal", "field": "y", "title": "Hardware Platforms"}}, "height": 350, "selection": {"selector005": {"type": "single", "on": "mouseover", "nearest": true}}, "title": "Performance Prediction for CIFAR-10", "width": 700}, {"mark": {"type": "text", "color": "white"}, "encoding": {"color": {"condition": {"value": "black", "test": "(datum.values > 1)"}, "value": "white"}, "text": {"type": "quantitative", "field": "values", "format": ".0f"}, "tooltip": [{"type": "quantitative", "field": "values", "format": ".0f", "title": "Input/sec"}, {"type": "nominal", "field": "x", "title": "Model"}, {"type": "nominal", "field": "y", "title": "Hardware Platform"}], "x": {"type": "ordinal", "field": "x", "title": "Models"}, "y": {"type": "ordinal", "field": "y", "title": "Hardware Platforms"}}}], "data": {"name": "data-e171d6336f8066b9f2438759011bb7aa"}, "$schema": "https://vega.github.io/schema/vega-lite/v4.0.2.json", "datasets": {"data-e171d6336f8066b9f2438759011bb7aa": [{"x": "CNV 100%-INT2", "y": "Ultra96-INT8", "values": 2043.0}, {"x": "CNV 100%-INT4", "y": "Ultra96-INT8", "values": 1382.0}, {"x": "CNV 100%-FP16", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 100%-FP32", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 50%-INT2", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 50%-INT4", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 50%-FP16", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 50%-FP32", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 25%-INT2", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 25%-INT4", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 25%-FP16", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 25%-FP32", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 12.5%-INT2", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 12.5%-INT4", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 12.5%-FP16", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 12.5%-FP32", "y": "Ultra96-INT8", "values": null}, {"x": "CNV 100%-INT2", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 100%-INT4", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 100%-FP16", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 100%-FP32", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 50%-INT2", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 50%-INT4", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 50%-FP16", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 50%-FP32", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 25%-INT2", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 25%-INT4", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 25%-FP16", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 25%-FP32", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 12.5%-INT2", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 12.5%-INT4", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 12.5%-FP16", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 12.5%-FP32", "y": "ZCU104-DPU-INT8", "values": null}, {"x": "CNV 100%-INT2", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 100%-INT4", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 100%-FP16", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 100%-FP32", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 50%-INT2", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 50%-INT4", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 50%-FP16", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 50%-FP32", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 25%-INT2", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 25%-INT4", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 25%-FP16", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 25%-FP32", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 12.5%-INT2", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 12.5%-INT4", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 12.5%-FP16", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 12.5%-FP32", "y": "ZCU102-DPU-INT8", "values": null}, {"x": "CNV 100%-INT2", "y": "ZCU104-FINN-INT2", "values": 12458.0}, {"x": "CNV 100%-INT4", "y": "ZCU104-FINN-INT2", "values": 6229.0}, {"x": "CNV 100%-FP16", "y": "ZCU104-FINN-INT2", "values": null}, {"x": "CNV 100%-FP32", "y": "ZCU104-FINN-INT2", "values": null}, {"x": "CNV 50%-INT2", "y": "ZCU104-FINN-INT2", "values": 49331.0}, {"x": "CNV 50%-INT4", "y": "ZCU104-FINN-INT2", "values": 24666.0}, {"x": "CNV 50%-FP16", "y": "ZCU104-FINN-INT2", "values": null}, {"x": "CNV 50%-FP32", "y": "ZCU104-FINN-INT2", "values": null}, {"x": "CNV 25%-INT2", "y": "ZCU104-FINN-INT2", "values": 201600.0}, {"x": "CNV 25%-INT4", "y": "ZCU104-FINN-INT2", "values": 100800.0}, {"x": "CNV 25%-FP16", "y": "ZCU104-FINN-INT2", "values": null}, {"x": "CNV 25%-FP32", "y": "ZCU104-FINN-INT2", "values": null}, {"x": "CNV 12.5%-INT2", "y": "ZCU104-FINN-INT2", "values": 638592.0}, {"x": "CNV 12.5%-INT4", "y": "ZCU104-FINN-INT2", "values": 319296.0}, {"x": "CNV 12.5%-FP16", "y": "ZCU104-FINN-INT2", "values": null}, {"x": "CNV 12.5%-FP32", "y": "ZCU104-FINN-INT2", "values": null}, {"x": "CNV 100%-INT2", "y": "ZCU104-FINN-INT4", "values": 12458.0}, {"x": "CNV 100%-INT4", "y": "ZCU104-FINN-INT4", "values": 6229.0}, {"x": "CNV 100%-FP16", "y": "ZCU104-FINN-INT4", "values": null}, {"x": "CNV 100%-FP32", "y": "ZCU104-FINN-INT4", "values": null}, {"x": "CNV 50%-INT2", "y": "ZCU104-FINN-INT4", "values": 49331.0}, {"x": "CNV 50%-INT4", "y": "ZCU104-FINN-INT4", "values": 24666.0}, {"x": "CNV 50%-FP16", "y": "ZCU104-FINN-INT4", "values": null}, {"x": "CNV 50%-FP32", "y": "ZCU104-FINN-INT4", "values": null}, {"x": "CNV 25%-INT2", "y": "ZCU104-FINN-INT4", "values": 201600.0}, {"x": "CNV 25%-INT4", "y": "ZCU104-FINN-INT4", "values": 100800.0}, {"x": "CNV 25%-FP16", "y": "ZCU104-FINN-INT4", "values": null}, {"x": "CNV 25%-FP32", "y": "ZCU104-FINN-INT4", "values": null}, {"x": "CNV 12.5%-INT2", "y": "ZCU104-FINN-INT4", "values": 638592.0}, {"x": "CNV 12.5%-INT4", "y": "ZCU104-FINN-INT4", "values": 319296.0}, {"x": "CNV 12.5%-FP16", "y": "ZCU104-FINN-INT4", "values": null}, {"x": "CNV 12.5%-FP32", "y": "ZCU104-FINN-INT4", "values": null}, {"x": "CNV 100%-INT2", "y": "ZCU104-BISMO-INT2", "values": 12458.0}, {"x": "CNV 100%-INT4", "y": "ZCU104-BISMO-INT2", "values": 6229.0}, {"x": "CNV 100%-FP16", "y": "ZCU104-BISMO-INT2", "values": null}, {"x": "CNV 100%-FP32", "y": "ZCU104-BISMO-INT2", "values": null}, {"x": "CNV 50%-INT2", "y": "ZCU104-BISMO-INT2", "values": 49331.0}, {"x": "CNV 50%-INT4", "y": "ZCU104-BISMO-INT2", "values": 24666.0}, {"x": "CNV 50%-FP16", "y": "ZCU104-BISMO-INT2", "values": null}, {"x": "CNV 50%-FP32", "y": "ZCU104-BISMO-INT2", "values": null}, {"x": "CNV 25%-INT2", "y": "ZCU104-BISMO-INT2", "values": 201600.0}, {"x": "CNV 25%-INT4", "y": "ZCU104-BISMO-INT2", "values": 100800.0}, {"x": "CNV 25%-FP16", "y": "ZCU104-BISMO-INT2", "values": null}, {"x": "CNV 25%-FP32", "y": "ZCU104-BISMO-INT2", "values": null}, {"x": "CNV 12.5%-INT2", "y": "ZCU104-BISMO-INT2", "values": 638592.0}, {"x": "CNV 12.5%-INT4", "y": "ZCU104-BISMO-INT2", "values": 319296.0}, {"x": "CNV 12.5%-FP16", "y": "ZCU104-BISMO-INT2", "values": null}, {"x": "CNV 12.5%-FP32", "y": "ZCU104-BISMO-INT2", "values": null}, {"x": "CNV 100%-INT2", "y": "ZCU104-BISMO-INT4", "values": 12458.0}, {"x": "CNV 100%-INT4", "y": "ZCU104-BISMO-INT4", "values": 6229.0}, {"x": "CNV 100%-FP16", "y": "ZCU104-BISMO-INT4", "values": null}, {"x": "CNV 100%-FP32", "y": "ZCU104-BISMO-INT4", "values": null}, {"x": "CNV 50%-INT2", "y": "ZCU104-BISMO-INT4", "values": 49331.0}, {"x": "CNV 50%-INT4", "y": "ZCU104-BISMO-INT4", "values": 24666.0}, {"x": "CNV 50%-FP16", "y": "ZCU104-BISMO-INT4", "values": null}, {"x": "CNV 50%-FP32", "y": "ZCU104-BISMO-INT4", "values": null}, {"x": "CNV 25%-INT2", "y": "ZCU104-BISMO-INT4", "values": 201600.0}, {"x": "CNV 25%-INT4", "y": "ZCU104-BISMO-INT4", "values": 100800.0}, {"x": "CNV 25%-FP16", "y": "ZCU104-BISMO-INT4", "values": null}, {"x": "CNV 25%-FP32", "y": "ZCU104-BISMO-INT4", "values": null}, {"x": "CNV 12.5%-INT2", "y": "ZCU104-BISMO-INT4", "values": 638592.0}, {"x": "CNV 12.5%-INT4", "y": "ZCU104-BISMO-INT4", "values": 319296.0}, {"x": "CNV 12.5%-FP16", "y": "ZCU104-BISMO-INT4", "values": null}, {"x": "CNV 12.5%-FP32", "y": "ZCU104-BISMO-INT4", "values": null}, {"x": "CNV 100%-INT2", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 100%-INT4", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 100%-FP16", "y": "TX2-maxn-FP16", "values": 2830.0}, {"x": "CNV 100%-FP32", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 50%-INT2", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 50%-INT4", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 50%-FP16", "y": "TX2-maxn-FP16", "values": 11083.0}, {"x": "CNV 50%-FP32", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 25%-INT2", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 25%-INT4", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 25%-FP16", "y": "TX2-maxn-FP16", "values": 44333.0}, {"x": "CNV 25%-FP32", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 12.5%-INT2", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 12.5%-INT4", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 12.5%-FP16", "y": "TX2-maxn-FP16", "values": 133000.0}, {"x": "CNV 12.5%-FP32", "y": "TX2-maxn-FP16", "values": null}, {"x": "CNV 100%-INT2", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 100%-INT4", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 100%-FP16", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 100%-FP32", "y": "TX2-maxn-FP32", "values": 1426.0}, {"x": "CNV 50%-INT2", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 50%-INT4", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 50%-FP16", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 50%-FP32", "y": "TX2-maxn-FP32", "values": 5583.0}, {"x": "CNV 25%-INT2", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 25%-INT4", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 25%-FP16", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 25%-FP32", "y": "TX2-maxn-FP32", "values": 22333.0}, {"x": "CNV 12.5%-INT2", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 12.5%-INT4", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 12.5%-FP16", "y": "TX2-maxn-FP32", "values": null}, {"x": "CNV 12.5%-FP32", "y": "TX2-maxn-FP32", "values": 67000.0}, {"x": "CNV 100%-INT2", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 100%-INT4", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 100%-FP16", "y": "TX2-maxp-FP16", "values": 2447.0}, {"x": "CNV 100%-FP32", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 50%-INT2", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 50%-INT4", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 50%-FP16", "y": "TX2-maxp-FP16", "values": 9583.0}, {"x": "CNV 50%-FP32", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 25%-INT2", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 25%-INT4", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 25%-FP16", "y": "TX2-maxp-FP16", "values": 38333.0}, {"x": "CNV 25%-FP32", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 12.5%-INT2", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 12.5%-INT4", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 12.5%-FP16", "y": "TX2-maxp-FP16", "values": 115000.0}, {"x": "CNV 12.5%-FP32", "y": "TX2-maxp-FP16", "values": null}, {"x": "CNV 100%-INT2", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 100%-INT4", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 100%-FP16", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 100%-FP32", "y": "TX2-maxp-FP32", "values": 1213.0}, {"x": "CNV 50%-INT2", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 50%-INT4", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 50%-FP16", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 50%-FP32", "y": "TX2-maxp-FP32", "values": 4750.0}, {"x": "CNV 25%-INT2", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 25%-INT4", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 25%-FP16", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 25%-FP32", "y": "TX2-maxp-FP32", "values": 19000.0}, {"x": "CNV 12.5%-INT2", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 12.5%-INT4", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 12.5%-FP16", "y": "TX2-maxp-FP32", "values": null}, {"x": "CNV 12.5%-FP32", "y": "TX2-maxp-FP32", "values": 57000.0}, {"x": "CNV 100%-INT2", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 100%-INT4", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 100%-FP16", "y": "TX2-maxq-FP16", "values": 1851.0}, {"x": "CNV 100%-FP32", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 50%-INT2", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 50%-INT4", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 50%-FP16", "y": "TX2-maxq-FP16", "values": 7250.0}, {"x": "CNV 50%-FP32", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 25%-INT2", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 25%-INT4", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 25%-FP16", "y": "TX2-maxq-FP16", "values": 29000.0}, {"x": "CNV 25%-FP32", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 12.5%-INT2", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 12.5%-INT4", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 12.5%-FP16", "y": "TX2-maxq-FP16", "values": 87000.0}, {"x": "CNV 12.5%-FP32", "y": "TX2-maxq-FP16", "values": null}, {"x": "CNV 100%-INT2", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 100%-INT4", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 100%-FP16", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 100%-FP32", "y": "TX2-maxq-FP32", "values": 936.0}, {"x": "CNV 50%-INT2", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 50%-INT4", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 50%-FP16", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 50%-FP32", "y": "TX2-maxq-FP32", "values": 3667.0}, {"x": "CNV 25%-INT2", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 25%-INT4", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 25%-FP16", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 25%-FP32", "y": "TX2-maxq-FP32", "values": 14667.0}, {"x": "CNV 12.5%-INT2", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 12.5%-INT4", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 12.5%-FP16", "y": "TX2-maxq-FP32", "values": null}, {"x": "CNV 12.5%-FP32", "y": "TX2-maxq-FP32", "values": 44000.0}, {"x": "CNV 100%-INT2", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 100%-INT4", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 100%-FP16", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 100%-FP32", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 50%-INT2", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 50%-INT4", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 50%-FP16", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 50%-FP32", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 25%-INT2", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 25%-INT4", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 25%-FP16", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 25%-FP32", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 12.5%-INT2", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 12.5%-INT4", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 12.5%-FP16", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 12.5%-FP32", "y": "TPU-fast-INT8", "values": null}, {"x": "CNV 100%-INT2", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 100%-INT4", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 100%-FP16", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 100%-FP32", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 50%-INT2", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 50%-INT4", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 50%-FP16", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 50%-FP32", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 25%-INT2", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 25%-INT4", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 25%-FP16", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 25%-FP32", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 12.5%-INT2", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 12.5%-INT4", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 12.5%-FP16", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 12.5%-FP32", "y": "TPU-slow-INT8", "values": null}, {"x": "CNV 100%-INT2", "y": "NCS-INT8", "values": null}, {"x": "CNV 100%-INT4", "y": "NCS-INT8", "values": null}, {"x": "CNV 100%-FP16", "y": "NCS-INT8", "values": null}, {"x": "CNV 100%-FP32", "y": "NCS-INT8", "values": null}, {"x": "CNV 50%-INT2", "y": "NCS-INT8", "values": null}, {"x": "CNV 50%-INT4", "y": "NCS-INT8", "values": null}, {"x": "CNV 50%-FP16", "y": "NCS-INT8", "values": null}, {"x": "CNV 50%-FP32", "y": "NCS-INT8", "values": null}, {"x": "CNV 25%-INT2", "y": "NCS-INT8", "values": null}, {"x": "CNV 25%-INT4", "y": "NCS-INT8", "values": null}, {"x": "CNV 25%-FP16", "y": "NCS-INT8", "values": null}, {"x": "CNV 25%-FP32", "y": "NCS-INT8", "values": null}, {"x": "CNV 12.5%-INT2", "y": "NCS-INT8", "values": null}, {"x": "CNV 12.5%-INT4", "y": "NCS-INT8", "values": null}, {"x": "CNV 12.5%-FP16", "y": "NCS-INT8", "values": null}, {"x": "CNV 12.5%-FP32", "y": "NCS-INT8", "values": null}, {"x": "CNV 100%-INT2", "y": "NCS-FP16", "values": null}, {"x": "CNV 100%-INT4", "y": "NCS-FP16", "values": null}, {"x": "CNV 100%-FP16", "y": "NCS-FP16", "values": 1038.0}, {"x": "CNV 100%-FP32", "y": "NCS-FP16", "values": null}, {"x": "CNV 50%-INT2", "y": "NCS-FP16", "values": null}, {"x": "CNV 50%-INT4", "y": "NCS-FP16", "values": null}, {"x": "CNV 50%-FP16", "y": "NCS-FP16", "values": 4111.0}, {"x": "CNV 50%-FP32", "y": "NCS-FP16", "values": null}, {"x": "CNV 25%-INT2", "y": "NCS-FP16", "values": null}, {"x": "CNV 25%-INT4", "y": "NCS-FP16", "values": null}, {"x": "CNV 25%-FP16", "y": "NCS-FP16", "values": 16667.0}, {"x": "CNV 25%-FP32", "y": "NCS-FP16", "values": null}, {"x": "CNV 12.5%-INT2", "y": "NCS-FP16", "values": null}, {"x": "CNV 12.5%-INT4", "y": "NCS-FP16", "values": null}, {"x": "CNV 12.5%-FP16", "y": "NCS-FP16", "values": 50000.0}, {"x": "CNV 12.5%-FP32", "y": "NCS-FP16", "values": null}, {"x": "CNV 100%-INT2", "y": "U96-Quadcore A53-INT8", "values": 409.0}, {"x": "CNV 100%-INT4", "y": "U96-Quadcore A53-INT8", "values": 409.0}, {"x": "CNV 100%-FP16", "y": "U96-Quadcore A53-INT8", "values": 346.0}, {"x": "CNV 100%-FP32", "y": "U96-Quadcore A53-INT8", "values": 173.0}, {"x": "CNV 50%-INT2", "y": "U96-Quadcore A53-INT8", "values": 1600.0}, {"x": "CNV 50%-INT4", "y": "U96-Quadcore A53-INT8", "values": 1600.0}, {"x": "CNV 50%-FP16", "y": "U96-Quadcore A53-INT8", "values": 1368.0}, {"x": "CNV 50%-FP32", "y": "U96-Quadcore A53-INT8", "values": 684.0}, {"x": "CNV 25%-INT2", "y": "U96-Quadcore A53-INT8", "values": 6400.0}, {"x": "CNV 25%-INT4", "y": "U96-Quadcore A53-INT8", "values": 6400.0}, {"x": "CNV 25%-FP16", "y": "U96-Quadcore A53-INT8", "values": 5591.0}, {"x": "CNV 25%-FP32", "y": "U96-Quadcore A53-INT8", "values": 2796.0}, {"x": "CNV 12.5%-INT2", "y": "U96-Quadcore A53-INT8", "values": 19200.0}, {"x": "CNV 12.5%-INT4", "y": "U96-Quadcore A53-INT8", "values": 19200.0}, {"x": "CNV 12.5%-FP16", "y": "U96-Quadcore A53-INT8", "values": 17711.0}, {"x": "CNV 12.5%-FP32", "y": "U96-Quadcore A53-INT8", "values": 8855.0}]}}, {"mode": "vega-lite"});
 </script>
 </div>
 

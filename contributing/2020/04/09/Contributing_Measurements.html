@@ -161,13 +161,11 @@ window.onload = wrap_img;
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ol>
-<li>Create a csv file with the following columns: 
-<code>NN_Topology,HWType,Precision,Op mode,batch/thread/stream,lat-comp,fps-system,fps-comp,tp-system,tp-comp,top1 [%],top5 [%],BasePWR [W],IdlePWR [W],FullPwr [W],GOPS,PruningFactor,level</code>
-</li>
-</ol>
-<ol>
 <li>
-<p>Rename the csv file with the name of your machine learning benchmark, e.g. <code>imagenet.csv</code>.</p>
+<p>Create a csv file with the following columns: <code>NN_Topology,HWType,Precision,Op mode,batch/thread/stream,lat-comp,fps-system,fps-comp,tp-system,tp-comp,top1 [%],top5 [%],BasePWR [W],IdlePWR [W],FullPwr [W],GOPS,PruningFactor,level</code>.</p>
+</li>
+<li>
+<p>Rename the csv file with the name of the measured machine learning task, e.g. <code>imagenet.csv</code>.</p>
 </li>
 <li>
 <p>Enter your data in this new <code>.csv</code> file, leaving columns blank if data is not available.</p>

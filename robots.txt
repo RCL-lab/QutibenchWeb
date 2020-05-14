@@ -1,1 +1,1 @@
-Sitemap: https://rcl-lab.github.io/Qutibench_Web/sitemap.xml
+Sitemap: https://rcl-lab.github.io/QutibenchWeb/sitemap.xml

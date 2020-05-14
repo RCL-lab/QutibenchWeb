@@ -5,7 +5,7 @@ pd.set_option('max_colwidth', 80)
 
 import altair as alt
 import csv
-from IPython.display import display, HTML
+
 
 #--------------------------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------HEATMAPS-------------------------------------------
@@ -124,9 +124,29 @@ def heatmap(dataframe: pd.DataFrame, mouseover_color: str, title: str)->alt.vega
 #-----------------------------------------------------------ROOFLINES--------------------------------------
 #-------------------------------------------------------------------------------------------------------------------------
 
-#hide
 # Checkboxes with on-plot tooltips
-def line_chart_w_checkbox(data, condition, selection):
+def line_chart_w_checkbox(data: pd.DataFrame, condition: dict, selection)->alt.vegalite.v4.api.Chart:
+    """
+    This function creates an Altair line chart with checkboxes.
+    
+    Parameters
+    ----------
+        data: pd.DataFrame
+            Dataframe from which the plot will be created.       
+        condition: dict
+            Condition for the color.
+            Eg.: {'condition': {'selection': 'FPGAs  Ultra96  DPU  ZCU  ', 'type': 'nominal', 'field': 'Name'}, 'value': 'lightgray'}      
+        selection: Selection
+            Selection object to select what information the checkbox is tied to.
+            Eg.: Selection('FPGAs  Ultra96  DPU  ZCU  ', SelectionDef({
+                             bind: BindCheckbox({ input: 'checkbox' }),
+                             fields: ['Hide'],
+                             type: 'single'
+                          }))
+    Returns
+    -------
+        Line Chart with checkboxes.          
+    """
     maxX=160000
     width =700 
     height = 500
@@ -144,8 +164,21 @@ def line_chart_w_checkbox(data, condition, selection):
     return chart
 
 
-#hide
-def line_chart_no_checkbox(data, condition, selection):
+def line_chart_no_checkbox(data: pd.DataFrame, condition: dict, selection)->alt.vegalite.v4.api.Chart:
+    """
+    This function creates an Altair line chart with no checkboxes.
+    
+    Parameters
+    ----------
+        data: pd.DataFrame
+            Dataframe from which the plot will be created.       
+        condition: dict
+            Condition for the color.
+            Eg.: {'condition': {'selection': 'FPGAs  Ultra96  DPU  ZCU  ', 'type': 'nominal', 'field': 'Name'}, 'value': 'lightgray'}      
+    Returns
+    -------
+        Line Chart with no checkboxes.          
+    """
     maxX=160000
     width =600 
     height = 400
@@ -162,13 +195,29 @@ def line_chart_no_checkbox(data, condition, selection):
     )
     return chart
 
-def rooflines(dataframe, neural_network: str):
+def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api.Chart:
+    """
+    This function creates an Altair line chart with checkboxes. Creates a lot of them and then sums them up.
+    
+    Parameters
+    ----------
+        data: pd.DataFrame
+            Dataframe from which the plot will be created.       
+        neural_network:str
+            neural network that will also be plotted besides all hardware platforms.
+            Eg.:'imagenet|mnist|cifar'
+                'imagenet'
+     Returns
+    -------
+        Line Chart with checkboxes, all charts are summed up.          
+    """
     #hide_input
     maxX=160000
     width =700 
     height = 500
     data=dataframe
-
+    
+    #This part is to create all plots binded to checkboes-------------
     #Selecting data for each checkbox, from dataset. Each checkbox will be tied to each one of these data
     FPGA_data   = dataframe[dataframe['Name'].str.contains("Ultra96 DPU|ZCU")]
     NVIDIA_data = dataframe[dataframe['Name'].str.contains("TX2")]
@@ -225,6 +274,7 @@ def rooflines(dataframe, neural_network: str):
 
     #--------------------------------------------------------------------------------------------------
     #Adapted from https://stackoverflow.com/questions/53287928/tooltips-in-altair-line-charts
+    #This part will add information onplot
     # Step 1: create the lines
     lines = alt.Chart().mark_line(clip=True).interactive().encode(
             alt.X('arith_intens:Q'), 
@@ -262,35 +312,4 @@ def rooflines(dataframe, neural_network: str):
 
     return Chart
 
-#-------------------------------TABLES OVERVIEW OF THE EXPERIMENTS-----------------------------------------
-
-## Just some needed functions
-#Function to read from a csv file and return a numpy 2D array
-def read_from_csv(filename):  
-    array= []
-    with open(filename, newline='', encoding='utf-8') as f:
-        reader = csv.reader(f)
-        for row in reader:
-            array.append(row)
-    array = np.asarray(array)
-    return array
-
-def load_and_display(filenames):
-    dataframes=[]
-    pd.set_option('max_colwidth', 80)
-    for filename in filenames:
-        table = read_from_csv(filename)  # To read from a csv file into a 2D numpy array
-        dataframe = pd.DataFrame(data=table[2:,:], columns=[table[0,0:], table[1,0:]])  #To transform to dataframe the first and second row will be header
-        dataframe.loc[dataframe.duplicated(dataframe.columns[0]) , dataframe.columns[0]] = ''  #To remove duplicates from first column
-        dataframes.append(dataframe)     #To save all dataframes in here
-    
-    return dataframes
-
-def tableOverviewExperiments(filenames):
-    pd.set_option('max_colwidth', 80)
-    #pd.set_option('display.max_colwidth', None)
-    dataframes = load_and_display(filenames)
-    for dataframe in dataframes:   
-        return display(HTML(dataframe.to_html(index=False)))
-#-----------------------------------------------------------------------------------------------------------
-    
+#----------------------------------------------------------------------------------------------------------------------------------

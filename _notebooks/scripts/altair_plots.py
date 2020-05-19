@@ -125,7 +125,7 @@ def heatmap(dataframe: pd.DataFrame, mouseover_color: str, title: str)->alt.vega
 #-------------------------------------------------------------------------------------------------------------------------
 
 # Checkboxes with on-plot tooltips
-def line_chart_w_checkbox(data: pd.DataFrame, condition: dict, selection)->alt.vegalite.v4.api.Chart:
+def line_chart_w_checkbox(data: pd.DataFrame, condition: dict, selection: Selection)->alt.vegalite.v4.api.Chart:
     """
     This function creates an Altair line chart with checkboxes.
     
@@ -315,19 +315,20 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
 #----------------------------------------------------------------------------------------------------------------------------------
     # PROCESSING FOR PERFORMANCE PLOTS (LINE PLOT, BOXPLOT, PARETO GRAPH)
     
-def norm_by_group(df, column, group_col):
+def norm_by_group(df: pd.DataFrame(), column:str, group_col:str)->pd.DataFrame():
     """ Normalizes pandas series by group """
     df["norm-"+column] = df.groupby(group_col)[column].apply(lambda x: (x / x.max()))
     return df
 
-def select_color(sel, column):
+def select_color(sel: Selection, column:str) -> dict:
     """ Easy way to set colors based on selection for altair plots
     """
     return alt.condition(sel, 
                       alt.Color(column),
                       alt.value('lightgray'))
 
-def get_pareto_df(df, groupcol, xcol, ycol):
+def get_pareto_df(df: pd.DataFrame(), groupcol: str, xcol: str, ycol: str) -> pd.DataFrame():
+    """Creates a pareto line from the dataframe. This function doesn't correctly correspond x to y datapoints"""
     pareto_line_df = df.groupby(groupcol)[xcol].max().to_frame("x")
     pareto_line_df['y'] = df.groupby(groupcol)[ycol].agg(lambda x: x.value_counts().index[0])
     pareto_line_df.sort_values('y', ascending=False, inplace=True)
@@ -336,7 +337,27 @@ def get_pareto_df(df, groupcol, xcol, ycol):
     pareto_line_df['group'] = pareto_line_df.index
     return pareto_line_df
 
-def get_pareto_df_improved(df, groupcol, xcol, ycol):
+def get_pareto_df_improved(df: pd.DataFrame(), groupcol: str, xcol: str, ycol: str) -> pd.DataFrame():
+    """
+    Creates a dataframe with the datapoints for a pareto line.
+    Improved version, it deals with lines that go up, this function correctly corresponds x to y datapoints 
+    
+    Parameters
+    ----------
+        df: pd.DataFrame
+            Dataframe from which the pareto line will be created       
+        groupcol: st
+           the dataframe column which has all hardware platforms 
+        xcol: str
+            the dataframe column which has the x axis information. Typically the fps-comp 
+        ycol: str
+           the dataframe columnwhich has the y axis information. Typically the top1 accuracy in % 
+            
+     Returns
+    -------
+        pareto_line_df: pd.DataFrame()
+           dataframe with datapoints for a pareto line          
+    """
     df_ = df.loc[:,[groupcol,ycol,xcol]]
 
     pareto_line_df = df.groupby(groupcol)[xcol].max().to_frame(xcol)
@@ -359,7 +380,7 @@ def label_point(x, y, val, ax, rot=0):
         ax.text(point['x']+.02, point['y'], str(point['val']), rotation=rot)
 
 
-def boxplot(df:pd.DataFrame(), yaxis: str, title: str):
+def boxplot(df:pd.DataFrame(), yaxis: str, title: str)-> alt.vegalite.v4.api.Chart:
     """ Creates a boxplot based on the df, yaxis and title """
     return alt.Chart(df).mark_boxplot().encode(
     x=alt.X('PruningFactor:O'),
@@ -369,8 +390,31 @@ def boxplot(df:pd.DataFrame(), yaxis: str, title: str):
     title = title,
     ).interactive()
 
-def pareto_graph(df: pd.DataFrame(), groupcol: str , xcol: str, ycol: str, W: int, H: int, title: str ):
-    """ Creates a pareto graph with the inputs given"""
+def pareto_graph(df: pd.DataFrame(), groupcol: str , xcol: str, ycol: str, W: int, H: int, title: str ) -> alt.vegalite.v4.api.Chart:
+    """
+    Creates a pareto graph with the inputs given.
+    
+    Parameters
+    ----------
+        data: pd.DataFrame
+            Dataframe from which the pareto graph will be created       
+        groupcol: st
+           the dataframe column which has all hardware platforms 
+        xcol: str
+            the dataframe column which has the x axis information. Typically the fps-comp 
+        ycol: str
+           the dataframe columnwhich has the y axis information. Typically the top1 accuracy in % 
+        W: int
+           Plot width           
+        H: int
+           Plot height 
+        title: str
+           Title to give to the plot
+            
+     Returns
+    -------
+        Line chart + Pareto chart          
+    """
     df_pareto = get_pareto_df_improved(df, groupcol, xcol, ycol)
 
     df_lines = alt.Chart(df).mark_line(point=True).encode(

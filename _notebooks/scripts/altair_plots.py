@@ -273,8 +273,8 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
     GNMT_chart     = line_chart_w_checkbox(GNMT_data,     GNMT_cond,     GNMT_select)
 
     #--------------------------------------------------------------------------------------------------
-    #Adapted from https://stackoverflow.com/questions/53287928/tooltips-in-altair-line-charts
-    #This part will add information onplot
+    #The following part was adapted from https://stackoverflow.com/questions/53287928/tooltips-in-altair-line-charts
+    #This part will add information to the plot
     # Step 1: create the lines
     lines = alt.Chart().mark_line(clip=True).interactive().encode(
             alt.X('arith_intens:Q'), 
@@ -313,3 +313,79 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
     return Chart
 
 #----------------------------------------------------------------------------------------------------------------------------------
+    # PROCESSING FOR PERFORMANCE PLOTS (LINE PLOT, BOXPLOT, PARETO GRAPH)
+    
+def norm_by_group(df, column, group_col):
+    """ Normalizes pandas series by group """
+    df["norm-"+column] = df.groupby(group_col)[column].apply(lambda x: (x / x.max()))
+    return df
+
+def select_color(sel, column):
+    """ Easy way to set colors based on selection for altair plots
+    """
+    return alt.condition(sel, 
+                      alt.Color(column),
+                      alt.value('lightgray'))
+
+def get_pareto_df(df, groupcol, xcol, ycol):
+    pareto_line_df = df.groupby(groupcol)[xcol].max().to_frame("x")
+    pareto_line_df['y'] = df.groupby(groupcol)[ycol].agg(lambda x: x.value_counts().index[0])
+    pareto_line_df.sort_values('y', ascending=False, inplace=True)
+    pareto_line_df['x'] = pareto_line_df.x.cummax()
+    pareto_line_df.drop_duplicates('x', keep='first', inplace=True)
+    pareto_line_df['group'] = pareto_line_df.index
+    return pareto_line_df
+
+def get_pareto_df_improved(df, groupcol, xcol, ycol):
+    df_ = df.loc[:,[groupcol,ycol,xcol]]
+
+    pareto_line_df = df.groupby(groupcol)[xcol].max().to_frame(xcol)
+
+    pareto_line_df = pd.merge(pareto_line_df, df_, left_on=xcol, right_on=xcol, how='left')
+    pareto_line_df = pareto_line_df.set_index(groupcol)
+    pareto_line_df.columns = ['x','y']
+
+    pareto_line_df.sort_values('y', ascending=False, inplace=True)
+    pareto_line_df['x'] = pareto_line_df.x.cummax()
+    pareto_line_df.drop_duplicates('x', keep='first', inplace=True)
+    pareto_line_df['group'] = pareto_line_df.index
+    pareto_line_df.head()
+    return pareto_line_df
+
+def label_point(x, y, val, ax, rot=0):
+    """ from https://stackoverflow.com/questions/46027653/adding-labels-in-x-y-scatter-plot-with-seaborn"""
+    a = pd.concat({'x': x, 'y': y, 'val': val}, axis=1)
+    for i, point in a.iterrows():
+        ax.text(point['x']+.02, point['y'], str(point['val']), rotation=rot)
+
+
+def boxplot(df:pd.DataFrame(), yaxis: str, title: str):
+    """ Creates a boxplot based on the df, yaxis and title """
+    return alt.Chart(df).mark_boxplot().encode(
+    x=alt.X('PruningFactor:O'),
+    y=alt.Y(yaxis, scale=alt.Scale(type="log"), title=yaxis),
+    color=alt.Color('PruningFactor:O', title='Pruning Factor'),
+    ).facet(column="quant_model").properties(
+    title = title,
+    ).interactive()
+
+def pareto_graph(df: pd.DataFrame(), groupcol: str , xcol: str, ycol: str, W: int, H: int, title: str ):
+    """ Creates a pareto graph with the inputs given"""
+    df_pareto = get_pareto_df_improved(df, groupcol, xcol, ycol)
+
+    df_lines = alt.Chart(df).mark_line(point=True).encode(
+        x=xcol,
+        y=alt.Y(ycol + ":Q", scale=alt.Scale(zero=False)),
+        color=alt.Color(groupcol, legend=alt.Legend(columns=1, title = "Hardware_Quantization_Pruning")),
+        tooltip=["HWType", "Precision", "PruningFactor", "batch/thread/stream", ycol, xcol],
+    )
+    df_pareto_plot = alt.Chart(df_pareto).mark_line().encode(
+        x="x",
+        y=alt.Y("y", scale=alt.Scale(zero=False)),
+    )
+    return (df_lines+df_pareto_plot).interactive().properties(
+        width=W,
+        height=H,
+        title=title
+    )
+

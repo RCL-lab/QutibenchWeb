@@ -396,3 +396,34 @@ def pareto_graph(df: pd.DataFrame(), groupcol: str , xcol: str, ycol: str, W: in
         title=title
     )
 
+def delete_unique_values(df: pd.DataFrame(), col_a: str, col_b:str)->pd.DataFrame():
+    """ Delets DataFrame rows based on column values.
+    Delets rows whose values in column A has only 1 distinct value in column B.
+    eg.:       Input:                    Desired output:
+         col_a       col_b               col_a       col_b 
+         NCS         1.728796            NCS         1.728796
+         NCS         1.780300            NCS         1.780300
+         TPU         14.5                
+         TPU         14.5    
+             
+    Parameters
+    ----------
+        data: pd.DataFrame
+            Dataframe with needed data.
+        col_hardw: str
+            dataframe column.
+        col_data: str
+            dataframe column.
+    Returns
+    -------
+        df: pd.DataFrame()
+            Processed DataFrame.
+    """
+    #drop all duplicated values of colB
+    df = df[~df.duplicated(col_b)]
+    #create new column that has the number of diferent values that column A has
+    df['count'] = df.groupby(col_a)[col_a].transform('count')
+    #delete rows that only have 1 data value ( eg.: only 1 power value)
+    df = df.query('count!= 1')
+    del df['count']
+    return df

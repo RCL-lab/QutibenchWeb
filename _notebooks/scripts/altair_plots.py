@@ -125,7 +125,7 @@ def heatmap(dataframe: pd.DataFrame, mouseover_color: str, title: str)->alt.vega
 #-------------------------------------------------------------------------------------------------------------------------
 
 # Checkboxes with on-plot tooltips
-def line_chart_w_checkbox(data: pd.DataFrame, condition: dict, selection: Selection)->alt.vegalite.v4.api.Chart:
+def line_chart_w_checkbox(data: pd.DataFrame, condition: dict, selection: alt.vegalite.v4.api.Selection)->alt.vegalite.v4.api.Chart:
     """
     This function creates an Altair line chart with checkboxes.
     
@@ -164,36 +164,6 @@ def line_chart_w_checkbox(data: pd.DataFrame, condition: dict, selection: Select
     return chart
 
 
-def line_chart_no_checkbox(data: pd.DataFrame, condition: dict, selection)->alt.vegalite.v4.api.Chart:
-    """
-    This function creates an Altair line chart with no checkboxes.
-    
-    Parameters
-    ----------
-        data: pd.DataFrame
-            Dataframe from which the plot will be created.       
-        condition: dict
-            Condition for the color.
-            Eg.: {'condition': {'selection': 'FPGAs  Ultra96  DPU  ZCU  ', 'type': 'nominal', 'field': 'Name'}, 'value': 'lightgray'}      
-    Returns
-    -------
-        Line Chart with no checkboxes.          
-    """
-    maxX=160000
-    width =600 
-    height = 400
-    chart = alt.Chart(data, width=width,height=height).properties(title='Comparing Hardware Platforms Rooflines and Neural Networks Arithmetic Intensity with checkboxes').mark_line(clip=True).encode(
-        alt.X('arith_intens:Q', 
-              title = 'ARITHMETIC INTENSITY (OPS/BYTE)', 
-              scale = alt.Scale(type='log', domain = (0.1,maxX) )
-             ),
-        alt.Y('performance:Q', 
-              title = 'PERFORMANCE (TOPS/S)', 
-              scale=alt.Scale(type='log', domain = (0.2,40) )
-             ),    
-        color=alt.Color("Name:N")
-    )
-    return chart
 
 def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api.Chart:
     """
@@ -307,7 +277,7 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
         return 'There were no results for the neural network asked. Please insert another network'
     
     #Chart = alt.layer(FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart + IMAGENET_chart + MNIST_chart + CIFAR_chart + MASKRCNN_chart+ GNMT_chart
-    #Chart = alt.layer(chart_filtered.squeeze() + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, selectors, text, data=dataframe, width=700, height=500)
+  
     Chart = alt.layer(chart_filtered.charts.sum(numeric_only = False) + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, selectors, text, data=dataframe, width=700, height=500)
 
     return Chart
@@ -320,7 +290,7 @@ def norm_by_group(df: pd.DataFrame(), column:str, group_col:str)->pd.DataFrame()
     df["norm-"+column] = df.groupby(group_col)[column].apply(lambda x: (x / x.max()))
     return df
 
-def select_color(sel: Selection, column:str) -> dict:
+def select_color(sel: alt.vegalite.v4.api.Selection, column: str) -> dict:
     """ Easy way to set colors based on selection for altair plots
     """
     return alt.condition(sel, 
@@ -373,21 +343,14 @@ def get_pareto_df_improved(df: pd.DataFrame(), groupcol: str, xcol: str, ycol: s
     pareto_line_df.head()
     return pareto_line_df
 
-def label_point(x, y, val, ax, rot=0):
-    """ from https://stackoverflow.com/questions/46027653/adding-labels-in-x-y-scatter-plot-with-seaborn"""
-    a = pd.concat({'x': x, 'y': y, 'val': val}, axis=1)
-    for i, point in a.iterrows():
-        ax.text(point['x']+.02, point['y'], str(point['val']), rotation=rot)
-
-
 def boxplot(df:pd.DataFrame(), yaxis: str, title: str)-> alt.vegalite.v4.api.Chart:
     """ Creates a boxplot based on the df, yaxis and title """
     return alt.Chart(df).mark_boxplot().encode(
-    x=alt.X('PruningFactor:O'),
-    y=alt.Y(yaxis, scale=alt.Scale(type="log"), title=yaxis),
-    color=alt.Color('PruningFactor:O', title='Pruning Factor'),
+        x=alt.X('PruningFactor:O'),
+        y=alt.Y(yaxis, scale=alt.Scale(type="log"), title=yaxis),
+        color=alt.Color('PruningFactor:O', title='Pruning Factor'),
     ).facet(column="quant_model").properties(
-    title = title,
+        title = title,
     ).interactive()
 
 def pareto_graph(df: pd.DataFrame(), groupcol: str , xcol: str, ycol: str, W: int, H: int, title: str ) -> alt.vegalite.v4.api.Chart:
@@ -403,7 +366,7 @@ def pareto_graph(df: pd.DataFrame(), groupcol: str , xcol: str, ycol: str, W: in
         xcol: str
             the dataframe column which has the x axis information. Typically the fps-comp 
         ycol: str
-           the dataframe columnwhich has the y axis information. Typically the top1 accuracy in % 
+           the dataframe column which has the y axis information. Typically the top1 accuracy in % 
         W: int
            Plot width           
         H: int

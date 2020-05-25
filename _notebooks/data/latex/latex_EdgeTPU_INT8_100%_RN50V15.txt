@@ -1,0 +1,10 @@
+\begin{tabular}{|r|c|l|r|c|l|r|c|l|r|c|l|r|c|l|r|c|l|r|c|l|}
+\toprule
+        hw\_quant\_prun\_net  & Op mode & batch &  lat-comp & fps-system & fps-comp & tp-system &   tp-comp & top1 & top5 [\%] & Base\_Pwr\_W & Idle\_Pwr\_W & Full\_Pwr\_W \\
+\midrule
+ EdgeTPU\_INT8\_100\%\_RN50V15 &    fast &     1 &  40.44151 &     10.552 &   24.727 &   86.5264 &  202.7614 &   na &       na &         na &         na &     1.1900 \\
+ EdgeTPU\_INT8\_100\%\_RN50V15 &    fast &     1 &  40.58504 &     10.589 &   24.640 &   86.8298 &  202.0480 &   na &       na &         na &         na &     1.4900 \\
+ EdgeTPU\_INT8\_100\%\_RN50V15 &    slow &     1 &  42.35792 &     10.075 &   23.608 &   82.6100 &  193.5856 &   na &       na &         na &         na &     0.9623 \\
+ EdgeTPU\_INT8\_100\%\_RN50V15 &    slow &     1 &  41.69559 &      7.111 &   23.983 &   58.3102 &  196.6606 &   na &       na &         na &         na &     1.0200 \\
+\bottomrule
+\end{tabular}

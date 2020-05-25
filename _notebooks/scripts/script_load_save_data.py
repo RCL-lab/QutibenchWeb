@@ -90,10 +90,9 @@ def clean_csv_performance_predictions(path_csv: str):
     #path_imagenet = path + '/performance_prediction_' + tasks[0] + '.csv'
 
     #Saving above dataframes to csv file
-    df_imagenet.to_csv('c:/Users/alinav/Documents/GitHub/Qutibench_Web/_notebooks/data/cleaned_csv/performance_prediction_imagenet.csv', index = False)
-    df_cifar10.to_csv('c:/Users/alinav/Documents/GitHub/Qutibench_Web/_notebooks/data/cleaned_csv/performance_prediction_cifar10.csv', index = False)
-    df_mnist.to_csv('c:/Users/alinav/Documents/GitHub/Qutibench_Web/_notebooks/data/cleaned_csv/performance_prediction_mnist.csv', index = False)
-    source.to_csv('c:/Users/alinav/Documents/GitHub/Qutibench_Web/_notebooks/data/cleaned_csv/performance_prediction_imagenet_mnist_cifar10.csv', index = False)
+    df_imagenet.to_csv('c:/Users/alinav/Documents/GitHub/QutibenchWeb/_notebooks/data/cleaned_csv/performance_prediction_imagenet.csv', index = False)
+    df_cifar10.to_csv('c:/Users/alinav/Documents/GitHub/QutibenchWeb/_notebooks/data/cleaned_csv/performance_prediction_cifar10.csv', index = False)
+    df_mnist.to_csv('c:/Users/alinav/Documents/GitHub/QutibenchWeb/_notebooks/data/cleaned_csv/performance_prediction_mnist.csv', index = False)
     
 #-------------------------------------------------------------------------------------------------------------------------------------------
 

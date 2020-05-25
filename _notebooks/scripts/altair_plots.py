@@ -297,6 +297,17 @@ def select_color(sel: alt.vegalite.v4.api.Selection, column: str) -> dict:
                       alt.Color(column),
                       alt.value('lightgray'))
 
+def boxplot(df:pd.DataFrame(), yaxis: str, title: str)-> alt.vegalite.v4.api.Chart:
+    """ Creates a boxplot based on the df, yaxis and title """
+    return alt.Chart(df).mark_boxplot().encode(
+        x=alt.X('PruningFactor:O'),
+        y=alt.Y(yaxis, scale=alt.Scale(type="log"), title=yaxis),
+        color=alt.Color('PruningFactor:O', title='Pruning Factor'),
+    ).facet(column="quant_model").properties(
+        title = title,
+    ).interactive()
+
+
 def get_pareto_df(df: pd.DataFrame(), groupcol: str, xcol: str, ycol: str) -> pd.DataFrame():
     """Creates a pareto line from the dataframe. This function doesn't correctly correspond x to y datapoints"""
     pareto_line_df = df.groupby(groupcol)[xcol].max().to_frame("x")
@@ -343,15 +354,6 @@ def get_pareto_df_improved(df: pd.DataFrame(), groupcol: str, xcol: str, ycol: s
     pareto_line_df.head()
     return pareto_line_df
 
-def boxplot(df:pd.DataFrame(), yaxis: str, title: str)-> alt.vegalite.v4.api.Chart:
-    """ Creates a boxplot based on the df, yaxis and title """
-    return alt.Chart(df).mark_boxplot().encode(
-        x=alt.X('PruningFactor:O'),
-        y=alt.Y(yaxis, scale=alt.Scale(type="log"), title=yaxis),
-        color=alt.Color('PruningFactor:O', title='Pruning Factor'),
-    ).facet(column="quant_model").properties(
-        title = title,
-    ).interactive()
 
 def pareto_graph(df: pd.DataFrame(), groupcol: str , xcol: str, ycol: str, W: int, H: int, title: str ) -> alt.vegalite.v4.api.Chart:
     """
@@ -384,7 +386,8 @@ def pareto_graph(df: pd.DataFrame(), groupcol: str , xcol: str, ycol: str, W: in
         x=xcol,
         y=alt.Y(ycol + ":Q", scale=alt.Scale(zero=False)),
         color=alt.Color(groupcol, legend=alt.Legend(columns=1, title = "Hardware_Quantization_Pruning")),
-        tooltip=["HWType", "Precision", "PruningFactor", "batch/thread/stream", ycol, xcol],
+        #tooltip=["HWType", "Precision", "PruningFactor", "batch/thread/stream", ycol, xcol],
+        tooltip=[groupcol, ycol, xcol],
     )
     df_pareto_plot = alt.Chart(df_pareto).mark_line().encode(
         x="x",

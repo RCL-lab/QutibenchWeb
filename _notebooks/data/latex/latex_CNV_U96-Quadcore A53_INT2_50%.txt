@@ -1,41 +1,41 @@
 \begin{tabular}{|r|c|l|r|c|l|r|c|l|r|c|l|r|c|l|r|c|l|r|c|l|}
 \toprule
-NN\_Topology &                hw\_quant\_prun & Op mode & batch &  lat-comp & fps-system &    fps-comp & tp-system & tp-comp &   top1 & top5 [\%] & Base\_Pwr\_W & Idle\_Pwr\_W & Full\_Pwr\_W \\
+NN\_Topology &                 hw\_quant\_prun & Op mode & batch & lat-sys &  lat-comp & fps-system &    fps-comp & tp-system &    tp-comp &   top1 & top5 [\%] & Base\_Pwr\_W & Idle\_Pwr\_W & Full\_Pwr\_W \\
 \midrule
-        CNV &    U96-Quadcore A53\_INT2\_50\% &      na &     2 &    34.132 &         na &   58.596039 &        na &      na &  84.29 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT2\_50\% &      na &     4 &    52.668 &         na &   75.947444 &        na &      na &  84.29 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT2\_50\% &      na &     8 &    89.495 &         na &   89.390469 &        na &      na &  84.29 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT2\_50\% &      na &    16 &   164.939 &         na &   97.005560 &        na &      na &  84.29 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT2\_50\% &      na &    32 &   320.240 &         na &   99.925056 &        na &      na &  84.29 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT2\_50\% &      na &    64 &   620.131 &         na &  103.204000 &        na &      na &  84.29 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT2\_50\% &      na &   128 &  1227.069 &         na &  104.313612 &        na &      na &  84.29 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT4\_25\% &      na &     2 &     8.550 &         na &  233.918129 &        na &      na &  81.09 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT4\_25\% &      na &     4 &    14.137 &         na &  282.945462 &        na &      na &  81.09 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT4\_25\% &      na &     8 &    25.200 &         na &  317.460317 &        na &      na &  81.09 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT4\_25\% &      na &    16 &    46.580 &         na &  343.495062 &        na &      na &  81.09 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT4\_25\% &      na &    32 &    90.412 &         na &  353.935318 &        na &      na &  81.09 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT4\_25\% &      na &    64 &   178.848 &         na &  357.845768 &        na &      na &  81.09 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT4\_25\% &      na &   128 &   353.671 &         na &  361.918280 &        na &      na &  81.09 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT2\_25\% &      na &     2 &     8.433 &         na &  237.163524 &        na &      na &  79.89 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT2\_25\% &      na &     4 &    14.103 &         na &  283.627597 &        na &      na &  79.89 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT2\_25\% &      na &     8 &    24.808 &         na &  322.476620 &        na &      na &  79.89 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT2\_25\% &      na &    16 &    46.974 &         na &  340.613957 &        na &      na &  79.89 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT2\_25\% &      na &    32 &    90.564 &         na &  353.341284 &        na &      na &  79.89 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT2\_25\% &      na &    64 &   178.144 &         na &  359.259925 &        na &      na &  79.89 &       na &        9.2 &         na &       14.5 \\
-        CNV &    U96-Quadcore A53\_INT2\_25\% &      na &   128 &   351.970 &         na &  363.667358 &        na &      na &  79.89 &       na &        9.2 &         na &       14.5 \\
-        CNV &  U96-Quadcore A53\_INT4\_12.5\% &      na &     2 &     3.625 &         na &  551.724138 &        na &      na &  75.85 &       na &        9.2 &         na &       14.5 \\
-        CNV &  U96-Quadcore A53\_INT4\_12.5\% &      na &     4 &     6.410 &         na &  624.024961 &        na &      na &  75.85 &       na &        9.2 &         na &       14.5 \\
-        CNV &  U96-Quadcore A53\_INT4\_12.5\% &      na &     8 &    11.712 &         na &  683.060109 &        na &      na &  75.85 &       na &        9.2 &         na &       14.5 \\
-        CNV &  U96-Quadcore A53\_INT4\_12.5\% &      na &    16 &    22.370 &         na &  715.243630 &        na &      na &  75.85 &       na &        9.2 &         na &       14.5 \\
-        CNV &  U96-Quadcore A53\_INT4\_12.5\% &      na &    32 &    43.397 &         na &  737.378160 &        na &      na &  75.85 &       na &        9.2 &         na &       14.5 \\
-        CNV &  U96-Quadcore A53\_INT4\_12.5\% &      na &    64 &    85.380 &         na &  749.590068 &        na &      na &  75.85 &       na &        9.2 &         na &       14.5 \\
-        CNV &  U96-Quadcore A53\_INT4\_12.5\% &      na &   128 &   168.071 &         na &  761.582902 &        na &      na &  75.85 &       na &        9.2 &         na &       14.5 \\
-        CNV &  U96-Quadcore A53\_INT2\_12.5\% &      na &     2 &     3.651 &         na &  547.795125 &        na &      na &  73.64 &       na &        9.2 &         na &       14.5 \\
-        CNV &  U96-Quadcore A53\_INT2\_12.5\% &      na &     4 &     6.306 &         na &  634.316524 &        na &      na &  73.64 &       na &        9.2 &         na &       14.5 \\
-        CNV &  U96-Quadcore A53\_INT2\_12.5\% &      na &     8 &    11.731 &         na &  681.953798 &        na &      na &  73.64 &       na &        9.2 &         na &       14.5 \\
-        CNV &  U96-Quadcore A53\_INT2\_12.5\% &      na &    16 &    22.210 &         na &  720.396218 &        na &      na &  73.64 &       na &        9.2 &         na &       14.5 \\
-        CNV &  U96-Quadcore A53\_INT2\_12.5\% &      na &    32 &    43.493 &         na &  735.750581 &        na &      na &  73.64 &       na &        9.2 &         na &       14.5 \\
-        CNV &  U96-Quadcore A53\_INT2\_12.5\% &      na &    64 &    85.127 &         na &  751.817872 &        na &      na &  73.64 &       na &        9.2 &         na &       14.5 \\
-        CNV &  U96-Quadcore A53\_INT2\_12.5\% &      na &   128 &   167.092 &         na &  766.045053 &        na &      na &  73.64 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT2\_50\% &      na &     2 &      na &    34.132 &         na &   58.596039 &        na &   6.968454 &  84.29 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT2\_50\% &      na &     4 &      na &    52.668 &         na &   75.947444 &        na &   9.031946 &  84.29 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT2\_50\% &      na &     8 &      na &    89.495 &         na &   89.390469 &        na &  10.630640 &  84.29 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT2\_50\% &      na &    16 &      na &   164.939 &         na &   97.005560 &        na &  11.536254 &  84.29 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT2\_50\% &      na &    32 &      na &   320.240 &         na &   99.925056 &        na &  11.883451 &  84.29 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT2\_50\% &      na &    64 &      na &   620.131 &         na &  103.204000 &        na &  12.273395 &  84.29 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT2\_50\% &      na &   128 &      na &  1227.069 &         na &  104.313612 &        na &  12.405354 &  84.29 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT4\_25\% &      na &     2 &      na &     8.550 &         na &  233.918129 &        na &   7.137247 &  81.09 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT4\_25\% &      na &     4 &      na &    14.137 &         na &  282.945462 &        na &   8.633156 &  81.09 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT4\_25\% &      na &     8 &      na &    25.200 &         na &  317.460317 &        na &   9.686264 &  81.09 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT4\_25\% &      na &    16 &      na &    46.580 &         na &  343.495062 &        na &  10.480629 &  81.09 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT4\_25\% &      na &    32 &      na &    90.412 &         na &  353.935318 &        na &  10.799180 &  81.09 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT4\_25\% &      na &    64 &      na &   178.848 &         na &  357.845769 &        na &  10.918494 &  81.09 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT4\_25\% &      na &   128 &      na &   353.671 &         na &  361.918280 &        na &  11.042754 &  81.09 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT2\_25\% &      na &     2 &      na &     8.433 &         na &  237.163524 &        na &   7.236270 &  79.89 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT2\_25\% &      na &     4 &      na &    14.103 &         na &  283.627597 &        na &   8.653969 &  79.89 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT2\_25\% &      na &     8 &      na &    24.808 &         na &  322.476620 &        na &   9.839320 &  79.89 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT2\_25\% &      na &    16 &      na &    46.974 &         na &  340.613957 &        na &  10.392722 &  79.89 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT2\_25\% &      na &    32 &      na &    90.564 &         na &  353.341283 &        na &  10.781055 &  79.89 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT2\_25\% &      na &    64 &      na &   178.144 &         na &  359.259925 &        na &  10.961643 &  79.89 &       na &        9.2 &         na &       14.5 \\
+        CNV &     U96-Quadcore A53\_INT2\_25\% &      na &   128 &      na &   351.970 &         na &  363.667358 &        na &  11.096121 &  79.89 &       na &        9.2 &         na &       14.5 \\
+        CNV &  U96-Quadcore A53\_INT4\_12.50\% &      na &     2 &      na &     3.625 &         na &  551.724138 &        na &   4.424097 &  75.85 &       na &        9.2 &         na &       14.5 \\
+        CNV &  U96-Quadcore A53\_INT4\_12.50\% &      na &     4 &      na &     6.410 &         na &  624.024961 &        na &   5.003854 &  75.85 &       na &        9.2 &         na &       14.5 \\
+        CNV &  U96-Quadcore A53\_INT4\_12.50\% &      na &     8 &      na &    11.712 &         na &  683.060109 &        na &   5.477238 &  75.85 &       na &        9.2 &         na &       14.5 \\
+        CNV &  U96-Quadcore A53\_INT4\_12.50\% &      na &    16 &      na &    22.370 &         na &  715.243630 &        na &   5.735307 &  75.85 &       na &        9.2 &         na &       14.5 \\
+        CNV &  U96-Quadcore A53\_INT4\_12.50\% &      na &    32 &      na &    43.397 &         na &  737.378160 &        na &   5.912797 &  75.85 &       na &        9.2 &         na &       14.5 \\
+        CNV &  U96-Quadcore A53\_INT4\_12.50\% &      na &    64 &      na &    85.380 &         na &  749.590068 &        na &   6.010720 &  75.85 &       na &        9.2 &         na &       14.5 \\
+        CNV &  U96-Quadcore A53\_INT4\_12.50\% &      na &   128 &      na &   168.071 &         na &  761.582903 &        na &   6.106887 &  75.85 &       na &        9.2 &         na &       14.5 \\
+        CNV &  U96-Quadcore A53\_INT2\_12.50\% &      na &     2 &      na &     3.651 &         na &  547.795125 &        na &   4.392592 &  73.64 &       na &        9.2 &         na &       14.5 \\
+        CNV &  U96-Quadcore A53\_INT2\_12.50\% &      na &     4 &      na &     6.306 &         na &  634.316524 &        na &   5.086379 &  73.64 &       na &        9.2 &         na &       14.5 \\
+        CNV &  U96-Quadcore A53\_INT2\_12.50\% &      na &     8 &      na &    11.731 &         na &  681.953798 &        na &   5.468367 &  73.64 &       na &        9.2 &         na &       14.5 \\
+        CNV &  U96-Quadcore A53\_INT2\_12.50\% &      na &    16 &      na &    22.210 &         na &  720.396218 &        na &   5.776624 &  73.64 &       na &        9.2 &         na &       14.5 \\
+        CNV &  U96-Quadcore A53\_INT2\_12.50\% &      na &    32 &      na &    43.493 &         na &  735.750581 &        na &   5.899746 &  73.64 &       na &        9.2 &         na &       14.5 \\
+        CNV &  U96-Quadcore A53\_INT2\_12.50\% &      na &    64 &      na &    85.127 &         na &  751.817872 &        na &   6.028584 &  73.64 &       na &        9.2 &         na &       14.5 \\
+        CNV &  U96-Quadcore A53\_INT2\_12.50\% &      na &   128 &      na &   167.092 &         na &  766.045053 &        na &   6.142667 &  73.64 &       na &        9.2 &         na &       14.5 \\
 \bottomrule
 \end{tabular}

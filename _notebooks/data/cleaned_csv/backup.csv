@@ -1,4 +1,4 @@
-NN_Topology,HWType,Precision,Op mode,batch/thread/stream,lat-sys,lat-comp,fps-system,fps-comp,tp-system,tp-comp,top1 [%],top5 [%],Base_Pwr_W,Idle_Pwr_W,Full_Pwr_W,GOPS,PruningFactor,level
+NN_Topology,HWType,Datatype,Op mode,batch/thread/stream,lat-sys,lat-comp,fps-system,fps-comp,tp-system,tp-comp,top1 [%],top5 [%],Base_Pwr_W,Idle_Pwr_W,Full_Pwr_W,GOPS,PruningFactor,level
 RN50V15,EdgeTPU,INT8,fast,1,,40.44151,10.552,24.727,86.5264,202.7614,,,,,1.19,,100%,l3
 RN50V15,EdgeTPU,INT8,fast,1,,40.58504,10.589,24.64,86.8298,202.048,,,,,1.49,,100%,l3
 RN50V15,EdgeTPU,INT8,slow,1,,42.35792,10.075,23.608,82.61,193.5856,,,,,0.9623,,100%,l3

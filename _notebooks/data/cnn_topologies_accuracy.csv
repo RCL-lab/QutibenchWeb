@@ -2,13 +2,13 @@
   ,top1 (top5) [%],top1 (top5) [%],top1 (top5) [%],top1 (top5) [%],top1 (top5) [%]
 GoogLeNetv1,nm,nm,69.24 (88.45),66.93 (87.83),66.96 (87.84)
 MobileNetv1,nm,nm,69.57 (87.71),nm,nm
-EfficientNet small,nm,nm,77,nm,nm
-EfficientNet medium,nm,nm,78.6,nm,nm
-EfficientNet large,nm,nm,80.2,nm,nm
-ResNet-50 100%,nm,nm,73.29 (91.26),75.14 (92.12),75.15 (92.11)
-ResNet-50 80%,nm,nm,73.30 (91.40),nm,nm
-ResNet-50 50%,nm,nm,69.49 (91.00),nm,nm
-ResNet-50 30%,nm,nm,68.83 ( 90.16),nm,nm
+EfficientNet-S 100%,nm,nm,77,nm,nm
+EfficientNet-M 100%,nm,nm,78.6,nm,nm
+EfficientNet-L 100%,nm,nm,80.2,nm,nm
+ResNet50 100%,nm,nm,73.29 (91.26),75.14 (92.12),75.15 (92.11)
+ResNet50 80%,nm,nm,73.30 (91.40),nm,nm
+ResNet50 50%,nm,nm,69.49 (91.00),nm,nm
+ResNet50 30%,nm,nm,68.83 ( 90.16),nm,nm
 CNV 100%,86.86,87.4,nm,87.02,87.06
 CNV 50%,84.29,84.88,nm,85.55,85.6
 CNV 25%,79.89,81.09,nm,83.28,83.25

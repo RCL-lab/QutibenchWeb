@@ -297,13 +297,13 @@ def select_color(sel: alt.vegalite.v4.api.Selection, column: str) -> dict:
                       alt.Color(column),
                       alt.value('lightgray'))
 
-def boxplot(df:pd.DataFrame(), yaxis: str, title: str)-> alt.vegalite.v4.api.Chart:
+def boxplot(df:pd.DataFrame(), xaxis:str, yaxis: str, color_col: str, facet_column: str, title: str)-> alt.vegalite.v4.api.Chart:
     """ Creates a boxplot based on the df, yaxis and title """
     return alt.Chart(df).mark_boxplot().encode(
-        x=alt.X('PruningFactor:O'),
+        x=alt.X(xaxis + ':O'),
         y=alt.Y(yaxis, scale=alt.Scale(type="log"), title=yaxis),
-        color=alt.Color('PruningFactor:O', title='Pruning Factor'),
-    ).facet(column="quant_model").properties(
+        color=alt.Color(color_col + ':O', title='Pruning Factor'),
+    ).facet(column=facet_column).properties(
         title = title,
     ).interactive()
 
@@ -380,20 +380,64 @@ def pareto_graph(df: pd.DataFrame(), groupcol: str , xcol: str, ycol: str, W: in
     -------
         Line chart + Pareto chart          
     """
-    df_pareto = get_pareto_df_improved(df, groupcol, xcol, ycol)
+    df_pareto = get_pareto_df(df, groupcol, xcol, ycol)
 
     df_lines = alt.Chart(df).mark_line(point=True).encode(
         x=xcol,
         y=alt.Y(ycol + ":Q", scale=alt.Scale(zero=False)),
         color=alt.Color(groupcol, legend=alt.Legend(columns=1, title = "Hardware_Quantization_Pruning")),
         #tooltip=["HWType", "Precision", "PruningFactor", "batch/thread/stream", ycol, xcol],
-        tooltip=[groupcol, ycol, xcol],
+        #tooltip=[groupcol, ycol, xcol],
     )
     df_pareto_plot = alt.Chart(df_pareto).mark_line().encode(
         x="x",
         y=alt.Y("y", scale=alt.Scale(zero=False)),
     )
     return (df_lines+df_pareto_plot).interactive().properties(
+        width=W,
+        height=H,
+        title=title
+    )
+
+def pareto_graph_points(df: pd.DataFrame(), groupcol: str , xcol: str, ycol: str, W: int, H: int, title: str ) -> alt.vegalite.v4.api.Chart:
+    """
+    Creates a pareto graph with the inputs given.
+    
+    Parameters
+    ----------
+        data: pd.DataFrame
+            Dataframe from which the pareto graph will be created       
+        groupcol: st
+           the dataframe column which has all hardware platforms 
+        xcol: str
+            the dataframe column which has the x axis information. Typically the fps-comp 
+        ycol: str
+           the dataframe column which has the y axis information. Typically the top1 accuracy in % 
+        W: int
+           Plot width           
+        H: int
+           Plot height 
+        title: str
+           Title to give to the plot
+            
+     Returns
+    -------
+        Line chart + Pareto chart          
+    """
+    df_pareto = get_pareto_df(df, groupcol, xcol, ycol)
+
+    df_points = alt.Chart(df).mark_circle(size=200, opacity=1).encode(
+        x=xcol,
+        y=alt.Y(ycol + ":Q", scale=alt.Scale(zero=False)),
+        color=alt.Color(groupcol, legend=alt.Legend(columns=2, title = "Hardware_Quantization_Pruning")),
+        #tooltip=["HWType", "Precision", "PruningFactor", "batch/thread/stream", ycol, xcol],
+        tooltip=[groupcol, xcol, ycol],
+    )
+    df_pareto_plot = alt.Chart(df_pareto).mark_line().encode(
+        x="x",
+        y=alt.Y("y", scale=alt.Scale(zero=False)),
+    )
+    return (df_points).interactive().properties(
         width=W,
         height=H,
         title=title

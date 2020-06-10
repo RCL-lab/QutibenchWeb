@@ -202,27 +202,30 @@ def process_measured_df(df_theoret: pd.DataFrame(), csv_measured:str ):
 
 #-------------------------------------------------
 
-def select_cnn_match_theo_for_measured(df_theo: pd.DataFrame(), net_prun_datatype: str):
+def select_cnn_match_theo_for_measured(df_theo: pd.DataFrame(), net_prun_datatype: str) -> pd.DataFrame():
     """
-        This method creates an overlepped pareto
+    Method that processes the dataframe to make it look like the measured dataframe.
+    Eliminates all NaNs and replaces elements to make dfs look alike. 
    
     Parameters
     ----------
-    csv_theor_accuracies:str
-        Filepath to the CNNs and their accuracy table. 
-    
+    df_theo: pd.DataFrame()
+        Dataframe with the data upon which these alterations will be done
+         
     Returns
     -------
-    df_top1_theo: pd.DataFrame()
-        Datraframe with 2 columns: |top1 | net_prun_datatype|
+    df_theo: pd.DataFrame()
+        Processed df. 
         
     """
-    #   create a subset from the given dataframe
-    # there is another way to do this # df_theo = df_superset[df_superset.apply(lambda row: row[net_prun_datatype].split('_')[0] == cnn_keyword, axis=1)]
-    #the line below is not needed because there is only 1 classification
+    # create a subset from the given dataframe
+    #     there is another way to do this 
+    #df_theo = df_superset[df_superset.apply(lambda row: row[net_prun_datatype].split('_')[0] == cnn_keyword, axis=1)]
+    #    the line below is not needed because there is only 1 classification
     #df_theo = df_superset.loc[df_superset[net_prun_datatype].str.contains(cnn_keyword, na=False)]
     df_theo = df_theo[df_theo['top1'].notna()]
     df_theo = df_theo[df_theo['fps-comp'].notna()]
+    
     #   given that we have on theoretical df:  net_prun_datatype | hardw_datatype | top1 | fps-comp
     #   and that we have on the measured df:   hardw_datatype_net_prun | batch/thread/stream  | hardw | network | fps-comp | top1 | type
     #We need to:

@@ -33,7 +33,7 @@ We invite the community to contribute to QuTiBench in order to be able to suppor
 in implementing machine learning systems.
 
 # Contributing
-See the [website](https://rcl-lab.github.io/Qutibench_Web/contributing/2020/04/09/Contributing_Measurements.html) for instructions on contributing.
+See the [website](https://rcl-lab.github.io/QutibenchWeb/contributing/2020/04/09/Contributing_Measurements.html) for instructions on contributing.
 
 # Publications
 Blott, Michaela, et al. "QuTiBench: Benchmarking neural networks on heterogeneous hardware." ACM Journal on Emerging Technologies in Computing Systems (JETC) 15.4 (2019): 1-38. [https://arxiv.org/pdf/1909.05009.pdf ](https://arxiv.org/pdf/1909.05009.pdf)
@@ -67,6 +67,8 @@ Johannes Kath is an undergraduate student of Information Systems Technology at D
 Contact:johannes.kath@mailbox.tu-dresden.de
 <br />
 <br />
+<br />
+<br />
 
 ### Lisa Halder
 <img align='left' src="../images/BildLisa.jpg" alt="drawing" style= "width:285px;height:214px;padding-right: 15px;"/>
@@ -88,6 +90,6 @@ Contact: zachary.neveu@gmail.com
  
 ### Alina Vasilciuc 
 <img align="left" src="../images/alina_vasilciuc.png" alt="drawing" style="width:200px;height:193px;padding-right: 15px;"/> 
-Alina Vasilciuc is an undergraduate student at Nova University of Lisbon, currently working on her Master’s degree in collaboration with Xilinx Research, where she is currently doing an internship.
+Alina Vasilciuc is an undergraduate student at [Nova University of Lisbon](https://www.unl.pt/en), currently working on her Master’s degree in collaboration with Xilinx Research, where she is currently doing an internship.
 <br />
-Contact: alina.vasilciuc@hotmail.com
+Contact: [alina.vasilciuc@hotmail.com](https://pt.linkedin.com/in/alina-vasilciuc).

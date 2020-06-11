@@ -584,7 +584,7 @@ def faceted_bar_chart(df: pd.DataFrame, xcol: str, ycol:str, colorcol: str, text
         
     """
     bars = alt.Chart().mark_bar().encode(
-        x=alt.X(xcol +':N', sort=['theoretical','measured'], title='Type'),
+        x=alt.X(xcol +':N', sort=['theoretical','measured'], title=''),
         y=alt.Y(ycol +':Q', scale= alt.Scale(type='log')),
         color=alt.Color(colorcol +':N', title='Datapoint Type'),
     )
@@ -654,7 +654,7 @@ def efficiency_plot(net_keyword: str, title: str) -> alt.vegalite.v4.api.Chart:
     overlapped_pareto = identify_pairs_nonpairs(df=overlapped_pareto, column='hardw_datatype_net_prun')
     # now we have: |hardw_datatype_net_prun | hardw | network | fps-comp | top1 | type | color|
     overlapped_pareto = overlapped_pareto.loc[(overlapped_pareto.color!='measured_no_match') & (overlapped_pareto.color!='theoretical_no_match')]
-    overlapped_pareto = get_percentage_colum(df=overlapped_pareto, col_elements='hardw_datatype_net_prun', newcol='percentage', )
+    overlapped_pareto = get_percentage_colum(df=overlapped_pareto, col_elements='hardw_datatype_net_prun', newcol='percentage')
 
     # Plot it - Faceted Bar chart
     return faceted_bar_chart(df=overlapped_pareto , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title )

@@ -82,7 +82,25 @@ def process_theo_fps(df_top1_theo:pd.DataFrame(),csv_files: list) -> pd.DataFram
 #----------------------------------------------------------------------
 
 def melt_df(df_in: pd.DataFrame(), cnn_names_col: str, new_column_names: list)->pd.DataFrame():
-    """Melts a dataframe into 2 columns, the 'cnn_names_col' and the 'value' column. Return the melted dataframe"""
+    """Melts a dataframe into 2 columns, the 'cnn_names_col' and the 'value' column. 
+    
+    Parameters
+    ----------
+    df_in : pd.DataFrame()
+        Dataframe which will be melted.
+    cnn_names_col: str
+        Column/s which will not be selected to be melted. Eg.:First column ' '.
+        
+    new_column_names: str
+        New column names to give to the dataframe. 
+    
+    Returns
+    -------
+    df_out: pd.DataFrame()
+        Returns the melted dataframe with the specified column names.
+        
+        
+    """
     df_out = pd.DataFrame()
     #  select all columns except first
     columns = (df_in.loc[:, df_in.columns!=cnn_names_col]).columns 
@@ -96,10 +114,21 @@ def melt_df(df_in: pd.DataFrame(), cnn_names_col: str, new_column_names: list)->
 
 #-----------------------------------------------------
 
-def spot_no_match(list_: list):
-    """Creates a list of hexadecimal colors. The colors depend wheteher there is a substring inside each
-    list item. For 'no match' the color is black, else, the color is created randomly
+def spot_no_match(list_: list) -> list:
+    """
+    Method that creates a list of hexadecimal colors. Colors depend on wheteher there is a substring inside each
+    list_ item. For 'no match' the color is black, else, the color is created randomly 
+   
+    Parameters
+    ----------
+    list_ : list
+        List of strings.  
     
+    Returns
+    -------
+    list_of_colors: list
+        List with the same size as the input list. Each item is a hexadecimal color. 
+               
     """
     sub='no_match'
     list_of_colors=[]
@@ -114,15 +143,43 @@ def spot_no_match(list_: list):
     return list_of_colors
 #-----------------------------------------------------
 
-def get_point_chart_simple(df: pd.DataFrame, 
-                    color_groupcol: str, 
-                    shape_groupcol: str,  
-                    xcol: str, 
-                    ycol: str, 
-                    shapes: str,
-                    title: str,
-                    legend_title_groupcol: str)->alt.vegalite.v4.api.Chart: 
-    """Creates an elaborated point chart with all these configurations"""
+def get_point_chart_enhanced(df: pd.DataFrame, color_groupcol: str,  shape_groupcol: str,  
+                    xcol: str,  ycol: str,  shapes: str, title: str, legend_title_groupcol: str)->alt.vegalite.v4.api.Chart: 
+    
+    """
+    Creates an elaborated point chart with the following configurations:
+        -different colors
+        -different shapes
+        -black color to datapoints that don't have a match (theoretical-measured)
+        -x axis log scale
+        -Text on plot
+        -Tooltips
+   
+    Parameters
+    ----------
+    df : pd.DataFrame
+        
+    color_groupcol: str
+        Column name which will be what distinguishes colors. 
+    shape_groupcol: str
+        Column name which will be what distinguishes shapes.
+    xcol: str
+        Column name which will be the x axis.
+    ycol: str
+        Column name which will be the y axis.
+    shapes: str
+        Desired shape range.
+    title: str
+        Plot title.
+    
+    legend_title_groupcol:
+        Title of the Legend.
+    Returns
+    -------
+    Vega chart: alt.vegalite.v4.api.Chart
+        List with the same size as the input list. Each item is a hexadecimal color. 
+               
+    """
     domain = df[color_groupcol].unique().tolist()
     range_= spot_no_match(list_= domain)
     points= alt.Chart(df).mark_point(size=100, opacity=1, filled =True).properties(
@@ -150,7 +207,27 @@ def get_point_chart_simple(df: pd.DataFrame,
 #----------------------------------------------------
 
 def get_line_chart(df: pd.DataFrame, groupcol: str, xcol: str, ycol:str, color:str) ->alt.vegalite.v4.api.Chart:
-    """Creates simple line chart"""
+    """
+    Creates simple line chart. With tooltips and log scale on the x axis
+   
+    Parameters
+    ----------
+     df: pd.DataFrame()
+        Contains the data for the chart.
+     groupcol: str
+        Column name which can be what distinguishes colors. Not used atm. 
+     xcol: str
+        Column name which will be the x axis.
+     ycol: str
+        Column name which will be the y axis.
+     color: str
+        Line color.
+    Returns
+    -------
+    chart: alt.vegalite.v4.api.Chart
+         Returns a simple altair line chart based on the inputs.
+        
+    """
     return alt.Chart(df).interactive().mark_line(point=True).encode(
         x=alt.X(xcol, scale=alt.Scale(type='log')),
         y=alt.Y(ycol + ":Q", scale=alt.Scale(zero=False)),
@@ -160,7 +237,25 @@ def get_line_chart(df: pd.DataFrame, groupcol: str, xcol: str, ycol:str, color:s
 #---------------------------------------------------
 
 def get_pareto_df(df: pd.DataFrame(), groupcol: str, xcol: str, ycol: str) -> pd.DataFrame():
-    """Creates a pareto line from the dataframe. This function doesn't correctly correspond x to y datapoints"""
+    """
+    Creates a pareto dataframe. This method doesn't correctly correspond x to y datapoints
+   
+    Parameters
+    ----------
+     df: pd.DataFrame()
+        Column name which will be what distinguishes colors.
+     groupcol: str
+         Column name which can be what distinguishes colors.
+     xcol: str
+          Column name which will be the x axis.        
+     ycol: str
+         Column name which will be the y axis.
+    Returns
+    -------
+    pareto_line_df: pd.DataFrame()
+        Dataframe with the pareto information.
+        
+    """
     pareto_line_df = df.groupby(groupcol)[xcol].max().to_frame("x")
     pareto_line_df['y'] = df.groupby(groupcol)[ycol].agg(lambda x: x.value_counts().index[0])
     pareto_line_df.sort_values('y', ascending=False, inplace=True)
@@ -174,6 +269,20 @@ def get_pareto_df(df: pd.DataFrame(), groupcol: str, xcol: str, ycol: str) -> pd
 
 def get_several_paretos_df(list_df: pd.DataFrame, groupcol: str, xcol: str, ycol:str, colors: list)->list:
     """Method that: from the input dfs creates a pareto df & creates a plot from the pareto df, does this for all input dfs"""
+    """
+    Method that  
+   
+    Parameters
+    ----------
+     : pd.DataFrame()
+        Contains bla bla 
+    
+    Returns
+    -------
+    : pd.DataFrame()
+       
+        
+    """
     list_df_out_charts = pd.DataFrame(columns=['charts'])
     for i, df in enumerate(list_df):
         pareto_df = get_pareto_df(df= df , groupcol= groupcol, xcol= xcol, ycol= ycol)
@@ -281,7 +390,7 @@ def identify_pairs_nonpairs(df: pd.DataFrame, column: str) -> pd.DataFrame():
     #fill up the rest of the rows that do not have a pair
     df['color'] = df.apply(lambda row: 'theoretical_no_match' if row.type=='theoretical' and row.color=='' else 
                                                      ('measured_no_match' if row.type=='measured' and row.color=='' else (row.color)), axis=1)
-    df = df.drop(columns=['pairs'])
+    #df = df.drop(columns=['pairs'])
     return df
 
 #-------------------------------------------------------
@@ -291,7 +400,7 @@ def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: st
     df_theo =df.loc[df.type=='theoretical',:]
     df_exper = df.loc[df.type=='measured',:]
     df_charts = get_several_paretos_df(list_df = [df_theo, df_exper], groupcol= groupcol, xcol= xcol , ycol= ycol, colors=['#FFA500', '#0066CC'])
-    chart1 = get_point_chart_simple(df= df, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    chart1 = get_point_chart_enhanced(df= df, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
     chart = df_charts.charts.sum(numeric_only = False)
     charts = alt.layer(
         chart1,
@@ -402,3 +511,153 @@ def theor_pareto(net_keyword, title: str) ->pd.DataFrame:
     df_charts = get_several_paretos_df(list_df = [df_fps_top1_theo], xcol= xcol, ycol= ycol, groupcol= groupcol, colors=colors)
     points = get_point_chart(df= df_fps_top1_theo, groupcol= groupcol, xcol= xcol, ycol=ycol, title=title) 
     return (points + df_charts.iloc[0,0])
+
+#----------------------------------------------------
+
+def get_percentage_colum(df: pd.DataFrame, col_elements: str, newcol: str ) -> pd.DataFrame:
+    """
+    Method that:
+        1.Creates a new empty column
+        2.Fills in that column with percentages based on another column.
+        3.percentage= (fps-comp (measured) / fps-comp (theoretical)) * 100 for each unique element from col_elements
+        4.Resulting df: col_elements  fps-comp    type           percentage
+                            A             x       measured         (x/y)*100
+                            A             y       theoretical
+                            B ...  
+    Parameters
+    ----------
+     df: pd.DataFrame()
+        Contains all needed data 
+     col_elements: str
+             Column with doubled elements. 
+             Each element in this column will correspond to measured and theoretical values in type column.
+     new_col: str
+         New column name which will be created.
+    Returns
+    -------
+    df_: pd.DataFrame()
+       Dataframe with the new column
+        
+    """
+    df_ = df.copy()
+    #Create new column
+    df_[newcol] = ''
+
+    pairs= df_[col_elements].unique()
+    percentage= []
+    for par in pairs:
+        df_pair = df_.loc[df_[col_elements] == par]
+        theoret = df_pair.loc[df_pair.type == 'theoretical','fps-comp']
+        measured = df_pair.loc[df_pair.type == 'measured','fps-comp']
+        percentage.append(str(round((measured.values[0]/theoret.values[0])*100,1)) + '%')
+
+    dict_= {key:value for key,value in zip(pairs,percentage)}
+    df_['percentage'] = df_.apply(lambda row: dict_[row[col_elements]]  if row[col_elements] in dict_ and row.type=='measured' else '', axis=1)
+    return df_
+
+#----------------------------------------------------
+
+def faceted_bar_chart(df: pd.DataFrame, xcol: str, ycol:str, colorcol: str, textcol: str, columncol: str, title:str) -> alt.vegalite.v4.api.Chart:
+    """
+    Creates simple faceted bar chart.   
+       
+    Parameters
+    ----------
+     df: pd.DataFrame()
+        Data to plot. 
+     xcol: str
+         DataFrame column name which will be used for the x axis.
+     ycol: str
+         DataFrame column name which will be used for the y axis.
+     colorcol: str
+         DataFrame column name which will be used for the color separation.
+     textcol: str
+         DataFrame column name which will be used for the text on plot.
+     columncol: str
+         DataFrame column name which will be used for the faceted bar chart (what separates into several mini-barcharts)
+     title: str
+         Plot title.
+    Returns
+    -------
+    Bar chart: alt.vegalite.v4.api.Chart:
+       Simple Faceted Bar chart with text on top of the columns and text inside the plot (percentage)
+        
+    """
+    bars = alt.Chart().mark_bar().encode(
+        x=alt.X(xcol +':N', sort=['theoretical','measured'], title='Type'),
+        y=alt.Y(ycol +':Q', scale= alt.Scale(type='log')),
+        color=alt.Color(colorcol +':N', title='Datapoint Type'),
+    )
+    text = bars.mark_text(
+        angle=270,
+        align='left',
+        baseline='middle',
+        dx=3  # Nudges text to right so it doesn't appear on top of the bar
+    ).encode(
+        text= alt.Text(textcol)
+    )
+    return alt.layer(bars, text, data=df).facet(
+        column=alt.Column(columncol+':N', header=alt.Header(labelAngle=-85, labelAlign='right'), title=title)
+    )
+
+#----------------------------------------------------
+
+def efficiency_plot(net_keyword: str, title: str) -> alt.vegalite.v4.api.Chart:
+    """
+    Method that creates a faceted bar chart.
+    In the y axis we have fps-compute and in the x axis we have several combinations of hardware platorms and neural networks. 
+       
+    Parameters
+    ----------
+     net_keyword: str
+        Desired Machine Learning task.
+     title: str
+         Plot title.
+    Returns
+    -------
+     Bar chart: alt.vegalite.v4.api.Chart
+        Simple Faceted Bar chart with text on top of the columns and text inside the plot (percentage) 
+       
+        
+    """
+    
+    # 1. Get the CNNs Accuracies table (Theoretical_Analysis/CNNs and their accuracy...) that only has the top1 accuracy and process it.
+    df_top1_theo = process_theo_top1(csv_theor_accuracies ='data/cnn_topologies_accuracy.csv')
+    #now we have: |top1 | net_prun_datatype| 
+
+    # 2. Now we need Theoretical FPS-COMP to match with that Theoretical TOP1
+    # 3. We need to get the above mentioned Theoretical FPS-COMP from the Heatmaps- Performance Predictions and merge them
+    # depending on the user input this is retrieved for the desired Classification Task
+    df_fps_top1_theo = process_theo_fps(df_top1_theo= df_top1_theo, csv_files=["data/cleaned_csv/performance_prediction_imagenet.csv"])
+    df_measured = pd.read_csv('data/cleaned_csv/pareto_data_imagenet.csv')
+
+    #see which classification type is required
+    if re.search(net_keyword, 'imagenet', re.IGNORECASE):           
+        df_fps_top1_theo = process_theo_fps(df_top1_theo= df_top1_theo, csv_files=["data/cleaned_csv/performance_prediction_imagenet.csv"])
+        df_measured = pd.read_csv('data/cleaned_csv/pareto_data_imagenet.csv')
+    elif re.search(net_keyword, 'mnist', re.IGNORECASE):   
+        df_fps_top1_theo = process_theo_fps(df_top1_theo= df_top1_theo, csv_files=["data/cleaned_csv/performance_prediction_mnist.csv"])
+        df_measured = pd.read_csv('data/cleaned_csv/pareto_data_mnist.csv')
+    elif re.search(net_keyword, 'cifar-10', re.IGNORECASE):   
+        df_fps_top1_theo = process_theo_fps(df_top1_theo= df_top1_theo, csv_files=["data/cleaned_csv/performance_prediction_cifar10.csv"])     
+        df_measured = pd.read_csv('data/cleaned_csv/pareto_data_cifar.csv')
+    
+    df_fps_top1_theo = select_cnn_match_theo_for_measured(df_theo= df_fps_top1_theo, net_prun_datatype = 'net_prun_datatype')
+    # now we have: |hardw_datatype_net_prun | hardw | network | fps-comp | top1 | type|
+
+    #  concatenate both measured with theoretical to get the overlapped pareto
+    overlapped_pareto = pd.concat([df_fps_top1_theo, df_measured])
+    # now we have everything together and matched
+
+    overlapped_pareto =overlapped_pareto.sort_values(by='hardw_datatype_net_prun')
+    # identify all pairs and create a special column for them 
+    overlapped_pareto = identify_pairs_nonpairs(df=overlapped_pareto, column='hardw_datatype_net_prun')
+    # now we have: |hardw_datatype_net_prun | hardw | network | fps-comp | top1 | type | color|
+    overlapped_pareto = overlapped_pareto.loc[(overlapped_pareto.color!='measured_no_match') & (overlapped_pareto.color!='theoretical_no_match')]
+    overlapped_pareto = get_percentage_colum(df=overlapped_pareto, col_elements='hardw_datatype_net_prun', newcol='percentage', )
+
+    # Plot it - Faceted Bar chart
+    return faceted_bar_chart(df=overlapped_pareto , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title )
+
+#----------------------------------------------------
+

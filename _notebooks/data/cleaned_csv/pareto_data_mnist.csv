@@ -1,16 +1,16 @@
 hardw_datatype_net_prun,hardw,network,fps-comp,top1,type
-GPU-maxp_FP16_MLP_100,GPU-maxp,MLP,61409.3,97.3,measured
-GPU-maxp_FP16_MLP_12.5,GPU-maxp,MLP,278034.0,97.15,measured
-GPU-maxp_FP16_MLP_25,GPU-maxp,MLP,220832.0,97.44,measured
-GPU-maxp_FP16_MLP_50,GPU-maxp,MLP,141671.0,97.46,measured
-GPU-maxp_FP32_MLP_100,GPU-maxp,MLP,39802.5,97.31,measured
-GPU-maxp_FP32_MLP_12.5,GPU-maxp,MLP,264873.0,97.15,measured
-GPU-maxp_FP32_MLP_25,GPU-maxp,MLP,193866.0,97.44,measured
-GPU-maxp_FP32_MLP_50,GPU-maxp,MLP,103759.0,97.46,measured
 NCS_FP16_MLP_100,NCS,MLP,621.337,98.86,measured
 NCS_FP16_MLP_12.5,NCS,MLP,2796.19,97.95,measured
 NCS_FP16_MLP_25,NCS,MLP,2197.4,98.49,measured
 NCS_FP16_MLP_50,NCS,MLP,1370.96,98.75,measured
+TX2-maxp_FP16_MLP_100,TX2-maxp,MLP,61409.3,97.3,measured
+TX2-maxp_FP16_MLP_12.5,TX2-maxp,MLP,278034.0,97.15,measured
+TX2-maxp_FP16_MLP_25,TX2-maxp,MLP,220832.0,97.44,measured
+TX2-maxp_FP16_MLP_50,TX2-maxp,MLP,141671.0,97.46,measured
+TX2-maxp_FP32_MLP_100,TX2-maxp,MLP,39802.5,97.31,measured
+TX2-maxp_FP32_MLP_12.5,TX2-maxp,MLP,264873.0,97.15,measured
+TX2-maxp_FP32_MLP_25,TX2-maxp,MLP,193866.0,97.44,measured
+TX2-maxp_FP32_MLP_50,TX2-maxp,MLP,103759.0,97.46,measured
 U96-Quadcore A53_INT2_MLP_100,U96-Quadcore A53,MLP,294.0744008,98.75,measured
 U96-Quadcore A53_INT2_MLP_12.5,U96-Quadcore A53,MLP,8493.696085,96.85,measured
 U96-Quadcore A53_INT2_MLP_25,U96-Quadcore A53,MLP,3104.686136,98.04,measured

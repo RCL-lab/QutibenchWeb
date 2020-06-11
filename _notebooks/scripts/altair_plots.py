@@ -245,27 +245,26 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
     #--------------------------------------------------------------------------------------------------
     #The following part was adapted from https://stackoverflow.com/questions/53287928/tooltips-in-altair-line-charts
     #This part will add information to the plot
-    # Step 1: create the lines
     lines = alt.Chart().mark_line(clip=True).interactive().encode(
             alt.X('arith_intens:Q'), 
             alt.Y('performance:Q'),
             alt.Color('Name:N', legend=alt.Legend(columns=2))
     )
 
-    # Step 2: Selection that chooses nearest point based on value on x-axis
-    nearest = alt.selection(type='single', nearest=True, on='mouseover', fields=['arith_intens']) #to leave suggestions on, just replace arith_intens wiith anything else
+    #Create the selection
+    selection = alt.selection(type='single', nearest=True, on='mouseover', fields=['arith_intens']) #to leave suggestions on, just replace arith_intens with anything else
 
 
-    # Step 3: Transparent selectors across the chart. This is what tells us the name of the Platform / Neural network
+    # Create the selectors across the chart. This part is transparent except when hoover with mouse and shows the name of the Platform / Neural network
     selectors = alt.Chart().mark_point(clip=True).encode(
                 alt.X('arith_intens:Q'), 
                 alt.Y('performance:Q'),
                 opacity=alt.value(0),
-    ).add_selection(nearest)
+    ).add_selection(selection)
 
-    # Step 4: Add text, show values about platforms when it's the nearest point to 
+    # Add text to the plot
     # mouseover, else show blank
-    text = (lines).mark_text(align='left', dx=3, dy=-3,clip=True).encode(  text=alt.condition(nearest, 'Name:N', alt.value(' ')))
+    text = (lines).mark_text(align='left', dx=3, dy=-3,clip=True).encode(  text=alt.condition(selection, 'Name:N', alt.value(' ')))
     
     chart_all = (pd.Series([IMAGENET_chart, MNIST_chart, CIFAR_chart, MASKRCNN_chart, 
                                GNMT_chart], name="charts")).to_frame()
@@ -277,7 +276,7 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
         return 'There were no results for the neural network asked. Please insert another network'
     
     #Chart = alt.layer(FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart + IMAGENET_chart + MNIST_chart + CIFAR_chart + MASKRCNN_chart+ GNMT_chart
-  
+    
     Chart = alt.layer(chart_filtered.charts.sum(numeric_only = False) + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, selectors, text, data=dataframe, width=700, height=500)
 
     return Chart

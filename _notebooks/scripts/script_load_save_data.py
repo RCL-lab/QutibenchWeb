@@ -13,7 +13,7 @@ def dataframe_contains(input_df: pd.DataFrame, column: str, value: str)->pd.Data
     Parameters
     ----------
     input_df : pd.DataFrame
-        Inpput dataframe from which the subset will be taken.       
+        Input dataframe from which the subset will be taken.       
     column : str
         Column name by which the subsetting will be taken.  
     value : str

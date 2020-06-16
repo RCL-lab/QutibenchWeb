@@ -1,3 +1,4 @@
+#hide
 import numpy as np
 import pandas as pd
 import random
@@ -557,6 +558,104 @@ def get_percentage_colum(df: pd.DataFrame, col_elements: str, newcol: str ) -> p
 
 #----------------------------------------------------
 
+def fill_values(col_value: str, dict_: dict)->int:
+    """Method that given a dict.:
+        -iterates through every key, splitting it,
+        -tries to find each part of each key in the string (col_value). 
+        -Criteria: if all parts of any key are found inside the string then that key is returned.
+        -Note: The first key to meet this criteria is returned.
+    
+    Parameters
+    ----------
+     col_value: str
+         String which will be searched for the key parts
+     dict_: dict
+         ditionary with all keys to be iterated
+    Returns
+    -------
+     dict_:dict
+          if all parts of any key are found inside the string the key is returned.
+     0: int
+         if all parts of any key are not found inside the string then 0 is returned.
+    """
+    for key in dict_: 
+        substrings = key.split(' ')
+        found=True
+        for substring in substrings:
+            if substring.lower() not in col_value.lower():
+                found=False
+        if found==True: 
+            return dict_[key]
+    return 0
+
+#----------------------------------------------------
+
+
+def get_peak_perf_gops_df(df_: pd.DataFrame ) ->pd.DataFrame:
+    """-Selects a subset of the given df (the 'hardw_datatype_net_prun' column)
+        -Gets Peak Compute Performance from the csv file (peakPerfBandHardPlatf) and 
+        fills the given df with that value for each hardware in a separate column called 'peak_compute'
+        -Gets GOPs for each CNN from csv file (cnn_topologies_compute_memory_requirements) and
+        fills another column called 'gops' in the given df
+        -Multiplies both of these new columns to get a new column which corresponds to the
+        Theoretical Peak Performance, however this is put in a column called 'fps-comp' to be able to, later,
+        merge this df with another df and also to plot this on a y-axis scale which has fps-comp.
+        
+    Parameters
+    ----------
+     df: pd.DataFrame()
+         Classifiation dataframe (MNIST, ImageNet, CIFAR-10..) which will be used for the subsetting and will be filled with 
+        Theoretical Peak Performance values.
+    
+    Returns
+    -------
+     efficiency_df: pd.DataFrame()
+        Dataframe like the following one:
+          ----------------------------------------------------------------------------
+          | hardw_datatype_net_prun   |         type                 |      fps-comp |
+          ----------------------------------------------------------------------------
+          |    NCS_FP16_MLP_100       |   Theoret. Peak Compute      |          x    |
+          |    NCS_FP16_MLP_12.5      |   Theoret. Peak Compute      |          y    |
+          |      ...                  |           ""                 |         ...   |
+          ----------------------------------------------------------------------------
+    """
+    # Create a subset form
+    efficiency_df = df_.loc[:, ['hardw_datatype_net_prun']]
+    efficiency_df['type'] = 'Theoret. Peak Compute'
+    #G  et Peak Compute for all hardware
+    peak_compute_hardw_df=pd.read_csv('data/peakPerfBandHardPlatf.csv')
+    peak_compute_hardw_dict=pd.Series(peak_compute_hardw_df.Peak_Performance.values,index=peak_compute_hardw_df.Name).to_dict()
+    efficiency_df['peak_compute'] = ''
+    efficiency_df['peak_compute']=efficiency_df.apply(lambda row: fill_values(row.hardw_datatype_net_prun, peak_compute_hardw_dict), axis=1)
+
+    #Get GOPS for all CNNs
+    gops_df = pd.read_csv('data/cnn_topologies_compute_memory_requirements.csv')
+    #get first two columns
+    gops_df = gops_df.loc[:,[' ','Total OPs']]
+    #rename column
+    gops_df.columns=['network', 'gops']
+    #remove first row with double names
+    gops_df= gops_df.iloc[1:,:]
+    # remove %, correct ResNet-50 to ResNet50...
+    gops_df = replace_data_df(df_=gops_df, column= 'network', list_tuples_data_to_replace= [('%',''),('ResNet-50','ResNet50'),('EfficientNet Edge L','EfficientNetL'),('EfficientNet Edge S','EfficientNetS'),('EfficientNet Edge M','EfficientNetM')])
+    #create dictionary out of the df
+    gops_dict=pd.Series(gops_df.gops.values,index=gops_df.network).to_dict()
+    #create a new column with the GOPs values
+    efficiency_df['gops'] = efficiency_df.apply(lambda row: fill_values(row.hardw_datatype_net_prun, gops_dict), axis=1)
+    #now that all is done lets create the theoretical performance column which will be called 'fps-comp' and calculate the numbers
+    try:
+        efficiency_df['fps-comp'] = efficiency_df.apply(lambda row: float(row.peak_compute)/float(row.gops), axis=1)
+    except ZeroDivisionError as err:
+        print('An error has occurred. Possibly GOPs CNN value was 0. This means there was a mismatch between names in the data coming from cnn_topologies_compute_memory_requirements.csv file and the dataframe given as input.', err)
+    
+    efficiency_df = efficiency_df.drop(columns=['gops','peak_compute'])
+
+    #remove all rows that have fps-comp = 0
+    efficiency_df= efficiency_df.loc[efficiency_df['fps-comp'] != 0, :]
+    
+    return efficiency_df
+#----------------------------------------------------
+
 def faceted_bar_chart(df: pd.DataFrame, xcol: str, ycol:str, colorcol: str, textcol: str, columncol: str, title:str) -> alt.vegalite.v4.api.Chart:
     """
     Creates simple faceted bar chart.   
@@ -585,7 +684,7 @@ def faceted_bar_chart(df: pd.DataFrame, xcol: str, ycol:str, colorcol: str, text
     """
     bars = alt.Chart().mark_bar().encode(
         x=alt.X(xcol +':N', sort=['theoretical','measured'], title=''),
-        y=alt.Y(ycol +':Q', scale= alt.Scale(type='log')),
+        y=alt.Y(ycol +':Q', scale= alt.Scale(type='log', domain = (0.01,100000000))),
         color=alt.Color(colorcol +':N', title='Datapoint Type'),
     )
     text = bars.mark_text(
@@ -602,7 +701,7 @@ def faceted_bar_chart(df: pd.DataFrame, xcol: str, ycol:str, colorcol: str, text
 
 #----------------------------------------------------
 
-def efficiency_plot(net_keyword: str, title: str) -> alt.vegalite.v4.api.Chart:
+def efficiency_plot(net_keyword: str, df_theo_peak_compute: pd.DataFrame, title: str) -> alt.vegalite.v4.api.Chart:
     """
     Method that creates a faceted bar chart.
     In the y axis we have fps-compute and in the x axis we have several combinations of hardware platorms and neural networks. 
@@ -645,19 +744,50 @@ def efficiency_plot(net_keyword: str, title: str) -> alt.vegalite.v4.api.Chart:
     df_fps_top1_theo = select_cnn_match_theo_for_measured(df_theo= df_fps_top1_theo, net_prun_datatype = 'net_prun_datatype')
     # now we have: |hardw_datatype_net_prun | hardw | network | fps-comp | top1 | type|
 
-    #  concatenate both measured with theoretical to get the overlapped pareto
+    #  concatenate both measured with theoretical to get the overlapped
     overlapped_pareto = pd.concat([df_fps_top1_theo, df_measured])
     # now we have everything together and matched
 
-    overlapped_pareto =overlapped_pareto.sort_values(by='hardw_datatype_net_prun')
+    
     # identify all pairs and create a special column for them 
     overlapped_pareto = identify_pairs_nonpairs(df=overlapped_pareto, column='hardw_datatype_net_prun')
     # now we have: |hardw_datatype_net_prun | hardw | network | fps-comp | top1 | type | color|
+    
+    #remove the ones that don't have a match
     overlapped_pareto = overlapped_pareto.loc[(overlapped_pareto.color!='measured_no_match') & (overlapped_pareto.color!='theoretical_no_match')]
+    
+    #create a percentage column
     overlapped_pareto = get_percentage_colum(df=overlapped_pareto, col_elements='hardw_datatype_net_prun', newcol='percentage')
+    
+    #merge with peak compute df which has the data for te 3rd bar 
+    overlapped_pareto= pd.concat([overlapped_pareto,df_theo_peak_compute])
+    overlapped_pareto= overlapped_pareto.fillna('')
+    overlapped_pareto['hardw'] = overlapped_pareto['hardw_datatype_net_prun'].str.split('_').str[0]
+
+    overlapped_pareto =overlapped_pareto.sort_values(by='hardw_datatype_net_prun')
+
+    #count how many times each 'hardw_datatype_net_prun' combination is repeated
+    df_tmp =overlapped_pareto['hardw_datatype_net_prun'].value_counts().to_frame().rename(columns={'hardw_datatype_net_prun':'count'})
+    #get the ones that are only repeated once
+    list_to_remove =df_tmp.loc[df_tmp['count'] < 3, :].index
+    #remove them 
+    overlapped_pareto = overlapped_pareto[~overlapped_pareto.hardw_datatype_net_prun.isin(list_to_remove)]
+    
+    #split in case there are too many rows, because the faceted bar chart will be too full
+    if overlapped_pareto.hardw_datatype_net_prun.unique().size < 8:
+        return faceted_bar_chart(df=overlapped_pareto , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) 
+    
+    
+    usb_devices_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.contains('TPU|NCS|A53')]
+    fpga_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.contains('ZCU|Ultra')]
+    gpu_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.contains('TX2')]
 
     # Plot it - Faceted Bar chart
-    return faceted_bar_chart(df=overlapped_pareto , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title )
-
-#----------------------------------------------------
+    #return faceted_bar_chart(df=usb_devices_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) | faceted_bar_chart(df=fpga_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) | faceted_bar_chart(df=gpu_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title) 
+    a=faceted_bar_chart(df=usb_devices_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) 
+    b=faceted_bar_chart(df=fpga_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) 
+    c=faceted_bar_chart(df=gpu_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title) 
+    return (a.display() or b.display() or c.display())
+    #return  overlapped_pareto
+    #----------------------------------------------------
 

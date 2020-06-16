@@ -239,18 +239,18 @@ def get_line_chart(df: pd.DataFrame, groupcol: str, xcol: str, ycol:str, color:s
 
 def get_pareto_df(df: pd.DataFrame(), groupcol: str, xcol: str, ycol: str) -> pd.DataFrame():
     """
-    Creates a pareto dataframe. This method doesn't correctly correspond x to y datapoints
+    Creates a pareto dataframe. This method doesn't take into account when the lines go up instead of being constant. 
    
     Parameters
     ----------
      df: pd.DataFrame()
-        Column name which will be what distinguishes colors.
+        Dataframe from which the pareto dataframe will be created. 
      groupcol: str
-         Column name which can be what distinguishes colors.
+         Column name which will be used to determine the groups for the groupby.
      xcol: str
-          Column name which will be the x axis.        
+          Column name which will be used for the x axis later. Used in te groupby.    
      ycol: str
-         Column name which will be the y axis.
+         Column name which will be the used for the groupby to create the y axis.
     Returns
     -------
     pareto_line_df: pd.DataFrame()
@@ -268,14 +268,73 @@ def get_pareto_df(df: pd.DataFrame(), groupcol: str, xcol: str, ycol: str) -> pd
 #-----------------------------------------------------
 
 
-def get_several_paretos_df(list_df: pd.DataFrame, groupcol: str, xcol: str, ycol:str, colors: list)->list:
-    """Method that: from the input dfs creates a pareto df & creates a plot from the pareto df, does this for all input dfs"""
-    """
-    Method that  
+def get_several_paretos_df(list_df: pd.DataFrame, groupcol: str, xcol: str, ycol:str, colors: list)->pd.DataFrame():
+    """Method that:
+        -Receives several dataframes as input inside a list. For each one of them:
+            -Gets the pareto dataframe;
+            -Creates a line chart from the above mentiioned pareto dataframe;
+        -creates a df with all charts inside a column;
    
     Parameters
     ----------
-     : pd.DataFrame()
+     list_df: pd.DataFrame()
+        Contains all dataframes from which the line charts will be generated and put inside the output dataframe (df_out_charts).
+     groupcol: str
+         Column name which will be used to determine the groups for the groupby.
+     xcol:str
+         Column name which will be used for the x axis later. Used in te groupby.
+     ycol: str
+         Column name which will be the used for the groupby to create the y axis.
+     colors:list
+         List with the colors for each line plot, for each dataframe inside the input list_df.
+         
+    Returns
+    -------
+    df_out_charts: pd.DataFrame()
+       Dataframe with all output charts.
+        
+    """
+    df_out_charts = pd.DataFrame(columns=['charts'])
+    for i, df in enumerate(list_df):
+        pareto_df = get_pareto_df(df= df , groupcol= groupcol, xcol= xcol, ycol= ycol)
+        chart = get_line_chart(df= pareto_df, groupcol= 'group', xcol= 'x', ycol= 'y', color = colors[i]) 
+        df_out_charts = df_out_charts.append(pd.DataFrame([[chart]], columns=['charts']))
+    return df_out_charts
+
+#---------------------------------------------
+
+def replace_data_df(df_: pd.DataFrame(), column:str, list_tuples_data_to_replace: list )-> pd.DataFrame():
+    """Method to replace a substring inside a cell inside a dataframe
+    Given a dataframe and a specific column, this method replaces a string for another, both from the list of tuples
+       
+    Parameters
+    ----------
+     df_: pd.DataFrame()
+        Dataframe with data to be replaced.
+    column: str
+        Column whithin dataframe where all replacements will take place.
+    list_tuples_data_to_replace: list
+        List with tuples which will contain what to replace by what.
+        Eg.:list_tuples_data_to_replace = [(a,b), (c,d), (...) ] -> 'a' will be replaced by 'b', 'c' will be replaced by 'd', and so on.
+
+    Returns
+    -------
+    df_out: pd.DataFrame()
+       Dataframe with all indicated values replaced.
+        
+    """
+    df_out = df_.copy()
+    for j, k in list_tuples_data_to_replace:
+        df_out[column] = df_out[column].str.replace(j, k)
+    return df_out
+#-------------------------------------------------
+
+def process_measured_df(df_theoret: pd.DataFrame(), csv_measured:str ):
+    """ Method that gets the measured dataframe and fixes small stuff inside it, concatenates with the  
+   
+    Parameters
+    ----------
+     df_theoret: pd.DataFrame()
         Contains bla bla 
     
     Returns
@@ -284,32 +343,15 @@ def get_several_paretos_df(list_df: pd.DataFrame, groupcol: str, xcol: str, ycol
        
         
     """
-    list_df_out_charts = pd.DataFrame(columns=['charts'])
-    for i, df in enumerate(list_df):
-        pareto_df = get_pareto_df(df= df , groupcol= groupcol, xcol= xcol, ycol= ycol)
-        chart = get_line_chart(df= pareto_df, groupcol= 'group', xcol= 'x', ycol= 'y', color = colors[i]) 
-        list_df_out_charts = list_df_out_charts.append(pd.DataFrame([[chart]], columns=['charts']))
-    return list_df_out_charts
-
-#---------------------------------------------
-
-def replace_data_df(df_: pd.DataFrame(), column:str, list_tuples_data_to_replace: list )-> pd.DataFrame():
-    """Method to replace a substring inside a cell inside a dataframe"""
-    df = df_.copy()
-    for j, k in list_tuples_data_to_replace:
-        df[column] = df[column].str.replace(j, k)
-    return df
-#-------------------------------------------------
-
-def process_measured_df(df_theoret: pd.DataFrame(), csv_measured:str ):
     #   get the measured dataframe
     df_measured = pd.read_csv(csv_measured)
     #   fix samll stuff in the measured dataframe so things match
     df_measured = replace_data_df(df_=df_measured, column='hardw_datatype_net_prun', list_tuples_data_to_replace=[("RN50", "ResNet50"),("MNv1", "MobileNetv1"),('GNv1','GoogLeNetv1'),('100.0','100')])
     df_measured = replace_data_df(df_=df_measured, column='network', list_tuples_data_to_replace=[("RN50", "ResNet50"),("MNv1", "MobileNetv1"),('GNv1','GoogLeNetv1')])
     #  concatenate both measured with theoretical
-    df = pd.concat([df_theoret, df_measured])
-
+    df_out = pd.concat([df_theoret, df_measured])
+    
+    return df_out
 #-------------------------------------------------
 
 def select_cnn_match_theo_for_measured(df_theo: pd.DataFrame(), net_prun_datatype: str) -> pd.DataFrame():
@@ -358,6 +400,20 @@ def select_cnn_match_theo_for_measured(df_theo: pd.DataFrame(), net_prun_datatyp
 #-------------------------------------------------------------
 
 def fix_small_stuff_df(df: pd.DataFrame(), col_to_drop: list, ) -> pd.DataFrame():
+    """Method that: from the input dfs creates a pareto df & creates a plot from the pareto df, does this for all input dfs
+    Method that  
+   
+    Parameters
+    ----------
+     : pd.DataFrame()
+        Contains bla bla 
+    
+    Returns
+    -------
+    : pd.DataFrame()
+       
+        
+    """
     #   delete all rows that have 'top1 (top5) [%]' inside
     df = df[df['top1'] !='top1 (top5) [%]']
     #    delete all rows with 'nm'
@@ -377,6 +433,20 @@ def fix_small_stuff_df(df: pd.DataFrame(), col_to_drop: list, ) -> pd.DataFrame(
 
 def identify_pairs_nonpairs(df: pd.DataFrame, column: str) -> pd.DataFrame():
     """This method identifies equal values in the column and signals them, and creates another column with labels for each case """
+    """Method that: from the input dfs creates a pareto df & creates a plot from the pareto df, does this for all input dfs
+    Method that  
+   
+    Parameters
+    ----------
+     : pd.DataFrame()
+        Contains bla bla 
+    
+    Returns
+    -------
+    : pd.DataFrame()
+       
+        
+    """
     # IDENTIFY ALL PAIRS AND CREATE A SPECIAL COLUMN FOR THEM
     #get all pair and then get unique names out of those pairs
     df['pairs'] = df[column].duplicated(keep=False)
@@ -398,6 +468,20 @@ def identify_pairs_nonpairs(df: pd.DataFrame, column: str) -> pd.DataFrame():
 
 def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: str) -> alt.vegalite.v4.api.Chart:
     """This method gets makes the overlapped pareto plots. With the 2 pareto lines and the points plot"""
+    """Method that: from the input dfs creates a pareto df & creates a plot from the pareto df, does this for all input dfs
+    Method that  
+   
+    Parameters
+    ----------
+     : pd.DataFrame()
+        Contains bla bla 
+    
+    Returns
+    -------
+    : pd.DataFrame()
+       
+        
+    """
     df_theo =df.loc[df.type=='theoretical',:]
     df_exper = df.loc[df.type=='measured',:]
     df_charts = get_several_paretos_df(list_df = [df_theo, df_exper], groupcol= groupcol, xcol= xcol , ycol= ycol, colors=['#FFA500', '#0066CC'])
@@ -467,6 +551,20 @@ def get_overlapped_pareto(net_keyword: str):
 
 def get_point_chart(df: pd.DataFrame, groupcol: str, xcol: str, ycol:str, title: str) ->alt.vegalite.v4.api.Chart:
     """Creates simple line chart"""
+    """Method that: from the input dfs creates a pareto df & creates a plot from the pareto df, does this for all input dfs
+    Method that  
+   
+    Parameters
+    ----------
+     : pd.DataFrame()
+        Contains bla bla 
+    
+    Returns
+    -------
+    : pd.DataFrame()
+       
+        
+    """
     points = alt.Chart(df).mark_point(filled=True).properties(
             width= W,
             height= 1.3*H,
@@ -490,6 +588,20 @@ def get_point_chart(df: pd.DataFrame, groupcol: str, xcol: str, ycol:str, title:
 
 def theor_pareto(net_keyword, title: str) ->pd.DataFrame:
     """Creates a Theoretical Pareto Plot."""
+    """Method that: from the input dfs creates a pareto df & creates a plot from the pareto df, does this for all input dfs
+    Method that  
+   
+    Parameters
+    ----------
+     : pd.DataFrame()
+        Contains bla bla 
+    
+    Returns
+    -------
+    : pd.DataFrame()
+       
+        
+    """
     xcol='fps-comp'
     ycol='top1'
     groupcol='hardw_datatype_net_prun'
@@ -644,7 +756,7 @@ def get_peak_perf_gops_df(df_: pd.DataFrame ) ->pd.DataFrame:
     efficiency_df['gops'] = efficiency_df.apply(lambda row: fill_values(row.hardw_datatype_net_prun, gops_dict), axis=1)
     #now that all is done lets create the theoretical performance column which will be called 'fps-comp' and calculate the numbers
     try:
-        efficiency_df['fps-comp'] = efficiency_df.apply(lambda row: float(row.peak_compute)/float(row.gops), axis=1)
+        efficiency_df['fps-comp'] = efficiency_df.apply(lambda row: float(row.peak_compute)*1000/float(row.gops), axis=1)
     except ZeroDivisionError as err:
         print('An error has occurred. Possibly GOPs CNN value was 0. This means there was a mismatch between names in the data coming from cnn_topologies_compute_memory_requirements.csv file and the dataframe given as input.', err)
     

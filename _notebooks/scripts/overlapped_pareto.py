@@ -75,7 +75,7 @@ def process_theo_fps(df_top1_theo:pd.DataFrame(),csv_files: list) -> pd.DataFram
     #  change column names
     df_fps_top1_theo.columns = ['net_prun_datatype', 'hardw_datatype', 'top1', 'fps-comp']
 
-    #Notes: 1. make sure everything in 'net_prun_datatype' column has network + prunning + datatype. If not it will fail
+    #Notes: 1. make sure everything in 'net_prun_datatype' column has network + pruning + datatype. If not it will fail
     df_fps_top1_theo = replace_data_df(df_=df_fps_top1_theo, column= 'net_prun_datatype', list_tuples_data_to_replace= [('GoogLeNetv1','GoogLeNetv1_100%'),('MobileNetv1','MobileNetv1_100%'),('GoogleNetv1','GoogleNetv1_100%'), ('EfficientNet_S','EfficientNet-S_100%'), ('EfficientNet_M','EfficientNet-M_100%'), ('EfficientNet_L','EfficientNet-L_100%'), ('%','')])
     #  now that we have: net_prun_datatype | hardw_datatype | top1 | fps-comp
     return df_fps_top1_theo
@@ -329,18 +329,20 @@ def replace_data_df(df_: pd.DataFrame(), column:str, list_tuples_data_to_replace
     return df_out
 #-------------------------------------------------
 
-def process_measured_df(df_theoret: pd.DataFrame(), csv_measured:str ):
-    """ Method that gets the measured dataframe and fixes small stuff inside it, concatenates with the  
+def process_measured_df(df_theoret: pd.DataFrame(), csv_measured: str )-> pd.DataFrame():
+    """ Method that gets the measured dataframe from the csv file and fixes small stuff inside it, concatenates with the theoretical df.
    
     Parameters
     ----------
      df_theoret: pd.DataFrame()
-        Contains bla bla 
-    
+        Datafrmae which will be concatenated with the measured df.
+        
+     csv_measured: str
+         Path to the csv file in which small stuff will be fixed inside it. 
     Returns
     -------
-    : pd.DataFrame()
-       
+    df_out: pd.DataFrame()
+       Processed dataframe which is the combination of theoretical with measured.
         
     """
     #   get the measured dataframe
@@ -356,14 +358,15 @@ def process_measured_df(df_theoret: pd.DataFrame(), csv_measured:str ):
 
 def select_cnn_match_theo_for_measured(df_theo: pd.DataFrame(), net_prun_datatype: str) -> pd.DataFrame():
     """
-    Method that processes the dataframe to make it look like the measured dataframe.
+    Method that processes the dataframe to make it look like the measured dataframe so they can be matched together later.
     Eliminates all NaNs and replaces elements to make dfs look alike. 
    
     Parameters
     ----------
     df_theo: pd.DataFrame()
         Dataframe with the data upon which these alterations will be done
-         
+    net_prun_datatype: str
+        Column name which should have the network, pruning factor and datatype.
     Returns
     -------
     df_theo: pd.DataFrame()
@@ -382,12 +385,12 @@ def select_cnn_match_theo_for_measured(df_theo: pd.DataFrame(), net_prun_datatyp
     #   and that we have on the measured df:   hardw_datatype_net_prun | batch/thread/stream  | hardw | network | fps-comp | top1 | type
     #We need to:
     #   1. Create 'network', 'type', 'hardware' and 'hardw_datatype_net_prun'
-    df_theo['network'] = df_theo['net_prun_datatype'].str.split('_').str[0]
+    df_theo['network'] = df_theo[net_prun_datatype].str.split('_').str[0]
     df_theo['type'] = 'predicted'
     #replace elemnts out of hardw column - take datatypes out of hardw_datatype column
     df_theo = replace_data_df(df_=df_theo, column= 'hardw_datatype', list_tuples_data_to_replace=[("-INT2", ""), ("-INT4", ""), ("-INT8", ""), ("-FP16", ""), ("-FP32", "")])      
     # 'hardw_datatype' column only has the hardware now
-    df_theo['hardw_datatype_net_prun'] = df_theo['hardw_datatype']+'_'+df_theo['net_prun_datatype'].str.split('_').str[2] +'_'+ df_theo['network']+'_'+df_theo['net_prun_datatype'].str.split('_').str[1]
+    df_theo['hardw_datatype_net_prun'] = df_theo['hardw_datatype']+'_'+df_theo[net_prun_datatype].str.split('_').str[2] +'_'+ df_theo['network']+'_'+df_theo[net_prun_datatype].str.split('_').str[1]
         
     #   delet unnecessary columns
     df_theo = df_theo.drop(columns = ['net_prun_datatype'])
@@ -400,51 +403,54 @@ def select_cnn_match_theo_for_measured(df_theo: pd.DataFrame(), net_prun_datatyp
 #-------------------------------------------------------------
 
 def fix_small_stuff_df(df: pd.DataFrame(), col_to_drop: list, ) -> pd.DataFrame():
-    """Method that: from the input dfs creates a pareto df & creates a plot from the pareto df, does this for all input dfs
-    Method that  
+    """Method that fixes small stuff in a dataframe. Things like:
+        -remove rows with 'nm'
+        - drop unnecessary columns
+        -...
    
     Parameters
     ----------
-     : pd.DataFrame()
-        Contains bla bla 
-    
+     df: pd.DataFrame()
+        Dataframe which will endure all there alterations.
+     col_to_drop: list
+         List of columns to be dropped.
     Returns
     -------
-    : pd.DataFrame()
-       
+    df_out: pd.DataFrame()
+       Processed dataframe.
         
     """
+    df_out = df.copy()
     #   delete all rows that have 'top1 (top5) [%]' inside
-    df = df[df['top1'] !='top1 (top5) [%]']
+    df_out = df_out[df_out['top1'] !='top1 (top5) [%]']
     #    delete all rows with 'nm'
-    df = df[df.top1!='nm'] 
-    df = df.reset_index()
+    df_out = df_out[df_out.top1!='nm'] 
+    df_out = df_out.reset_index()
     #   merge 'net_prun' with 'datatype' column into 'net_prun_datatype'
-    df['net_prun_datatype'] = df.net_prun + ' ' + df.datatype
-    df = df.drop(columns = col_to_drop)
+    df_out['net_prun_datatype'] = df_out.net_prun + ' ' + df_out.datatype
+    df_out = df_out.drop(columns = col_to_drop)
 
     #    Some cells have [top1 (top5)] accuracies, create col only with top1 acc
-    df['top1'] = df['top1'].str.split(' ').str[0] #take top5 acc out
+    df_out['top1'] = df_out['top1'].str.split(' ').str[0] #take top5 acc out
     #    separate by underscore instead of space
-    df = replace_data_df(df_=df, column='net_prun_datatype', list_tuples_data_to_replace=[(' ','_')])
-    return df
+    df_out = replace_data_df(df_=df_out, column='net_prun_datatype', list_tuples_data_to_replace=[(' ','_')])
+    return df_out
 
 #--------------------------------------------------------
 
 def identify_pairs_nonpairs(df: pd.DataFrame, column: str) -> pd.DataFrame():
-    """This method identifies equal values in the column and signals them, and creates another column with labels for each case """
-    """Method that: from the input dfs creates a pareto df & creates a plot from the pareto df, does this for all input dfs
-    Method that  
-   
+    """This method identifies equal values in the column and signals them, and creates another column with labels for each case 
+
     Parameters
     ----------
-     : pd.DataFrame()
-        Contains bla bla 
-    
+     df: pd.DataFrame()
+        Dataframe which will be processed.
+     column: str
+         Column which has: hardware platform, datatype, network and pruning factor. It has duplicated values.
     Returns
     -------
-    : pd.DataFrame()
-       
+    df: pd.DataFrame()
+       Processed dataframe.
         
     """
     # IDENTIFY ALL PAIRS AND CREATE A SPECIAL COLUMN FOR THEM
@@ -467,19 +473,25 @@ def identify_pairs_nonpairs(df: pd.DataFrame, column: str) -> pd.DataFrame():
 #-------------------------------------------------------
 
 def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: str) -> alt.vegalite.v4.api.Chart:
-    """This method gets makes the overlapped pareto plots. With the 2 pareto lines and the points plot"""
-    """Method that: from the input dfs creates a pareto df & creates a plot from the pareto df, does this for all input dfs
-    Method that  
+    """This method creates all plots for the overlapped pareto and layers them all together. These are: 2 pareto lines and the points plot. 
    
     Parameters
     ----------
-     : pd.DataFrame()
-        Contains bla bla 
+     df: pd.DataFrame()
+        Contains data to be plotted.
+     xcol: str
+         Dataframe column which has the information for the x axis.
+     ycol: str
+         Dataframe column which has the information for the y axis.
+     groupcol: str
+          Dataframe column which has the information for the color.
+     title:str
+         Title to give to the plot.
     
     Returns
     -------
-    : pd.DataFrame()
-       
+    Layered chart: -> alt.vegalite.v4.api.Chart
+       Layered chart, both theoretical pareto curves and the points chart
         
     """
     df_theo =df.loc[df.type=='predicted',:]
@@ -550,19 +562,25 @@ def get_overlapped_pareto(net_keyword: str):
 #----------------------------------------------------
 
 def get_point_chart(df: pd.DataFrame, groupcol: str, xcol: str, ycol:str, title: str) ->alt.vegalite.v4.api.Chart:
-    """Creates simple line chart"""
-    """Method that: from the input dfs creates a pareto df & creates a plot from the pareto df, does this for all input dfs
-    Method that  
-   
+    """Creates simple point chart
+    
     Parameters
     ----------
-     : pd.DataFrame()
-        Contains bla bla 
+     df: pd.DataFrame()
+        Contains data to be plotted.
+     xcol: str
+         Dataframe column which has the information for the x axis.
+     ycol: str
+         Dataframe column which has the information for the y axis.
+     groupcol: str
+          Dataframe column which has the information for the color.
+     title:str
+         Title to give to the plot.
     
     Returns
     -------
-    : pd.DataFrame()
-       
+    Chart: alt.vegalite.v4.api.Chart
+       Simple point chart.
         
     """
     points = alt.Chart(df).mark_point(filled=True).properties(
@@ -586,19 +604,20 @@ def get_point_chart(df: pd.DataFrame, groupcol: str, xcol: str, ycol:str, title:
     return (points+text).interactive()
 #----------------------------------------------------
 
-def theor_pareto(net_keyword, title: str) ->pd.DataFrame:
-    """Creates a Theoretical Pareto Plot."""
-    """Method that: from the input dfs creates a pareto df & creates a plot from the pareto df, does this for all input dfs
-    Method that  
+def theor_pareto(net_keyword, title: str) ->alt.vegalite.v4.api.Chart:
+    """Creates a Theoretical Pareto Plot.
+   
    
     Parameters
     ----------
-     : pd.DataFrame()
-        Contains bla bla 
-    
+    net_keyword : pd.DataFrame()
+        Desired classification task. Eg.: MNIST, CIFAR, ImageNet. 
+    title: str
+        Plot title.
+        
     Returns
     -------
-    : pd.DataFrame()
+    Chart: alt.vegalite.v4.api.Chart
        
         
     """

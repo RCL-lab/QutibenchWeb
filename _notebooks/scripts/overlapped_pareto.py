@@ -383,7 +383,7 @@ def select_cnn_match_theo_for_measured(df_theo: pd.DataFrame(), net_prun_datatyp
     #We need to:
     #   1. Create 'network', 'type', 'hardware' and 'hardw_datatype_net_prun'
     df_theo['network'] = df_theo['net_prun_datatype'].str.split('_').str[0]
-    df_theo['type'] = 'theoretical'
+    df_theo['type'] = 'predicted'
     #replace elemnts out of hardw column - take datatypes out of hardw_datatype column
     df_theo = replace_data_df(df_=df_theo, column= 'hardw_datatype', list_tuples_data_to_replace=[("-INT2", ""), ("-INT4", ""), ("-INT8", ""), ("-FP16", ""), ("-FP32", "")])      
     # 'hardw_datatype' column only has the hardware now
@@ -459,7 +459,7 @@ def identify_pairs_nonpairs(df: pd.DataFrame, column: str) -> pd.DataFrame():
     #assign it to the dataframe color column. Only fill up rows (with the same color) that have pairs
     df['color'] = df[column].apply(lambda x: x if x in names_with_colors else '')
     #fill up the rest of the rows that do not have a pair
-    df['color'] = df.apply(lambda row: 'theoretical_no_match' if row.type=='theoretical' and row.color=='' else 
+    df['color'] = df.apply(lambda row: 'theoretical_no_match' if row.type=='predicted' and row.color=='' else 
                                                      ('measured_no_match' if row.type=='measured' and row.color=='' else (row.color)), axis=1)
     #df = df.drop(columns=['pairs'])
     return df
@@ -482,7 +482,7 @@ def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: st
        
         
     """
-    df_theo =df.loc[df.type=='theoretical',:]
+    df_theo =df.loc[df.type=='predicted',:]
     df_exper = df.loc[df.type=='measured',:]
     df_charts = get_several_paretos_df(list_df = [df_theo, df_exper], groupcol= groupcol, xcol= xcol , ycol= ycol, colors=['#FFA500', '#0066CC'])
     chart1 = get_point_chart_enhanced(df= df, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
@@ -660,7 +660,7 @@ def get_percentage_colum(df: pd.DataFrame, col_elements: str, newcol: str ) -> p
     percentage= []
     for par in pairs:
         df_pair = df_.loc[df_[col_elements] == par]
-        theoret = df_pair.loc[df_pair.type == 'theoretical','fps-comp']
+        theoret = df_pair.loc[df_pair.type == 'predicted','fps-comp']
         measured = df_pair.loc[df_pair.type == 'measured','fps-comp']
         percentage.append(str(round((measured.values[0]/theoret.values[0])*100,1)) + '%')
 
@@ -795,7 +795,7 @@ def faceted_bar_chart(df: pd.DataFrame, xcol: str, ycol:str, colorcol: str, text
         
     """
     bars = alt.Chart().mark_bar().encode(
-        x=alt.X(xcol +':N', sort=['theoretical','measured'], title=''),
+        x=alt.X(xcol +':N', sort=['predicted','measured'], title=''),
         y=alt.Y(ycol +':Q', scale= alt.Scale(type='log', domain = (0.01,100000000))),
         color=alt.Color(colorcol +':N', title='Datapoint Type'),
     )

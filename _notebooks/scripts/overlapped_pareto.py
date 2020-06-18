@@ -4,6 +4,7 @@ import pandas as pd
 import random
 import re
 import altair as alt
+import warnings
 
 W = 600
 H = 480
@@ -549,7 +550,7 @@ def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: st
     TX2_chart=get_point_chart_selection(df= TX2_data,condition=TX2_cond, selection=TX2_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
     NCS_chart=get_point_chart_selection(df= NCS_data,condition=NCS_cond, selection=NCS_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
     TPU_chart=get_point_chart_selection(df= TPU_data,condition=TPU_cond, selection=TPU_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
-    
+    warnings.filterwarnings("ignore")
     #sum the pareto lines
     chart = df_charts.charts.sum(numeric_only = False)
     #layer the pareto lines with the points chart with checkboxes

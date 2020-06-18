@@ -465,15 +465,18 @@ def identify_pairs_nonpairs(df: pd.DataFrame, column: str) -> pd.DataFrame():
     #assign it to the dataframe color column. Only fill up rows (with the same color) that have pairs
     df['color'] = df[column].apply(lambda x: x if x in names_with_colors else '')
     #fill up the rest of the rows that do not have a pair
-    df['color'] = df.apply(lambda row: 'theoretical_no_match' if row.type=='predicted' and row.color=='' else 
+    df['color'] = df.apply(lambda row: 'predicted_no_match' if row.type=='predicted' and row.color=='' else 
                                                      ('measured_no_match' if row.type=='measured' and row.color=='' else (row.color)), axis=1)
     #df = df.drop(columns=['pairs'])
     return df
 
 #-------------------------------------------------------
 
+#hide
 def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: str) -> alt.vegalite.v4.api.Chart:
-    """This method creates all plots for the overlapped pareto and layers them all together. These are: 2 pareto lines and the points plot. 
+    """This method creates all plots for the overlapped pareto and layers them all together. 
+    These are: 2 pareto lines and the points plot.
+    All points plot are binded to checkboxes
    
     Parameters
     ----------
@@ -494,14 +497,63 @@ def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: st
        Layered chart, both theoretical pareto curves and the points chart
         
     """
+    #get the pareto data to built the pareto lines
     df_theo =df.loc[df.type=='predicted',:]
     df_exper = df.loc[df.type=='measured',:]
     df_charts = get_several_paretos_df(list_df = [df_theo, df_exper], groupcol= groupcol, xcol= xcol , ycol= ycol, colors=['#FFA500', '#0066CC'])
-    chart1 = get_point_chart_enhanced(df= df, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    
+    #this is to be used in the color field to set a different color for each field, and to set to black all that doesn't have a match
+    domain = df[groupcol].unique().tolist()
+    range_= spot_no_match(list_= domain)
+    
+    #Select data from the dataframe to bind to each checkbox
+    measu_no_match_data= df[df[groupcol].str.contains("measured")]
+    predic_no_match_data= df[df[groupcol].str.contains("predicted")]
+    FINN_data= df.loc[df[groupcol].str.contains("FINN")]
+    BISMO_data= df.loc[df[groupcol].str.contains("BISMO")]
+    A53_data= df.loc[df[groupcol].str.contains("A53")]
+    TX2_data= df.loc[df[groupcol].str.contains("TX2")]
+    NCS_data= df.loc[df[groupcol].str.contains("NCS")]
+    TPU_data= df.loc[df[groupcol].str.contains("TPU")]
+    
+    #The type of binding will be a checkbox
+    filter_checkbox = alt.binding_checkbox()
+    
+    #Create all checkboxes
+    measu_no_match_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="Measured_Without_Match") 
+    predicted_no_match_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="Predicted_Without_Match") 
+    FINN_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="ZCU104_FINN") 
+    BISMO_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="ZCU104_BISMO")
+    A53_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="U96_Quadcore_A53")
+    TX2_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="TX2")
+    NCS_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="NCS")
+    TPU_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="TPU")
+    
+    legend_title_groupcol ='Hardw_Datatype_Net_Prun'
+    #Color Conditions for each plot
+    measu_no_match_cond= alt.condition(measu_no_match_select,  alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_),  legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("lightgray"))
+    predicted_no_match_cond = alt.condition(predicted_no_match_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)), alt.value("lightgray"))
+    FINN_cond    = alt.condition(FINN_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("lightgray"))
+    BISMO_cond   = alt.condition(BISMO_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("lightgray"))
+    A53_cond     = alt.condition(A53_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("lightgray"))
+    TX2_cond     = alt.condition(TX2_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("lightgray"))
+    NCS_cond     = alt.condition(NCS_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("lightgray"))
+    TPU_cond     = alt.condition(TPU_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("lightgray"))
+    
+    #Create the charts
+    measu_no_match_chart=get_point_chart_selection(df= measu_no_match_data, condition=measu_no_match_cond, selection=measu_no_match_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    predic_no_match_chart=get_point_chart_selection(df= predic_no_match_data,condition=predicted_no_match_cond, selection=predicted_no_match_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    FINN_chart=get_point_chart_selection(df= FINN_data, condition=FINN_cond, selection=FINN_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    BISMO_chart=get_point_chart_selection(df= BISMO_data,condition=BISMO_cond, selection=BISMO_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    A53_chart=get_point_chart_selection(df= A53_data,condition=A53_cond, selection=A53_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    TX2_chart=get_point_chart_selection(df= TX2_data,condition=TX2_cond, selection=TX2_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    NCS_chart=get_point_chart_selection(df= NCS_data,condition=NCS_cond, selection=NCS_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    TPU_chart=get_point_chart_selection(df= TPU_data,condition=TPU_cond, selection=TPU_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    
+    #sum the pareto lines
     chart = df_charts.charts.sum(numeric_only = False)
-    charts = alt.layer(
-        chart1,
-        chart
+    #layer the pareto lines with the points chart with checkboxes
+    charts = alt.layer(measu_no_match_chart+predic_no_match_chart+FINN_chart + BISMO_chart + A53_chart+ TX2_chart+ NCS_chart +TPU_chart + chart
     ).resolve_scale(color='independent',shape='independent').properties(title=title)
     return charts
 
@@ -557,7 +609,7 @@ def get_overlapped_pareto(net_keyword: str):
     # now we have: |hardw_datatype_net_prun | hardw | network | fps-comp | top1 | type | color|
     
     #plot it
-    return plot_it_now(df= overlapped_pareto, xcol= 'fps-comp', ycol= 'top1', groupcol= 'hardw_datatype_net_prun', title='Overlapped Pareto Plots Theoretical + Measured for' + ' ' + net_keyword.upper())    
+    return plot_it_now(df= overlapped_pareto, xcol= 'fps-comp', ycol= 'top1', groupcol= 'color', title='Overlapped Pareto Plots Theoretical + Measured for' + ' ' + net_keyword.upper())    
 
 #----------------------------------------------------
 
@@ -603,6 +655,76 @@ def get_point_chart(df: pd.DataFrame, groupcol: str, xcol: str, ycol:str, title:
     )
     return (points+text).interactive()
 #----------------------------------------------------
+def get_point_chart_selection(df: pd.DataFrame, color_groupcol: str, 
+                              condition: dict,
+                              selection: alt.vegalite.v4.api.Selection,
+                              shape_groupcol: str,  
+                    xcol: str,  ycol: str,  shapes: str, title: str, legend_title_groupcol: str)->alt.vegalite.v4.api.Chart: 
+    
+    """
+    Creates an elaborated point chart with the following configurations:
+        -different colors
+        -different shapes
+        -black color to datapoints that don't have a match (theoretical-measured)
+        -x axis log scale
+        -Text on plot
+        -Tooltips
+   
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Dataframe with data ot be plotted.
+    condition: dict
+        Condition for the color.
+        Eg.: {'condition': {'selection': 'FPGAs  Ultra96  DPU  ZCU  ', 'type': 'nominal', 'field': 'Name'}, 'value': 'lightgray'}  
+    selection: alt.vegalite.v4.api.Selection
+        Selection object to select what information the selection is tied to.
+    color_groupcol: str
+        Column name which will be what distinguishes colors. 
+    shape_groupcol: str
+        Column name which will be what distinguishes shapes.
+    xcol: str
+        Column name which will be the x axis.
+    ycol: str
+        Column name which will be the y axis.
+    shapes: str
+        Desired shape range.
+    title: str
+        Plot title.
+    
+    legend_title_groupcol:
+        Title of the Legend.
+    Returns
+    -------
+    Vega chart: alt.vegalite.v4.api.Chart
+        List with the same size as the input list. Each item is a hexadecimal color. 
+               
+    """
+    domain = df[color_groupcol].unique().tolist()
+    range_= spot_no_match(list_= domain)
+    points= alt.Chart(df).mark_point(size=100, opacity=1, filled =True).properties(
+            width= W,
+            height= 1.3*H,
+            title=title
+        ).encode(
+            x= alt.X(xcol,  scale=alt.Scale(type="log")),
+            y=alt.Y(ycol + ":Q", scale=alt.Scale(zero=False)),
+            color=condition,
+            shape=alt.Shape(shape_groupcol, scale=alt.Scale(range=shapes), legend=alt.Legend(title = 'Datapoint Type')),
+            tooltip=['hardw_datatype_net_prun',color_groupcol, shape_groupcol, xcol, ycol],
+
+        )
+    text = points.mark_text(
+        angle=325,
+        align='left',
+        baseline='middle',
+        dx=7
+    ).encode(
+        text='hardw'
+    )
+    return (points + text).interactive().add_selection(selection)
+
+#---------------------------------------------------------------
 
 def theor_pareto(net_keyword, title: str) ->alt.vegalite.v4.api.Chart:
     """Creates a Theoretical Pareto Plot.
@@ -885,7 +1007,7 @@ def efficiency_plot(net_keyword: str, df_theo_peak_compute: pd.DataFrame, title:
     # now we have: |hardw_datatype_net_prun | hardw | network | fps-comp | top1 | type | color|
     
     #remove the ones that don't have a match
-    overlapped_pareto = overlapped_pareto.loc[(overlapped_pareto.color!='measured_no_match') & (overlapped_pareto.color!='theoretical_no_match')]
+    overlapped_pareto = overlapped_pareto.loc[(overlapped_pareto.color!='measured_no_match') & (overlapped_pareto.color!='predicted_no_match')]
     
     #create a percentage column
     overlapped_pareto = get_percentage_colum(df=overlapped_pareto, col_elements='hardw_datatype_net_prun', newcol='percentage')

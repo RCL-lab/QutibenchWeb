@@ -532,14 +532,14 @@ def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: st
     
     legend_title_groupcol ='Hardw_Datatype_Net_Prun'
     #Color Conditions for each plot
-    measu_no_match_cond= alt.condition(measu_no_match_select,  alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_),  legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("lightgray"))
-    predicted_no_match_cond = alt.condition(predicted_no_match_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)), alt.value("lightgray"))
-    FINN_cond    = alt.condition(FINN_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("lightgray"))
-    BISMO_cond   = alt.condition(BISMO_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("lightgray"))
-    A53_cond     = alt.condition(A53_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("lightgray"))
-    TX2_cond     = alt.condition(TX2_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("lightgray"))
-    NCS_cond     = alt.condition(NCS_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("lightgray"))
-    TPU_cond     = alt.condition(TPU_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("lightgray"))
+    measu_no_match_cond= alt.condition(measu_no_match_select,  alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_),  legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("white"))
+    predicted_no_match_cond = alt.condition(predicted_no_match_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)), alt.value("white"))
+    FINN_cond    = alt.condition(FINN_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("white"))
+    BISMO_cond   = alt.condition(BISMO_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("white"))
+    A53_cond     = alt.condition(A53_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("white"))
+    TX2_cond     = alt.condition(TX2_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("white"))
+    NCS_cond     = alt.condition(NCS_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("white"))
+    TPU_cond     = alt.condition(TPU_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("white"))
     
     #Create the charts
     measu_no_match_chart=get_point_chart_selection(df= measu_no_match_data, condition=measu_no_match_cond, selection=measu_no_match_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )

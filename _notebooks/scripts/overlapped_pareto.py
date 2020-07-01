@@ -1,4 +1,5 @@
 #hide
+#hide
 import numpy as np
 import pandas as pd
 import random
@@ -42,7 +43,9 @@ def process_theo_fps(df_top1_theo:pd.DataFrame(),csv_files: list) -> pd.DataFram
     """
     Method that gets the data from the csv of the Heatmap tables.
     Merges this theoretical df with the given theoretical df (fps+top1) on the 'net_prun_datatype' common column.
-    Removes nans from the 'values' column. Changes column order and columns names.
+    Removes n
+    
+    ans from the 'values' column. Changes column order and columns names.
     Replaces things to match.
     
     Notes: Values on the shared column need to be equal for them to be included on the merge. 
@@ -510,12 +513,12 @@ def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: st
     #Select data from the dataframe to bind to each checkbox
     measu_no_match_data= df[df[groupcol].str.contains("measured")]
     predic_no_match_data= df[df[groupcol].str.contains("predicted")]
-    FINN_data= df.loc[df[groupcol].str.contains("FINN")]
-    BISMO_data= df.loc[df[groupcol].str.contains("BISMO")]
-    A53_data= df.loc[df[groupcol].str.contains("A53")]
-    TX2_data= df.loc[df[groupcol].str.contains("TX2")]
-    NCS_data= df.loc[df[groupcol].str.contains("NCS")]
-    TPU_data= df.loc[df[groupcol].str.contains("TPU")]
+    FINN_data= df.loc[df[groupcol].str.contains("finn")]
+    BISMO_data= df.loc[df[groupcol].str.contains("bismo")]
+    A53_data= df.loc[df[groupcol].str.contains("a53")]
+    TX2_data= df.loc[df[groupcol].str.contains("tx2")]
+    NCS_data= df.loc[df[groupcol].str.contains("ncs")]
+    TPU_data= df.loc[df[groupcol].str.contains("tpu")]
     
     #The type of binding will be a checkbox
     filter_checkbox = alt.binding_checkbox()
@@ -603,8 +606,11 @@ def get_overlapped_pareto(net_keyword: str):
     overlapped_pareto = pd.concat([df_fps_top1_theo, df_measured])
     # now we have everything together and matched
 
-    overlapped_pareto.sort_values(by='hardw_datatype_net_prun')
-     
+    #put everything to lowercase
+    overlapped_pareto.hardw_datatype_net_prun = overlapped_pareto.hardw_datatype_net_prun.str.casefold() 
+    #organize by column alpabetically
+    overlapped_pareto= overlapped_pareto.sort_values(by='hardw_datatype_net_prun')
+
     # identify all pairs and create a special column for them 
     overlapped_pareto = identify_pairs_nonpairs(df=overlapped_pareto, column='hardw_datatype_net_prun')
     # now we have: |hardw_datatype_net_prun | hardw | network | fps-comp | top1 | type | color|

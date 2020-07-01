@@ -614,7 +614,7 @@ def get_overlapped_pareto(net_keyword: str):
     # identify all pairs and create a special column for them 
     overlapped_pareto = identify_pairs_nonpairs(df=overlapped_pareto, column='hardw_datatype_net_prun')
     # now we have: |hardw_datatype_net_prun | hardw | network | fps-comp | top1 | type | color|
-    
+    #return overlapped_pareto
     #plot it
     return plot_it_now(df= overlapped_pareto, xcol= 'fps-comp', ycol= 'top1', groupcol= 'color', title='Overlapped Pareto Plots Theoretical + Measured for' + ' ' + net_keyword.upper())    
 

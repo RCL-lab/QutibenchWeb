@@ -10,9 +10,9 @@ TX2-maxp_FP32_GoogLeNetv1_100,TX2-maxp,GoogLeNetv1,136.319,66.956,measured
 TX2-maxp_FP32_ResNet50_100,TX2-maxp,ResNet50,61.5141,75.148,measured
 Ultra96-DPU_INT8_GoogLeNetv1_100,Ultra96-DPU,GoogLeNetv1,66.5095,69.41,measured
 Ultra96-DPU_INT8_ResNet50_100,Ultra96-DPU,ResNet50,26.5641,73.29,measured
-Ultra96-DPU_INT8_ResNet50_30.0,Ultra96-DPU,ResNet50,49.5801,68.83,measured
+Ultra96-DPU_INT8_ResNet50_30,Ultra96-DPU,ResNet50,49.5801,68.83,measured
 Ultra96-DPU_INT8_ResNet50_50,Ultra96-DPU,ResNet50,39.62,69.49,measured
-Ultra96-DPU_INT8_ResNet50_80.0,Ultra96-DPU,ResNet50,29.3968,73.3,measured
+Ultra96-DPU_INT8_ResNet50_80,Ultra96-DPU,ResNet50,29.3968,73.3,measured
 ZCU102-DPU_INT8_GoogLeNetv1_100,ZCU102-DPU,GoogLeNetv1,544.702,69.49,measured
 ZCU102-DPU_INT8_ResNet50_100,ZCU102-DPU,ResNet50,193.787,72.53,measured
 ZCU104-DPU_INT8_ResNet50_100,ZCU104-DPU,ResNet50,138.253,72.53,measured

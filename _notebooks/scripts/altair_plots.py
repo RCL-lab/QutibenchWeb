@@ -471,3 +471,85 @@ def delete_unique_values(df: pd.DataFrame(), col_a: str, col_b:str)->pd.DataFram
     df = df.query('count!= 1')
     del df['count']
     return df
+
+
+#--------------------------------------BAR CHARTS---------------------------------------------------------------
+
+def simple_bar_chart(df:pd.DataFrame(), xaxis: str, yaxis: str, coloraxis: str, xaxis_title: str, yaxis_title: str, plot_title:str ) -> alt.vegalite.v4.api.Chart:
+    """
+    Method that returns a simple colored bar chart.
+   
+    Parameters
+    ----------
+    df : pd.DataFrame()
+        Dataframe with data to be plotted.
+    xaxis: str
+        Dataframe column which will be plotted on the x axis.
+    yaxis: str
+        Dataframe column which will be plotted on the y axis.
+    coloraxis: str
+        Dataframe column which will be used to set the bars colors.
+    xaxis_title: str 
+        X axis title.
+    yaxis_title: str
+        Y axis title.
+    plot_title: str
+        Plot title.
+    
+    Returns
+    -------
+    alt.vegalite.v4.api.Chart
+       Simple bar chart
+        
+    """
+
+    return alt.Chart(df).mark_bar().interactive().properties(title=plot_title).encode(
+    x=alt.X(xaxis + ':N', 
+            title= xaxis_title),
+    y=alt.Y(yaxis + ':Q',
+            title= yaxis_title,
+            scale=alt.Scale(type='symlog')),
+    color=alt.Color(coloraxis + ':N'),
+)
+
+#---------------------------------------------------------------------------------------
+
+def get_compute_memory_cnn_chart(csv_file: str)-> alt.vegalite.v4.api.Chart:
+    """
+    Method that creates 2 simple bar charts based on two different columns('Total OPs' and 'Total Model Size') 
+    from the csv file provided. 
+   
+    Parameters
+    ----------
+     csv_file: str
+         File from wich data will be used for the bar charts.
+    
+    Returns
+    -------
+    alt.vegalite.v4.api.Chart:
+       2 simple bar charts with colored bars.
+        
+    """
+
+    df = pd.read_csv('data/cnn_topologies_compute_memory_requirements.csv')
+    df=df.drop(0)
+    df['network'] = df[' '].str.split(' ').str[0]
+    gops_chart= simple_bar_chart(df=df,
+                                xaxis=' ',
+                                yaxis='Total OPs',
+                                coloraxis='network',
+                                xaxis_title='All convolutional neural networks',
+                                yaxis_title= 'Number of Operations [GOPs]',
+                                plot_title= 'Compute and Memory Requirements for all CNNs in number of operations')
+
+    model_size_chart= simple_bar_chart(df=df,
+                                xaxis=' ',
+                            yaxis='Total Model Size',
+                            coloraxis='network',
+                            xaxis_title='All convolutional neural networks',
+                            yaxis_title= 'Total Model Size in Millions of Elements [ME]',
+                            plot_title= 'Compute and Memory Requirements for all CNNs in Model size')
+
+    return gops_chart | model_size_chart
+
+#---------------------------------------------------------------------------------------------

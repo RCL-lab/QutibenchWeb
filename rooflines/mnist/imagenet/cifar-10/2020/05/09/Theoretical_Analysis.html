@@ -645,10 +645,10 @@ In order to get a general overview of all CNNs and Hardware Platforms included i
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-e6aa2340bd884b0c9d7062b9f19c3347"></div>
+<div id="altair-viz-2ce06d7a00184075ab44fd3bedebc712"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
-    const outputDiv = document.getElementById("altair-viz-e6aa2340bd884b0c9d7062b9f19c3347");
+    const outputDiv = document.getElementById("altair-viz-2ce06d7a00184075ab44fd3bedebc712");
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
       "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
@@ -689,7 +689,7 @@ In order to get a general overview of all CNNs and Hardware Platforms included i
         .catch(showError)
         .then(() => displayChart(vegaEmbed));
     }
-  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "hconcat": [{"mark": "bar", "encoding": {"color": {"type": "nominal", "field": "network"}, "x": {"type": "nominal", "field": " ", "title": "All convolutional neural networks"}, "y": {"type": "quantitative", "field": "Total OPs", "scale": {"type": "symlog"}, "title": "Number of Operations [GOPs]"}}, "selection": {"selector001": {"type": "interval", "bind": "scales", "encodings": ["x", "y"]}}, "title": "Compute and Memory Requirements for all CNNs in number of operations"}, {"mark": "bar", "encoding": {"color": {"type": "nominal", "field": "network"}, "x": {"type": "nominal", "field": " ", "title": "All convolutional neural networks"}, "y": {"type": "quantitative", "field": "Total Model Size", "scale": {"type": "symlog"}, "title": "Total Model Size in Millions of Elements [ME]"}}, "selection": {"selector002": {"type": "interval", "bind": "scales", "encodings": ["x", "y"]}}, "title": "Compute and Memory Requirements for all CNNs in Model size"}], "data": {"name": "data-38f32b45ebebcc44d6c6becf9d377948"}, "$schema": "https://vega.github.io/schema/vega-lite/v4.0.2.json", "datasets": {"data-38f32b45ebebcc44d6c6becf9d377948": [{" ": "GoogLeNetv1", "Total OPs": "3.1", "Total Model Size": "6", "OI (INT2)": "2093.97", "OI (INT4)": "1046.99", "OI (INT8)": "523.49", "OI (FP16)": "261.75", "OI (FP32)": "130.87", "network": "GoogLeNetv1"}, {" ": "MobileNetv1", "Total OPs": "1.1", "Total Model Size": "4.2", "OI (INT2)": "1075.47", "OI (INT4)": "537.74", "OI (INT8)": "268.87", "OI (FP16)": "134.43", "OI (FP32)": "67.22", "network": "MobileNetv1"}, {" ": "ResNet-50 100%", "Total OPs": "7.7", "Total Model Size": "25.5", "OI (INT2)": "1210.84", "OI (INT4)": "605.42", "OI (INT8)": "302.71", "OI (FP16)": "151.36", "OI (FP32)": "75.68", "network": "ResNet-50"}, {" ": "ResNet-50 80%", "Total OPs": "6.5", "Total Model Size": "23.7", "OI (INT2)": "1086.59", "OI (INT4)": "543.3", "OI (INT8)": "271.65", "OI (FP16)": "135.82", "OI (FP32)": "67.91", "network": "ResNet-50"}, {" ": "ResNet-50 50%", "Total OPs": "3.8", "Total Model Size": "15.8", "OI (INT2)": "949.85", "OI (INT4)": "474.93", "OI (INT8)": "237.46", "OI (FP16)": "118.73", "OI (FP32)": "59.37", "network": "ResNet-50"}, {" ": "ResNet-50 30%", "Total OPs": "2.5", "Total Model Size": "10.1", "OI (INT2)": "970.16", "OI (INT4)": "485.08", "OI (INT8)": "242.54", "OI (FP16)": "121.27", "OI (FP32)": "60.64", "network": "ResNet-50"}, {" ": "EfficientNet Edge S", "Total OPs": "4.7", "Total Model Size": "5.4", "OI (INT2)": "3481.48", "OI (INT4)": "1740.74", "OI (INT8)": "870.37", "OI (FP16)": "435.18", "OI (FP32)": "217.59", "network": "EfficientNet"}, {" ": "EfficientNet Edge M", "Total OPs": "7.4", "Total Model Size": "6.9", "OI (INT2)": "4289.86", "OI (INT4)": "2144.93", "OI (INT8)": "1072.46", "OI (FP16)": "536.23", "OI (FP32)": "268.12", "network": "EfficientNet"}, {" ": "EfficientNet Edge L", "Total OPs": "19.4", "Total Model Size": "10.6", "OI (INT2)": "7313.21", "OI (INT4)": "3656.6", "OI (INT8)": "1828.3", "OI (FP16)": "914.15", "OI (FP32)": "457.08", "network": "EfficientNet"}, {" ": "CNV 100%", "Total OPs": "0.47", "Total Model Size": "6.16", "OI (INT2)": "304.95", "OI (INT4)": "152.48", "OI (INT8)": "76.24", "OI (FP16)": "38.12", "OI (FP32)": "19.06", "network": "CNV"}, {" ": "CNV 50%", "Total OPs": "0.12", "Total Model Size": "1.54", "OI (INT2)": "308.32", "OI (INT4)": "154.16", "OI (INT8)": "77.08", "OI (FP16)": "38.54", "OI (FP32)": "19.27", "network": "CNV"}, {" ": "CNV 25%", "Total OPs": "0.03", "Total Model Size": "0.39", "OI (INT2)": "315.01", "OI (INT4)": "157.51", "OI (INT8)": "78.75", "OI (FP16)": "39.38", "OI (FP32)": "19.69", "network": "CNV"}, {" ": "CNV 12.5%", "Total OPs": "0.01", "Total Model Size": "0.1", "OI (INT2)": "332.61", "OI (INT4)": "166.3", "OI (INT8)": "83.15", "OI (FP16)": "41.58", "OI (FP32)": "20.79", "network": "CNV"}, {" ": "MLP 100%", "Total OPs": "0.02", "Total Model Size": "10.01", "OI (INT2)": "8", "OI (INT4)": "4", "OI (INT8)": "2", "OI (FP16)": "1", "OI (FP32)": "0.5", "network": "MLP"}, {" ": "MLP 50%", "Total OPs": "0.00582", "Total Model Size": "2.91", "OI (INT2)": "8", "OI (INT4)": "4", "OI (INT8)": "2", "OI (FP16)": "1", "OI (FP32)": "0.5", "network": "MLP"}, {" ": "MLP 25%", "Total OPs": "0.0019", "Total Model Size": "0.93", "OI (INT2)": "8", "OI (INT4)": "4", "OI (INT8)": "2", "OI (FP16)": "1", "OI (FP32)": "0.5", "network": "MLP"}, {" ": "MLP 12.5%", "Total OPs": "0.0007", "Total Model Size": "0.33", "OI (INT2)": "8", "OI (INT4)": "4", "OI (INT8)": "2", "OI (FP16)": "1", "OI (FP32)": "0.5", "network": "MLP"}]}}, {"mode": "vega-lite"});
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "hconcat": [{"mark": "bar", "encoding": {"color": {"type": "nominal", "field": "network"}, "x": {"type": "nominal", "field": " ", "title": "All convolutional neural networks"}, "y": {"type": "quantitative", "field": "Total OPs", "scale": {"type": "symlog"}, "title": "Number of Operations [GOPs]"}}, "height": 350, "selection": {"selector014": {"type": "interval", "bind": "scales", "encodings": ["x", "y"]}}, "title": "Compute and Memory Requirements for all CNNs in number of operations", "width": 350}, {"mark": "bar", "encoding": {"color": {"type": "nominal", "field": "network"}, "x": {"type": "nominal", "field": " ", "title": "All convolutional neural networks"}, "y": {"type": "quantitative", "field": "Total Model Size", "scale": {"type": "symlog"}, "title": "Total Model Size in Millions of Elements [ME]"}}, "height": 350, "selection": {"selector015": {"type": "interval", "bind": "scales", "encodings": ["x", "y"]}}, "title": "Compute and Memory Requirements for all CNNs in Model size", "width": 350}], "data": {"name": "data-38f32b45ebebcc44d6c6becf9d377948"}, "$schema": "https://vega.github.io/schema/vega-lite/v4.0.2.json", "datasets": {"data-38f32b45ebebcc44d6c6becf9d377948": [{" ": "GoogLeNetv1", "Total OPs": "3.1", "Total Model Size": "6", "OI (INT2)": "2093.97", "OI (INT4)": "1046.99", "OI (INT8)": "523.49", "OI (FP16)": "261.75", "OI (FP32)": "130.87", "network": "GoogLeNetv1"}, {" ": "MobileNetv1", "Total OPs": "1.1", "Total Model Size": "4.2", "OI (INT2)": "1075.47", "OI (INT4)": "537.74", "OI (INT8)": "268.87", "OI (FP16)": "134.43", "OI (FP32)": "67.22", "network": "MobileNetv1"}, {" ": "ResNet-50 100%", "Total OPs": "7.7", "Total Model Size": "25.5", "OI (INT2)": "1210.84", "OI (INT4)": "605.42", "OI (INT8)": "302.71", "OI (FP16)": "151.36", "OI (FP32)": "75.68", "network": "ResNet-50"}, {" ": "ResNet-50 80%", "Total OPs": "6.5", "Total Model Size": "23.7", "OI (INT2)": "1086.59", "OI (INT4)": "543.3", "OI (INT8)": "271.65", "OI (FP16)": "135.82", "OI (FP32)": "67.91", "network": "ResNet-50"}, {" ": "ResNet-50 50%", "Total OPs": "3.8", "Total Model Size": "15.8", "OI (INT2)": "949.85", "OI (INT4)": "474.93", "OI (INT8)": "237.46", "OI (FP16)": "118.73", "OI (FP32)": "59.37", "network": "ResNet-50"}, {" ": "ResNet-50 30%", "Total OPs": "2.5", "Total Model Size": "10.1", "OI (INT2)": "970.16", "OI (INT4)": "485.08", "OI (INT8)": "242.54", "OI (FP16)": "121.27", "OI (FP32)": "60.64", "network": "ResNet-50"}, {" ": "EfficientNet Edge S", "Total OPs": "4.7", "Total Model Size": "5.4", "OI (INT2)": "3481.48", "OI (INT4)": "1740.74", "OI (INT8)": "870.37", "OI (FP16)": "435.18", "OI (FP32)": "217.59", "network": "EfficientNet"}, {" ": "EfficientNet Edge M", "Total OPs": "7.4", "Total Model Size": "6.9", "OI (INT2)": "4289.86", "OI (INT4)": "2144.93", "OI (INT8)": "1072.46", "OI (FP16)": "536.23", "OI (FP32)": "268.12", "network": "EfficientNet"}, {" ": "EfficientNet Edge L", "Total OPs": "19.4", "Total Model Size": "10.6", "OI (INT2)": "7313.21", "OI (INT4)": "3656.6", "OI (INT8)": "1828.3", "OI (FP16)": "914.15", "OI (FP32)": "457.08", "network": "EfficientNet"}, {" ": "CNV 100%", "Total OPs": "0.47", "Total Model Size": "6.16", "OI (INT2)": "304.95", "OI (INT4)": "152.48", "OI (INT8)": "76.24", "OI (FP16)": "38.12", "OI (FP32)": "19.06", "network": "CNV"}, {" ": "CNV 50%", "Total OPs": "0.12", "Total Model Size": "1.54", "OI (INT2)": "308.32", "OI (INT4)": "154.16", "OI (INT8)": "77.08", "OI (FP16)": "38.54", "OI (FP32)": "19.27", "network": "CNV"}, {" ": "CNV 25%", "Total OPs": "0.03", "Total Model Size": "0.39", "OI (INT2)": "315.01", "OI (INT4)": "157.51", "OI (INT8)": "78.75", "OI (FP16)": "39.38", "OI (FP32)": "19.69", "network": "CNV"}, {" ": "CNV 12.5%", "Total OPs": "0.01", "Total Model Size": "0.1", "OI (INT2)": "332.61", "OI (INT4)": "166.3", "OI (INT8)": "83.15", "OI (FP16)": "41.58", "OI (FP32)": "20.79", "network": "CNV"}, {" ": "MLP 100%", "Total OPs": "0.02", "Total Model Size": "10.01", "OI (INT2)": "8", "OI (INT4)": "4", "OI (INT8)": "2", "OI (FP16)": "1", "OI (FP32)": "0.5", "network": "MLP"}, {" ": "MLP 50%", "Total OPs": "0.00582", "Total Model Size": "2.91", "OI (INT2)": "8", "OI (INT4)": "4", "OI (INT8)": "2", "OI (FP16)": "1", "OI (FP32)": "0.5", "network": "MLP"}, {" ": "MLP 25%", "Total OPs": "0.0019", "Total Model Size": "0.93", "OI (INT2)": "8", "OI (INT4)": "4", "OI (INT8)": "2", "OI (FP16)": "1", "OI (FP32)": "0.5", "network": "MLP"}, {" ": "MLP 12.5%", "Total OPs": "0.0007", "Total Model Size": "0.33", "OI (INT2)": "8", "OI (INT4)": "4", "OI (INT8)": "2", "OI (FP16)": "1", "OI (FP32)": "0.5", "network": "MLP"}]}}, {"mode": "vega-lite"});
 </script>
 </div>
 
@@ -945,10 +945,10 @@ In order to get a general overview of all CNNs and Hardware Platforms included i
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-95abe23352584cc88b31261bc6e73a4a"></div>
+<div id="altair-viz-acc74813bbb746048e09c9dbcbe356cd"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
-    const outputDiv = document.getElementById("altair-viz-95abe23352584cc88b31261bc6e73a4a");
+    const outputDiv = document.getElementById("altair-viz-acc74813bbb746048e09c9dbcbe356cd");
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
       "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
@@ -1047,10 +1047,10 @@ In order to get a general overview of all CNNs and Hardware Platforms included i
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-5236399cee4c4b0d9dbc4c035f98079c"></div>
+<div id="altair-viz-1a7cc9320e254916982397d78214530b"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
-    const outputDiv = document.getElementById("altair-viz-5236399cee4c4b0d9dbc4c035f98079c");
+    const outputDiv = document.getElementById("altair-viz-1a7cc9320e254916982397d78214530b");
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
       "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
@@ -1132,10 +1132,10 @@ In order to get a general overview of all CNNs and Hardware Platforms included i
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-7a2b9216f0854eaa89509cdfb9f8dff3"></div>
+<div id="altair-viz-5f46689cd075421ea0410c40e23f2622"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
-    const outputDiv = document.getElementById("altair-viz-7a2b9216f0854eaa89509cdfb9f8dff3");
+    const outputDiv = document.getElementById("altair-viz-5f46689cd075421ea0410c40e23f2622");
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
       "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
@@ -1217,10 +1217,10 @@ In order to get a general overview of all CNNs and Hardware Platforms included i
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-47228eef57f346ebb38d4c1eb35eb679"></div>
+<div id="altair-viz-801f3e9805c046c980590027e201415f"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
-    const outputDiv = document.getElementById("altair-viz-47228eef57f346ebb38d4c1eb35eb679");
+    const outputDiv = document.getElementById("altair-viz-801f3e9805c046c980590027e201415f");
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
       "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
@@ -1311,10 +1311,10 @@ In order to get a general overview of all CNNs and Hardware Platforms included i
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-c8e52c23d58d4fc48cee2a647e8a1fe8"></div>
+<div id="altair-viz-ac306454423248f985d1ed58bb501cba"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
-    const outputDiv = document.getElementById("altair-viz-c8e52c23d58d4fc48cee2a647e8a1fe8");
+    const outputDiv = document.getElementById("altair-viz-ac306454423248f985d1ed58bb501cba");
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
       "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
@@ -1388,10 +1388,10 @@ In order to get a general overview of all CNNs and Hardware Platforms included i
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-904f5165b2384b8c9217ae0f175dbc86"></div>
+<div id="altair-viz-54adba48bb2f4bb995ab94a1426e9ab0"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
-    const outputDiv = document.getElementById("altair-viz-904f5165b2384b8c9217ae0f175dbc86");
+    const outputDiv = document.getElementById("altair-viz-54adba48bb2f4bb995ab94a1426e9ab0");
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
       "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
@@ -1465,10 +1465,10 @@ In order to get a general overview of all CNNs and Hardware Platforms included i
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-7ed3b5626f2d41f9909c89dbeb3941b9"></div>
+<div id="altair-viz-bf4745ec96aa4bc3bfeee9d86d3db33f"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
-    const outputDiv = document.getElementById("altair-viz-7ed3b5626f2d41f9909c89dbeb3941b9");
+    const outputDiv = document.getElementById("altair-viz-bf4745ec96aa4bc3bfeee9d86d3db33f");
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
       "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",

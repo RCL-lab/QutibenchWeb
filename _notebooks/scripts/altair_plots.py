@@ -503,7 +503,7 @@ def simple_bar_chart(df:pd.DataFrame(), xaxis: str, yaxis: str, coloraxis: str, 
         
     """
 
-    return alt.Chart(df).mark_bar().interactive().properties(title=plot_title).encode(
+    return alt.Chart(df, width=350, height=350).mark_bar().interactive().properties(title=plot_title).encode(
     x=alt.X(xaxis + ':N', 
             title= xaxis_title),
     y=alt.Y(yaxis + ':Q',

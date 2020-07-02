@@ -384,7 +384,7 @@ def pareto_graph(df: pd.DataFrame(), groupcol: str , xcol: str, ycol: str, W: in
         y=alt.Y(ycol + ":Q", scale=alt.Scale(zero=False)),
         color=alt.Color(groupcol, legend=alt.Legend(columns=1, title = "Hardware_Quantization_Pruning")),
         #tooltip=["HWType", "Precision", "PruningFactor", "batch/thread/stream", ycol, xcol],
-        #tooltip=[groupcol, ycol, xcol],
+        tooltip=[groupcol, ycol, xcol],
     )
     df_pareto_plot = alt.Chart(df_pareto).mark_line().encode(
         x="x",
@@ -503,7 +503,8 @@ def simple_bar_chart(df:pd.DataFrame(), xaxis: str, yaxis: str, coloraxis: str, 
         
     """
 
-    return alt.Chart(df, width=350, height=350).mark_bar().interactive().properties(title=plot_title).encode(
+     
+    bars=alt.Chart(df).mark_bar().encode(
     x=alt.X(xaxis + ':N', 
             title= xaxis_title),
     y=alt.Y(yaxis + ':Q',
@@ -511,6 +512,13 @@ def simple_bar_chart(df:pd.DataFrame(), xaxis: str, yaxis: str, coloraxis: str, 
             scale=alt.Scale(type='symlog')),
     color=alt.Color(coloraxis + ':N'),
 )
+    text = bars.mark_text(
+   
+    dy=-5  # Nudges text upwards so it doesn't appear on top of the bar
+).encode(
+    text= yaxis+':Q'
+)
+    return (bars + text).properties(width=350, height=350, title=plot_title).interactive()
 
 #---------------------------------------------------------------------------------------
 
@@ -532,6 +540,7 @@ def get_compute_memory_cnn_chart(csv_file: str)-> alt.vegalite.v4.api.Chart:
     """
 
     df = pd.read_csv('data/cnn_topologies_compute_memory_requirements.csv')
+    pd.options.display.float_format = '{:20,.2f}'.format
     df=df.drop(0)
     df['network'] = df[' '].str.split(' ').str[0]
     gops_chart= simple_bar_chart(df=df,

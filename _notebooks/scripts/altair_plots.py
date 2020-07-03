@@ -584,10 +584,17 @@ def get_peak_perf_bar_chart(csv_file)->alt.vegalite.v4.api.Chart:
     df = pd.melt(df, id_vars=['Hardware Platforms'], value_vars=['INT2','INT4','INT8','FP16','FP32','Memory Bandwidth'], var_name='Datatypes and MB')
     df=df.dropna()
 
-    return alt.Chart(df).mark_bar().interactive().properties(title='Peak Performance and Memory Bandwidth for all Hardware Platforms').encode(
+    bars= alt.Chart().mark_bar().encode(
         x=alt.X('Datatypes and MB:O', title=''),
         y=alt.Y('value:Q',scale=alt.Scale(type='log'), title='Peak Performance [TOP/sec] and MB [GBps]'),
         color='Datatypes and MB:N',
-        column=alt.Column('Hardware Platforms:N', title='Hardware Platforms')
     )
+    text = bars.mark_text(
+   
+    dy=-5  # Nudges text upwards so it doesn't appear on top of the bar
+).encode(
+    text= 'value:Q'
+)
+    return alt.layer(bars, text, data=df).facet(columns=5, facet=alt.Facet('Hardware Platforms:N', title='Hardware Platforms')).properties(title='Peak Performance and Memory Bandwidth for all Hardware Platforms')
+
 #-------------------------------------------------------------------------------------------------------

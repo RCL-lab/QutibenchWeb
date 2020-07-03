@@ -562,3 +562,32 @@ def get_compute_memory_cnn_chart(csv_file: str)-> alt.vegalite.v4.api.Chart:
     return gops_chart | model_size_chart
 
 #---------------------------------------------------------------------------------------------
+
+def get_peak_perf_bar_chart(csv_file)->alt.vegalite.v4.api.Chart:
+    """
+    Method that creates a simple grouped bar chart from the csv file:
+   
+    Parameters
+    ----------
+    csv_file: str
+        csv file from which the bar chart will be created.
+    
+    Returns
+    -------
+    alt.vegalite.v4.api.Chart
+        Simple, grouped bar chart.
+        
+    """
+
+    df= pd.read_csv(csv_file)
+    df=df.drop(0)
+    df = pd.melt(df, id_vars=['Hardware Platforms'], value_vars=['INT2','INT4','INT8','FP16','FP32','Memory Bandwidth'], var_name='Datatypes and MB')
+    df=df.dropna()
+
+    return alt.Chart(df).mark_bar().interactive().properties(title='Peak Performance and Memory Bandwidth for all Hardware Platforms').encode(
+        x=alt.X('Datatypes and MB:O', title=''),
+        y=alt.Y('value:Q',scale=alt.Scale(type='log'), title='Peak Performance [TOP/sec] and MB [GBps]'),
+        color='Datatypes and MB:N',
+        column=alt.Column('Hardware Platforms:N', title='Hardware Platforms')
+    )
+#-------------------------------------------------------------------------------------------------------

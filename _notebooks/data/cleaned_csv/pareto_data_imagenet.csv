@@ -1,9 +1,9 @@
 hardw_datatype_net_prun,hardw,network,fps-comp,top1,type
+EdgeTPU-fast_INT8_GoogLeNetv1_100,EdgeTPU-fast,GoogLeNetv1,274.084,69.2434,measured
+EdgeTPU-fast_INT8_MobileNetv1_100,EdgeTPU-fast,MobileNetv1,389.034,69.5674,measured
+EdgeTPU-slow_INT8_GoogLeNetv1_100,EdgeTPU-slow,GoogLeNetv1,174.785,69.2434,measured
+EdgeTPU-slow_INT8_MobileNetv1_100,EdgeTPU-slow,MobileNetv1,244.949,69.5674,measured
 NCS_FP16_ResNet50_100,NCS,ResNet50,18.2716,75.172,measured
-TPU-fast_INT8_GoogLeNetv1_100,TPU-fast,GoogLeNetv1,274.084,69.2434,measured
-TPU-fast_INT8_MobileNetv1_100,TPU-fast,MobileNetv1,389.034,69.5674,measured
-TPU-slow_INT8_GoogLeNetv1_100,TPU-slow,GoogLeNetv1,174.785,69.2434,measured
-TPU-slow_INT8_MobileNetv1_100,TPU-slow,MobileNetv1,244.949,69.5674,measured
 TX2-maxp_FP16_GoogLeNetv1_100,TX2-maxp,GoogLeNetv1,240.699,66.928,measured
 TX2-maxp_FP16_ResNet50_100,TX2-maxp,ResNet50,114.03299999999999,75.142,measured
 TX2-maxp_FP32_GoogLeNetv1_100,TX2-maxp,GoogLeNetv1,136.319,66.956,measured

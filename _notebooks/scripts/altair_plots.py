@@ -191,7 +191,7 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
     #Selecting data for each checkbox, from dataset. Each checkbox will be tied to each one of these data
     FPGA_data   = dataframe[dataframe['Name'].str.contains("Ultra96 DPU|ZCU")]
     NVIDIA_data = dataframe[dataframe['Name'].str.contains("TX2")]
-    GOOGLE_data = dataframe[dataframe['Name'].str.contains("TPU")]
+    GOOGLE_data = dataframe[dataframe['Name'].str.contains("EdgeTPU")]
     INTEL_data  = dataframe[dataframe['Name'].str.contains("NCS")]
 
     IMAGENET_data = dataframe[dataframe['Name'].str.contains("ResNet|GoogLeNet|MobileNet|VGG|AlexNet")]
@@ -208,7 +208,7 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
     #Selection('FPGAs:', SelectionDef({ bind: BindCheckbox({ input: 'checkbox' }), fields: ['Ultra96 DPU,ZCU104,ZCU102,ZCU104 FINN,ZCU104 BISMO'], type: 'single' }))
     FPGA_select   = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="FPGAs  Ultra96  DPU  ZCU  ")                 
     NVIDIA_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="INVIDIA  TX2  maxn, maxp, maxq  ")
-    GOOGLE_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="GOOGLE  TPU, fast, slow  ")
+    GOOGLE_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="GOOGLE  EdgeTPU, fast, slow  ")
     INTEL_select  = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="INTEL  NCS  ")
 
     IMAGENET_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="IMAGENET  ResNet  GoogLeNet  MobileNet  VGG  AlexNet  ")
@@ -442,13 +442,13 @@ def pareto_graph_points(df: pd.DataFrame(), groupcol: str , xcol: str, ycol: str
 
 def delete_unique_values(df: pd.DataFrame(), col_a: str, col_b:str)->pd.DataFrame():
     """ Delets DataFrame rows based on column values.
-    Delets rows whose values in column A has only 1 distinct value in column B.
+    Delets rows whose values in column A has only 1 unique value in column B.
     eg.:       Input:                    Desired output:
          col_a       col_b               col_a       col_b 
-         NCS         1.728796            NCS         1.728796
-         NCS         1.780300            NCS         1.780300
-         TPU         14.5                
-         TPU         14.5    
+         NCS         3                    NCS         3
+         NCS         8                    NCS         8
+         EdgeTPU         14.5                
+         EdgeTPU         14.5    
              
     Parameters
     ----------

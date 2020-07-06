@@ -1038,7 +1038,7 @@ def efficiency_plot(net_keyword: str, df_theo_peak_compute: pd.DataFrame, title:
         return faceted_bar_chart(df=overlapped_pareto , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) 
     
     
-    usb_devices_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.contains('TPU|NCS|A53')]
+    usb_devices_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.contains('EdgeTPU|NCS|A53')]
     fpga_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.contains('ZCU|Ultra')]
     gpu_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.contains('TX2')]
 

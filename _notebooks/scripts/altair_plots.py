@@ -187,18 +187,30 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
     height = 500
     data=dataframe
     
+    #to select data to be plotted according to user input
+    if neural_network in 'imagenet':
+        nn_df   = dataframe[dataframe['Name'].str.contains("GoogLeNetv1|MobileNetv1|ResNet|EfficientNet")]
+    elif neural_network in 'cifar':
+        nn_df   = dataframe[dataframe['Name'].str.contains("CNV")]
+    elif neural_network in 'mnist':
+        nn_df   = dataframe[dataframe['Name'].str.contains("MLP")]
+    elif neural_network in 'imagenet|mnist|cifar':
+        nn_df   = dataframe[dataframe['Name'].str.contains("GoogLeNetv1|MobileNetv1|ResNet|EfficientNet|CNV|MLP")]
+    else:
+         return 'There were no results for the neural network asked. Please insert another network'
+    
     #This part is to create all plots binded to checkboes-------------
-    #Selecting data for each checkbox, from dataset. Each checkbox will be tied to each one of these data
+    #Selecting data for each checkbox, from dataset. Each checkbox will be tied to each one of these data        
     FPGA_data   = dataframe[dataframe['Name'].str.contains("Ultra96 DPU|ZCU")]
     NVIDIA_data = dataframe[dataframe['Name'].str.contains("TX2")]
     GOOGLE_data = dataframe[dataframe['Name'].str.contains("EdgeTPU")]
     INTEL_data  = dataframe[dataframe['Name'].str.contains("NCS")]
 
-    IMAGENET_data = dataframe[dataframe['Name'].str.contains("ResNet|GoogLeNet|MobileNet|VGG|AlexNet")]
-    MNIST_data    = dataframe[dataframe['Name'].str.contains("MLP")]
-    CIFAR_data    = dataframe[dataframe['Name'].str.contains("CNV")]
-    MASKRCNN_data = dataframe[dataframe['Name'].str.contains("MaskRCNN")]
-    GNMT_data     = dataframe[dataframe['Name'].str.contains("GNMT")]
+    INT2_data = nn_df[nn_df['Name'].str.contains("INT2")]
+    INT4_data    = nn_df[nn_df['Name'].str.contains("INT4")]
+    INT8_data    = nn_df[nn_df['Name'].str.contains("INT8")]
+    FP16_data = nn_df[nn_df['Name'].str.contains("FP16")]
+    FP32_data     = nn_df[nn_df['Name'].str.contains("FP32")]
 
     #To say that the binding type will be a checkbox
     #BindCheckbox({ input: 'checkbox'})
@@ -211,11 +223,11 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
     GOOGLE_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="GOOGLE  EdgeTPU, fast, slow  ")
     INTEL_select  = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="INTEL  NCS  ")
 
-    IMAGENET_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="IMAGENET  ResNet  GoogLeNet  MobileNet  VGG  AlexNet  ")
-    MNIST_select    = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="MNIST  MLP  ")   
-    CIFAR_select    = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="CIFAR-10  CNV  ")   
-    MASKRCNN_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="MASKRCNN  ")
-    GNMT_select     = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="GNMT  ")
+    INT2_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="INT2")
+    INT4_select    = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="INT4")   
+    INT8_select    = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="INT8")   
+    FP16_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="FP16")
+    FP32_select     = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="FP32")
 
     #Color Condiotions for each plot
     #{'condition': {'selection': 'FPGAs:', 'type': 'nominal', 'field': 'Name'}, 'value': 'lightgray'}
@@ -224,23 +236,24 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
     GOOGLE_cond   = alt.condition(GOOGLE_select, alt.Color("Name:N"), alt.value("lightgray"))
     INTEL_cond    = alt.condition(INTEL_select, alt.Color("Name:N"), alt.value("lightgray"))
 
-    IMAGENET_cond = alt.condition(IMAGENET_select, alt.Color("Name:N"), alt.value("lightgray"))
-    MNIST_cond    = alt.condition(MNIST_select, alt.Color("Name:N"), alt.value("lightgray"))
-    CIFAR_cond    = alt.condition(CIFAR_select, alt.Color("Name:N"), alt.value("lightgray"))
-    MASKRCNN_cond = alt.condition(MASKRCNN_select, alt.Color("Name:N"), alt.value("lightgray"))
-    GNMT_cond     = alt.condition(GNMT_select, alt.Color("Name:N"), alt.value("lightgray"))
+    INT2_cond = alt.condition(INT2_select, alt.Color("Name:N"), alt.value("lightgray"))
+    INT4_cond    = alt.condition(INT4_select, alt.Color("Name:N"), alt.value("lightgray"))
+    INT8_cond    = alt.condition(INT8_select, alt.Color("Name:N"), alt.value("lightgray"))
+    FP16_cond = alt.condition(FP16_select, alt.Color("Name:N"), alt.value("lightgray"))
+    FP32_cond     = alt.condition(FP32_select, alt.Color("Name:N"), alt.value("lightgray"))
 
     #Creating all plots 
+    
     FPGA_chart     = line_chart_w_checkbox(FPGA_data,     FPGA_cond,    FPGA_select)
     NVIDIA_chart   = line_chart_w_checkbox(NVIDIA_data,   NVIDIA_cond,  NVIDIA_select)
     GOOGLE_chart   = line_chart_w_checkbox(GOOGLE_data,   GOOGLE_cond,  GOOGLE_select)                         
     INTEL_chart    = line_chart_w_checkbox(INTEL_data,    INTEL_cond,   INTEL_select)
 
-    IMAGENET_chart = line_chart_w_checkbox(IMAGENET_data, IMAGENET_cond, IMAGENET_select)
-    MNIST_chart    = line_chart_w_checkbox(MNIST_data,    MNIST_cond,    MNIST_select)
-    CIFAR_chart    = line_chart_w_checkbox(CIFAR_data,    CIFAR_cond,    CIFAR_select)
-    MASKRCNN_chart = line_chart_w_checkbox(MASKRCNN_data, MASKRCNN_cond, MASKRCNN_select)
-    GNMT_chart     = line_chart_w_checkbox(GNMT_data,     GNMT_cond,     GNMT_select)
+    INT2_chart =    line_chart_w_checkbox(INT2_data, INT2_cond, INT2_select)
+    INT4_chart    = line_chart_w_checkbox(INT4_data,    INT4_cond,    INT4_select)
+    INT8_chart    = line_chart_w_checkbox(INT8_data,    INT8_cond,    INT8_select)
+    FP16_chart =    line_chart_w_checkbox(FP16_data, FP16_cond, FP16_select)
+    FP32_chart     = line_chart_w_checkbox(FP32_data,     FP32_cond,     FP32_select)
 
    
     #--------------------------------------------------------------------------------------------------
@@ -264,18 +277,11 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
                 opacity=alt.value(0),
     ).add_selection(selection)
     
-    chart_all = (pd.Series([IMAGENET_chart, MNIST_chart, CIFAR_chart, MASKRCNN_chart, 
-                               GNMT_chart], name="charts")).to_frame()
-    chart_all.index = ['imagenet', 'mnist', 'cifar10', 'maskrcnn','gnmt']
-    chart_all.index.name = 'index'
-    
-    chart_filtered = chart_all[chart_all.index.astype(str).str.contains(neural_network)] 
-    if len(chart_filtered.index) == 0:
-        return 'There were no results for the neural network asked. Please insert another network'
-    
-    #Chart = alt.layer(FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart + IMAGENET_chart + MNIST_chart + CIFAR_chart + MASKRCNN_chart+ GNMT_chart
+    chart_all = (pd.Series([INT2_chart, INT4_chart, INT8_chart, FP16_chart, FP32_chart], name="charts")).to_frame()
+   
+    #Chart = alt.layer(FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart + INT2_chart + INT4_chart + INT8_chart + FP16_chart+ FP32_chart
     #Chart = alt.layer(chart_filtered.squeeze() + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, selectors, text, data=dataframe, width=700, height=500)
-    Chart = alt.layer(chart_filtered.charts.sum(numeric_only = False) + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, selectors, text, data=dataframe, width=700, height=500)
+    Chart = alt.layer(chart_all.charts.sum(numeric_only = False) + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, selectors, text, data=dataframe, width=700, height=500)
 
     return Chart
 

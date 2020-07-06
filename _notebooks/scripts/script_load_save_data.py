@@ -97,7 +97,6 @@ def clean_csv_performance_predictions(path_csv: str):
 #-------------------------------------------------------------------------------------------------------------------------------------------
 
 #--------------------------------------------------------ROOFLINES--------------------------------------------------------------------------
-
 def clean_csv_rooflines(path_topologies, path_hardware):
     """
     This function:
@@ -132,24 +131,18 @@ def clean_csv_rooflines(path_topologies, path_hardware):
     ## Loading Hardware platforms and Neural networks csv
     df_topology = pd.read_csv(path_topologies, sep=',')
     df_hardware = pd.read_csv(path_hardware, sep=',')
-
-
+    df_topology.columns=['Name','Total OPs','Total Model Size','INT2','INT4','INT8','FP16','FP32'] 
+    
     ## Calculate the Arithmetic intensity (x axis) for each NN based on Fwd ops and Total params
-    n_bytes=1 
-    calc_arith = lambda operations, params, n_bytes: operations/(params*n_bytes)
-
-    for index, row in df_topology.iterrows():             #nditer is a iterator object   
-            #calculate the arith intensity with the lambda function
-        arith_intens = calc_arith(row['Fwd Ops'], row['Total Params'], n_bytes) 
-            #saving it to the dataframe
-        df_topology.at[index, 'arith_intens'] = arith_intens              
-
-    #to duplicate the dataframe so each row with (Platform, arith_intens) 
+    df_topology = df_topology.drop(0)
+    df_topology = pd.melt(df_topology, id_vars=['Name'], value_vars=['INT2','INT4','INT8','FP16','FP32'],value_name='arith_intens', var_name='datatype')
+    df_topology.Name = df_topology.Name + '_' + df_topology.datatype
+    df_topology = df_topology.drop(columns=['datatype'])
+    
+    #to quadruplicate the dataframe so each row with (Platform, arith_intens) 
     #will be filled with 100 and then 0s to plot the vertical line later    
-    df_topology = pd.concat([df_topology, df_topology])
-    df_topology = pd.concat([df_topology, df_topology])
-    #deleting unnecessary columns (Fwd ops and Total params)
-    df_topology = df_topology.drop(columns=['Total Params','Fwd Ops']) 
+    df_topology = pd.concat([df_topology, df_topology, df_topology, df_topology])
+    
 
     ## Preparing the NNs dataset to be ploted as vertical lines later
     # creating a y list [100,100,100,...75,75,...25,25,25...0.0001,0.0001] to plot a vertical line later
@@ -180,7 +173,7 @@ def clean_csv_rooflines(path_topologies, path_hardware):
     df_result = pd.concat([df_hardw_clean,df_topology])
 
     ##Save
-    df_result.to_csv('c:/Users/alinav/Documents/GitHub/Qutibench_Web/_notebooks/data/cleaned_csv/rooflines_hardware_neural_networks.csv', index = False)
+    df_result.to_csv('c:/Users/alinav/Documents/GitHub/QutibenchWeb/_notebooks/data/cleaned_csv/rooflines_hardware_neural_networks.csv', index = False)
 
 #----------------------------------------------------------------------------------------------------------------------------------------    
 #--------------------RAW MEASUREMENTS---------------------------------------    

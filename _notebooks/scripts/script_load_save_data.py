@@ -131,8 +131,9 @@ def clean_csv_rooflines(path_topologies, path_hardware):
     ## Loading Hardware platforms and Neural networks csv
     df_topology = pd.read_csv(path_topologies, sep=',')
     df_hardware = pd.read_csv(path_hardware, sep=',')
-    df_topology.columns=['Name','Total OPs','Total Model Size','INT2','INT4','INT8','FP16','FP32'] 
     
+    df_topology.columns=['Name','Total OPs','Total Model Size','INT2','INT4','INT8','FP16','FP32'] 
+   
     ## Calculate the Arithmetic intensity (x axis) for each NN based on Fwd ops and Total params
     df_topology = df_topology.drop(0)
     df_topology = pd.melt(df_topology, id_vars=['Name'], value_vars=['INT2','INT4','INT8','FP16','FP32'],value_name='arith_intens', var_name='datatype')
@@ -145,8 +146,8 @@ def clean_csv_rooflines(path_topologies, path_hardware):
     
 
     ## Preparing the NNs dataset to be ploted as vertical lines later
-    # creating a y list [100,100,100,...75,75,...25,25,25...0.0001,0.0001] to plot a vertical line later
-    df_topology['performance'] = [100]*round((len(df_topology.index))/4)   +   [25]*round((len(df_topology.index))/4)  +  [75]*round((len(df_topology.index))/4)  +   [0.1]*round((len(df_topology.index))/4) 
+    # creating a y list [100,100,100,...75,75,...25,25,1...0.0001,0.0001] to plot a vertical line later
+    df_topology['performance'] = [30]*round((len(df_topology.index))/4)   +   [1]*round((len(df_topology.index))/4)  +  [10]*round((len(df_topology.index))/4)  +   [0.1]*round((len(df_topology.index))/4) 
 
     ## Calculating the rooflines (y axis) for each hardware platform
     #--------------------------------Calculating the values to plot for the roofline model-----------
@@ -168,7 +169,7 @@ def clean_csv_rooflines(path_topologies, path_hardware):
                 df_hardw_clean = df_hardw_clean.append([pd.Series([row['Name'],maxX, row['Peak_Performance']],df_hardw_clean.columns)], ignore_index=True)
                 break
 
-
+    #print(df_topology)
     ## Merging NNs dataset with Hardware Platforms dataset
     df_result = pd.concat([df_hardw_clean,df_topology])
 

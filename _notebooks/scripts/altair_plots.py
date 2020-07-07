@@ -187,6 +187,8 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
     height = 500
     data=dataframe
     
+    hw_df   = dataframe[dataframe['Name'].str.contains("Ultra96|ZCU|TX2|TPU|NCS|A53")]
+    
     #to select data to be plotted according to user input
     if neural_network in 'imagenet':
         nn_df   = dataframe[dataframe['Name'].str.contains("GoogLeNetv1|MobileNetv1|ResNet|EfficientNet")]
@@ -198,6 +200,7 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
         nn_df   = dataframe[dataframe['Name'].str.contains("GoogLeNetv1|MobileNetv1|ResNet|EfficientNet|CNV|MLP")]
     else:
          return 'There were no results for the neural network asked. Please insert another network'
+    
     
     #This part is to create all plots binded to checkboes-------------
     #Selecting data for each checkbox, from dataset. Each checkbox will be tied to each one of these data        
@@ -270,7 +273,7 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
     text = (line_chart).mark_text(align='left', dx=3, dy=-3,clip=True).encode(  text=alt.condition(selection, 'Name:N', alt.value(' ')))
 
 
-    #Create a selector which will tell us the name of the Platform / Neural network
+    #Creates the points plot for the NNs. The points will be invisible
     selectors = alt.Chart().mark_point(clip=True).encode(
                 alt.X('arith_intens:Q'), 
                 alt.Y('performance:Q'),
@@ -281,7 +284,7 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
    
     #Chart = alt.layer(FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart + INT2_chart + INT4_chart + INT8_chart + FP16_chart+ FP32_chart
     #Chart = alt.layer(chart_filtered.squeeze() + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, selectors, text, data=dataframe, width=700, height=500)
-    Chart = alt.layer(chart_all.charts.sum(numeric_only = False) + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, selectors, text, data=dataframe, width=700, height=500)
+    Chart = alt.layer(chart_all.charts.sum(numeric_only = False) + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, selectors, text, data=pd.concat([nn_df, hw_df]), width=700, height=500)
 
     return Chart
 

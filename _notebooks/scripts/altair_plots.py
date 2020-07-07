@@ -558,7 +558,7 @@ def get_compute_memory_cnn_chart(csv_file: str)-> alt.vegalite.v4.api.Chart:
                                 coloraxis='network',
                                 xaxis_title='All convolutional neural networks',
                                 yaxis_title= 'Number of Operations [GOPs]',
-                                plot_title= 'Compute and Memory Requirements for all CNNs in number of operations')
+                                plot_title= 'Compute and Memory Requirements for All CNNs in Number of Operations')
 
     model_size_chart= simple_bar_chart(df=df,
                                 xaxis=' ',
@@ -566,7 +566,7 @@ def get_compute_memory_cnn_chart(csv_file: str)-> alt.vegalite.v4.api.Chart:
                             coloraxis='network',
                             xaxis_title='All convolutional neural networks',
                             yaxis_title= 'Total Model Size in Millions of Elements [ME]',
-                            plot_title= 'Compute and Memory Requirements for all CNNs in Model size')
+                            plot_title= 'Compute and Memory Requirements for All CNNs in Model Size')
 
     return gops_chart | model_size_chart
 
@@ -604,6 +604,6 @@ def get_peak_perf_bar_chart(csv_file)->alt.vegalite.v4.api.Chart:
 ).encode(
     text= 'value:Q'
 )
-    return alt.layer(bars, text, data=df).facet(columns=5, facet=alt.Facet('Hardware Platforms:N', title='Hardware Platforms')).properties(title='Peak Performance and Memory Bandwidth for all Hardware Platforms')
+    return alt.layer(bars, text, data=df).facet(columns=5, facet=alt.Facet('Hardware Platforms:N', title='Hardware Platforms')).properties(title='Peak Performance and Memory Bandwidth for All Hardware Platforms')
 
 #-------------------------------------------------------------------------------------------------------

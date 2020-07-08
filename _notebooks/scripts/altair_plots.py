@@ -5,7 +5,7 @@ pd.set_option('max_colwidth', 80)
 
 import altair as alt
 import csv
-
+from overlapped_pareto import *
 
 #--------------------------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------HEATMAPS-------------------------------------------
@@ -123,8 +123,82 @@ def heatmap(dataframe: pd.DataFrame, mouseover_color: str, title: str)->alt.vega
 #---------------------------------------------------------------------------------------------------------------------------
 #-----------------------------------------------------------ROOFLINES--------------------------------------
 #-------------------------------------------------------------------------------------------------------------------------
+def clean_csv_rooflines(path_topologies, path_hardware):
+    """
+    Preprocesses the csv files to create the Rooflines for Hardware Platforms and for topologies.
+    More precisely:
+        -Loads the unprocessed csv's with topologies details and hardware details
+        -creates a clean ready to be plotted dataframe for topologies like the following:
+                                  Name       arith_intens(x axis)  performance(y axis)
+                                 AlexNet          2995                  75.0
+                                 AlexNet          2995                 100.0
+                                 AlexNet          2995                   0.1
+                                 AlexNet          2995                  25.0
+                                 CNV                76                  25.0   ...
+                               
+        -creates a clean, ready to be plotted dataframe for hardware platforms like the following:
+                                  Name           arith_intens(x axis)  performance(y axis)
+                            Ultra96 DPU INT8            17.1                  0.072846
+                            Ultra96 DPU INT8           226.1                  0.960000
+                            Ultra96 DPU INT8          160000                  0.960000
+                            ZCU104 INT8                  4.1                  0.078720  ...
+        -concatenates these two dataframes
+        -saves this to a csv
+        
+    Parameters
+    ----------
+    path_topologies:  str
+        Path to csv file containing topologies.
+    path_hardware: str
+        Path to csv file containing hardware platforms.  
 
-# Checkboxes with on-plot tooltips
+    Returns
+    -------     
+    """
+    ## Loading Hardware platforms and Neural networks csv
+    df_topology = pd.read_csv(path_topologies, sep=',')
+    df_hardware = pd.read_csv(path_hardware, sep=',')
+    
+    df_topology.columns=['Name','Total OPs','Total Model Size','INT2','INT4','INT8','FP16','FP32'] 
+   
+    ## Calculate the Arithmetic intensity (x axis) for each NN based on Fwd ops and Total params
+    df_topology = df_topology.drop(0)
+    df_topology = pd.melt(df_topology, id_vars=['Name'], value_vars=['INT2','INT4','INT8','FP16','FP32'],value_name='arith_intens', var_name='datatype')
+    df_topology.Name = df_topology.Name + ' ' + df_topology.datatype
+    df_topology = df_topology.drop(columns=['datatype'])
+    
+    #to quadruplicate the dataframe so each row with (Platform, arith_intens) 
+    #will be filled with 100 and then 0s to plot the vertical line later    
+    df_topology = pd.concat([df_topology, df_topology, df_topology, df_topology])
+    
+
+    ## Preparing the NNs dataset to be ploted as vertical lines later
+    # creating a y list [100,100,100,...75,75,...25,25,1...0.0001,0.0001] to plot a vertical line later
+    df_topology['performance'] = [30]*round((len(df_topology.index))/4)   +   [1]*round((len(df_topology.index))/4)  +  [10]*round((len(df_topology.index))/4)  +   [0.1]*round((len(df_topology.index))/4) 
+
+    ## Calculating the rooflines (y axis) for each hardware platform
+    #--------------------------------Calculating the values to plot for the roofline model-----------
+    maxX=160000
+    #to create a list that represents the x axis with numbers between 0 and 1000
+    x_axis = np.arange(0.1,maxX,1) 
+    df_hardw_clean = pd.DataFrame(columns=['Name','arith_intens','performance']) 
+    #Create hardware dataframe (df_hardw_clean) based on df_hardware
+    #Each hardware platform will have 3 coordinates (x,y), initial point, turning point and final point
+    for index, row in df_hardware.iterrows():             
+        FIRST_POINT = True
+        for i in np.nditer(x_axis):
+            y_point = row['Bandwidth'] * i
+            if FIRST_POINT & (y_point > 0.05) :
+                df_hardw_clean = df_hardw_clean.append([pd.Series([row['Name'],i, y_point],df_hardw_clean.columns)], ignore_index=True)
+                FIRST_POINT=False
+            if y_point > row['Peak_Performance']:
+                df_hardw_clean = df_hardw_clean.append([pd.Series([row['Name'],i,    row['Peak_Performance']],df_hardw_clean.columns)], ignore_index=True)
+                df_hardw_clean = df_hardw_clean.append([pd.Series([row['Name'],maxX, row['Peak_Performance']],df_hardw_clean.columns)], ignore_index=True)
+                break
+
+    return df_topology, df_hardw_clean
+#----------------------------------------------------------------------------------------------------
+
 def line_chart_w_checkbox(data: pd.DataFrame, condition: dict, selection: alt.vegalite.v4.api.Selection)->alt.vegalite.v4.api.Chart:
     """
     This function creates an Altair line chart with checkboxes.
@@ -159,7 +233,8 @@ def line_chart_w_checkbox(data: pd.DataFrame, condition: dict, selection: alt.ve
               title = 'PERFORMANCE (TOPS/S)', 
               scale=alt.Scale(type='log', domain = (0.2,40) )
              ),    
-        color=condition
+        color=condition,
+        order='arith_intens:Q',
     ).add_selection(selection)
     return chart
 
@@ -181,40 +256,44 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
     -------
         Line Chart with checkboxes, all charts are summed up.          
     """
-    #hide_input
     maxX=160000
     width =700 
     height = 500
-    data=dataframe
     
-    hw_df   = dataframe[dataframe['Name'].str.contains("Ultra96|ZCU|TX2|TPU|NCS|A53")]
+    nn_df, hw_df = clean_csv_rooflines(path_topologies='data/cnn_topologies_compute_memory_requirements.csv',
+                        path_hardware='data/peakPerfBandHardPlatf.csv')
+
     
     #to select data to be plotted according to user input
     if neural_network in 'imagenet':
-        nn_df   = dataframe[dataframe['Name'].str.contains("GoogLeNetv1|MobileNetv1|ResNet|EfficientNet")]
+        nn_df   = nn_df[nn_df['Name'].str.contains("GoogLeNetv1|MobileNetv1|ResNet|EfficientNet")]
     elif neural_network in 'cifar':
-        nn_df   = dataframe[dataframe['Name'].str.contains("CNV")]
+        nn_df   = nn_df[nn_df['Name'].str.contains("CNV")]
     elif neural_network in 'mnist':
-        nn_df   = dataframe[dataframe['Name'].str.contains("MLP")]
-    elif neural_network in 'imagenet|mnist|cifar':
-        nn_df   = dataframe[dataframe['Name'].str.contains("GoogLeNetv1|MobileNetv1|ResNet|EfficientNet|CNV|MLP")]
-    else:
+        nn_df   = nn_df[nn_df['Name'].str.contains("MLP")]
+    elif neural_network != 'imagenet|mnist|cifar':
          return 'There were no results for the neural network asked. Please insert another network'
-    
+
+        
+    #regex expression replace for all MLPs because they overlapp in the plot because they have the same value for MLP100%,MLP50%..
+    #nn_df['Name']=nn_df['Name'].replace(r'.*MLP.*', 'MLP', regex=True)
+    nn_df = replace_data_df(nn_df, 'Name',[('MLP 100%','MLP*'),('MLP 50%','MLP*'),('MLP 25%','MLP*'), ('MLP 12.5%','MLP*')])
+    nn_df= nn_df.drop_duplicates()
     
     #This part is to create all plots binded to checkboes-------------
     #Selecting data for each checkbox, from dataset. Each checkbox will be tied to each one of these data        
-    FPGA_data   = dataframe[dataframe['Name'].str.contains("Ultra96 DPU|ZCU")]
-    NVIDIA_data = dataframe[dataframe['Name'].str.contains("TX2")]
-    GOOGLE_data = dataframe[dataframe['Name'].str.contains("EdgeTPU")]
-    INTEL_data  = dataframe[dataframe['Name'].str.contains("NCS")]
+    FPGA_data   = hw_df[hw_df['Name'].str.contains("Ultra96 DPU|ZCU")]
+    NVIDIA_data = hw_df[hw_df['Name'].str.contains("TX2")]
+    GOOGLE_data = hw_df[hw_df['Name'].str.contains("EdgeTPU")]
+    INTEL_data  = hw_df[hw_df['Name'].str.contains("NCS")]
 
     INT2_data = nn_df[nn_df['Name'].str.contains("INT2")]
     INT4_data    = nn_df[nn_df['Name'].str.contains("INT4")]
     INT8_data    = nn_df[nn_df['Name'].str.contains("INT8")]
     FP16_data = nn_df[nn_df['Name'].str.contains("FP16")]
     FP32_data     = nn_df[nn_df['Name'].str.contains("FP32")]
-
+    
+    
     #To say that the binding type will be a checkbox
     #BindCheckbox({ input: 'checkbox'})
     filter_checkbox = alt.binding_checkbox()
@@ -267,11 +346,12 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
             alt.Color('Name:N', legend=alt.Legend(columns=2))
     )
     
+    
         #Create the selection which chooses nearest point on mouse hoover
     selection = alt.selection(type='single', nearest=True, on='mouseover', fields=['arith_intens']) #to leave suggestions on, just replace arith_intens wiith anything else
-    #Create text plot to show the text values on mouse hoovering
+   
+        #Create text plot to show the text values on mouse hoovering
     text = (line_chart).mark_text(align='left', dx=3, dy=-3,clip=True).encode(  text=alt.condition(selection, 'Name:N', alt.value(' ')))
-
 
     #Creates the points plot for the NNs. The points will be invisible
     selectors = alt.Chart().mark_point(clip=True).encode(
@@ -280,14 +360,17 @@ def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api
                 opacity=alt.value(0),
     ).add_selection(selection)
     
+
+    
     chart_all = (pd.Series([INT2_chart, INT4_chart, INT8_chart, FP16_chart, FP32_chart], name="charts")).to_frame()
-   
+    
     #Chart = alt.layer(FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart + INT2_chart + INT4_chart + INT8_chart + FP16_chart+ FP32_chart
     #Chart = alt.layer(chart_filtered.squeeze() + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, selectors, text, data=dataframe, width=700, height=500)
-    Chart = alt.layer(chart_all.charts.sum(numeric_only = False) + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, selectors, text, data=pd.concat([nn_df, hw_df]), width=700, height=500)
-
+    Chart = alt.layer(chart_all.charts.sum(numeric_only = False) + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, 
+                      selectors, text, data= pd.concat([nn_df,hw_df]), width=700, height=500)
+    
+    #return nn_df
     return Chart
-
 #----------------------------------------------------------------------------------------------------------------------------------
     # PROCESSING FOR PERFORMANCE PLOTS (LINE PLOT, BOXPLOT, PARETO GRAPH)
     

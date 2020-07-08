@@ -524,8 +524,8 @@ def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: st
     filter_checkbox = alt.binding_checkbox()
     
     #Create all checkboxes
-    measu_no_match_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="Measured_Without_Match") 
-    predicted_no_match_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="Predicted_Without_Match") 
+    #measu_no_match_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="Measured_Without_Match") 
+    #predicted_no_match_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="Predicted_Without_Match") 
     FINN_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="ZCU104_FINN") 
     BISMO_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="ZCU104_BISMO")
     A53_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="U96_Quadcore_A53")
@@ -535,8 +535,8 @@ def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: st
     
     legend_title_groupcol ='Hardw_Datatype_Net_Prun'
     #Color Conditions for each plot
-    measu_no_match_cond= alt.condition(measu_no_match_select,  alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_),  legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
-    predicted_no_match_cond = alt.condition(predicted_no_match_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)), alt.value(None))
+    #measu_no_match_cond= alt.condition(measu_no_match_select,  alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_),  legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
+    #predicted_no_match_cond = alt.condition(predicted_no_match_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)), alt.value(None))
     FINN_cond    = alt.condition(FINN_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
     BISMO_cond   = alt.condition(BISMO_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
     A53_cond     = alt.condition(A53_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
@@ -545,8 +545,8 @@ def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: st
     TPU_cond     = alt.condition(TPU_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("white"))
     
     #Create the charts
-    measu_no_match_chart=get_point_chart_selection(df= measu_no_match_data, condition=measu_no_match_cond, selection=measu_no_match_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
-    predic_no_match_chart=get_point_chart_selection(df= predic_no_match_data,condition=predicted_no_match_cond, selection=predicted_no_match_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    #measu_no_match_chart=get_point_chart_selection(df= measu_no_match_data, condition=measu_no_match_cond, selection=measu_no_match_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    #predic_no_match_chart=get_point_chart_selection(df= predic_no_match_data,condition=predicted_no_match_cond, selection=predicted_no_match_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
     FINN_chart=get_point_chart_selection(df= FINN_data, condition=FINN_cond, selection=FINN_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
     BISMO_chart=get_point_chart_selection(df= BISMO_data,condition=BISMO_cond, selection=BISMO_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
     A53_chart=get_point_chart_selection(df= A53_data,condition=A53_cond, selection=A53_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
@@ -557,7 +557,7 @@ def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: st
     #sum the pareto lines
     chart = df_charts.charts.sum(numeric_only = False)
     #layer the pareto lines with the points chart with checkboxes
-    charts = alt.layer(measu_no_match_chart+predic_no_match_chart+FINN_chart + BISMO_chart + A53_chart+ TX2_chart+ NCS_chart +TPU_chart + chart
+    charts = alt.layer(FINN_chart + BISMO_chart + A53_chart+ TX2_chart+ NCS_chart +TPU_chart + chart
     ).resolve_scale(color='independent',shape='independent').properties(title=title)
     return charts
 
@@ -613,6 +613,9 @@ def get_overlapped_pareto(net_keyword: str):
 
     # identify all pairs and create a special column for them 
     overlapped_pareto = identify_pairs_nonpairs(df=overlapped_pareto, column='hardw_datatype_net_prun')
+    
+    #overlapped_pareto = overlapped_pareto.drop(overlapped_pareto[overlapped_pareto.type=='predicted_no_match|measured_no_match'].index)
+    
     # now we have: |hardw_datatype_net_prun | hardw | network | fps-comp | top1 | type | color|
     #return overlapped_pareto
     #plot it

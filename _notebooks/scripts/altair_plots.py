@@ -682,7 +682,6 @@ def get_peak_perf_bar_chart(csv_file)->alt.vegalite.v4.api.Chart:
         color='Datatypes and MB:N',
     )
     text = bars.mark_text(
-   
     dy=-5  # Nudges text upwards so it doesn't appear on top of the bar
 ).encode(
     text= 'value:Q'

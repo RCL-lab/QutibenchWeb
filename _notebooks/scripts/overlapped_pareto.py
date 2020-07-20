@@ -6,6 +6,7 @@ import random
 import re
 import altair as alt
 import warnings
+from utils import *
 
 W = 600
 H = 480
@@ -43,9 +44,7 @@ def process_theo_fps(df_top1_theo:pd.DataFrame(),csv_files: list) -> pd.DataFram
     """
     Method that gets the data from the csv of the Heatmap tables.
     Merges this theoretical df with the given theoretical df (fps+top1) on the 'net_prun_datatype' common column.
-    Removes n
-    
-    ans from the 'values' column. Changes column order and columns names.
+    Removes nans from the 'values' column. Changes column order and columns names.
     Replaces things to match.
     
     Notes: Values on the shared column need to be equal for them to be included on the merge. 
@@ -78,7 +77,7 @@ def process_theo_fps(df_top1_theo:pd.DataFrame(),csv_files: list) -> pd.DataFram
     df_fps_top1_theo = df_fps_top1_theo[['net_prun_datatype', 'hardw', 'top1', 'fps']]
     #  change column names
     df_fps_top1_theo.columns = ['net_prun_datatype', 'hardw_datatype', 'top1', 'fps-comp']
-
+    
     #Notes: 1. make sure everything in 'net_prun_datatype' column has network + pruning + datatype. If not it will fail
     df_fps_top1_theo = replace_data_df(df_=df_fps_top1_theo, column= 'net_prun_datatype', list_tuples_data_to_replace= [('GoogLeNetv1','GoogLeNetv1_100%'),('MobileNetv1','MobileNetv1_100%'),('GoogleNetv1','GoogleNetv1_100%'), ('EfficientNet_S','EfficientNet-S_100%'), ('EfficientNet_M','EfficientNet-M_100%'), ('EfficientNet_L','EfficientNet-L_100%'), ('%','')])
     #  now that we have: net_prun_datatype | hardw_datatype | top1 | fps-comp
@@ -307,31 +306,6 @@ def get_several_paretos_df(list_df: pd.DataFrame, groupcol: str, xcol: str, ycol
 
 #---------------------------------------------
 
-def replace_data_df(df_: pd.DataFrame(), column:str, list_tuples_data_to_replace: list )-> pd.DataFrame():
-    """Method to replace a substring inside a cell inside a dataframe
-    Given a dataframe and a specific column, this method replaces a string for another, both from the list of tuples
-       
-    Parameters
-    ----------
-     df_: pd.DataFrame()
-        Dataframe with data to be replaced.
-    column: str
-        Column whithin dataframe where all replacements will take place.
-    list_tuples_data_to_replace: list
-        List with tuples which will contain what to replace by what.
-        Eg.:list_tuples_data_to_replace = [(a,b), (c,d), (...) ] -> 'a' will be replaced by 'b', 'c' will be replaced by 'd', and so on.
-
-    Returns
-    -------
-    df_out: pd.DataFrame()
-       Dataframe with all indicated values replaced.
-        
-    """
-    df_out = df_.copy()
-    for j, k in list_tuples_data_to_replace:
-        df_out[column] = df_out[column].str.replace(j, k)
-    return df_out
-#-------------------------------------------------
 
 def process_measured_df(df_theoret: pd.DataFrame(), csv_measured: str )-> pd.DataFrame():
     """ Method that gets the measured dataframe from the csv file and fixes small stuff inside it, concatenates with the theoretical df.
@@ -441,7 +415,57 @@ def fix_small_stuff_df(df: pd.DataFrame(), col_to_drop: list, ) -> pd.DataFrame(
     return df_out
 
 #--------------------------------------------------------
+def process_measured_data(csv_filepath:str)->pd.DataFrame():
+    """ This is to create a df to be joined with the theoretical df in 'Theoretical Analysis' to create the overlapped paretos
 
+    Steps
+    ------
+    1. Create subset from imagenet that doesn't have the ResNet50 v15 measurements because it does not have accuracy measures
+    2. Create new hardware column that has hardware and operation mode, beware with NaNs
+    3. Create new 'hardw_datatype_net_prun' with hardware + datatype + netwrok + pruning
+    4. Create a suset of the dataframe with the above mentioned column and the corresponding ones
+    5. With groupby for col 'hardw_datatype_net_prun', for each unique value get the rows with biggest batch 
+    6. Add 'type column', reset the index from 'hardw_datatype_net_prun' to ints and save it
+    
+    Parameters
+    ----------
+     csv_filepath: str
+        Contains  the file path to the file with all measurements which will be read and prepared to be later joined with the theoretical predictions
+    
+      Returns
+    -------
+    pd.DataFrame()
+        Processed dataframe to match the theoretical predictions dataframe.
+    
+    """
+    df = pd.read_csv(csv_filepath)
+    # ResNet50 v15 does not have accuracy measurements yet, so it needs to be taken out
+    # create df from imagenet_df
+    df = df[df.NN_Topology != 'RN50V15']
+    # create hardw column to include: hardware + op_mode
+    df['hardw'] = df['HWType'] + ('-' + df['Op mode']).fillna('')
+    #create hardw_datatype_net_prun col with all those columns merged
+    df['hardw_datatype_net_prun'] = df.apply(lambda r: "_".join([r.hardw, r.Datatype, r.NN_Topology, str(r.PruningFactor)]), axis=1)
+    #create a subset of the dataframe with only those columns
+    df = df[['hardw_datatype_net_prun','hardw', 'NN_Topology' ,'fps-comp', 'top1','batch/thread/stream']]
+    #Only get the points corresponding to the biggest batch
+    df = df.groupby('hardw_datatype_net_prun')[['batch/thread/stream','hardw', 'NN_Topology','fps-comp', 'top1']].max()
+    #add type column
+    df['type'] = 'measured'
+    # reset index to start being numeric 
+    df = df.reset_index()
+    #save it all
+    df.to_csv('data/cleaned_csv/pareto_data_imagenet.csv', index = False)
+    #   change column names
+    df.columns = ['hardw_datatype_net_prun', 'batch/thread/stream', 'hardw', 'network', 'fps-comp', 'top1', 'type']
+    #   fix samll stuff in the df so things match with the other side
+    df = replace_data_df(df_=df, column='hardw_datatype_net_prun', list_tuples_data_to_replace=[("RN50", "ResNet50"),("MNv1", "MobileNetv1"),('GNv1','GoogLeNetv1'),('100.0','100'),('25.0','25') ,('50.0','50'),('30.0','30'),('80.0','80')])
+    df = replace_data_df(df_=df, column='network', list_tuples_data_to_replace=[("RN50", "ResNet50"),("MNv1", "MobileNetv1"),('GNv1','GoogLeNetv1')])
+    #delete unnecessary columns
+    df = df.drop(columns=['batch/thread/stream'])
+
+    return df
+#---------------------------------------------------------------------------------------------------------------
 def identify_pairs_nonpairs(df: pd.DataFrame, column: str) -> pd.DataFrame():
     """This method identifies equal values in the column and signals them, and creates another column with labels for each case 
 
@@ -585,23 +609,24 @@ def get_overlapped_pareto(net_keyword: str):
     #   theoretical top1
     df_top1_theo = process_theo_top1(csv_theor_accuracies ='data/cnn_topologies_accuracy.csv')
     #now we have: |top1 | net_prun_datatype| 
-   
+    return df_top1_theo
     # 2. Now we need Theoretical FPS-COMP to match with that Theoretical TOP1
     # 3. We need to get the above mentioned Theoretical FPS-COMP from the Heatmaps- Performance Predictions and merge them
     # depending on the user input this is retrieved for the desired Classification Task
     if re.search(net_keyword, 'imagenet', re.IGNORECASE):
         df_fps_top1_theo = process_theo_fps(df_top1_theo= df_top1_theo, csv_files=["data/cleaned_csv/performance_prediction_imagenet.csv"])
-        df_measured = pd.read_csv('data/cleaned_csv/pareto_data_imagenet.csv')
+        df_measured = process_measured_data(csv_filepath= 'data/cleaned_csv/experimental_data_imagenet.csv')
     elif re.search(net_keyword, 'mnist', re.IGNORECASE):
         df_fps_top1_theo = process_theo_fps(df_top1_theo= df_top1_theo, csv_files=["data/cleaned_csv/performance_prediction_mnist.csv"])
-        df_measured = pd.read_csv('data/cleaned_csv/pareto_data_mnist.csv')
+        df_measured = process_measured_data(csv_filepath= 'data/cleaned_csv/experimental_data_mnist.csv')
     elif re.search(net_keyword, 'cifar-10', re.IGNORECASE):
         df_fps_top1_theo = process_theo_fps(df_top1_theo= df_top1_theo, csv_files=["data/cleaned_csv/performance_prediction_cifar10.csv"])
-        df_measured = pd.read_csv('data/cleaned_csv/pareto_data_cifar.csv')
+        df_measured = process_measured_data(csv_filepath= 'data/cleaned_csv/experimental_data_cifar.csv'
     
+
     df_fps_top1_theo = select_cnn_match_theo_for_measured(df_theo= df_fps_top1_theo, net_prun_datatype = 'net_prun_datatype')
     # now we have: |hardw_datatype_net_prun | hardw | network | fps-comp | top1 | type|
-
+    
     #  concatenate both measured with theoretical to get the overlapped pareto
     overlapped_pareto = pd.concat([df_fps_top1_theo, df_measured])
     # now we have everything together and matched
@@ -617,7 +642,7 @@ def get_overlapped_pareto(net_keyword: str):
     #overlapped_pareto = overlapped_pareto.drop(overlapped_pareto[overlapped_pareto.type=='predicted_no_match|measured_no_match'].index)
     
     # now we have: |hardw_datatype_net_prun | hardw | network | fps-comp | top1 | type | color|
-    #return overlapped_pareto
+    return overlapped_pareto
     #plot it
     return plot_it_now(df= overlapped_pareto, xcol= 'fps-comp', ycol= 'top1', groupcol= 'color', title='Overlapped Pareto Plots Theoretical + Measured for' + ' ' + net_keyword.upper())    
 

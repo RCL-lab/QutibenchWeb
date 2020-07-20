@@ -5,14 +5,66 @@ pd.set_option('max_colwidth', 80)
 
 import altair as alt
 import csv
-from overlapped_pareto import *
+import re
+#from overlapped_pareto import *
 
+
+
+#--------------------
+#utils functions
+def replace_data_df(df_: pd.DataFrame(), column:str, list_tuples_data_to_replace: list )-> pd.DataFrame():
+    """Method to replace a substring inside a cell inside a dataframe
+    Given a dataframe and a specific column, this method replaces a string for another, both from the list of tuples
+       
+    Parameters
+    ----------
+     df_: pd.DataFrame()
+        Dataframe with data to be replaced.
+    column: str
+        Column whithin dataframe where all replacements will take place.
+    list_tuples_data_to_replace: list
+        List with tuples which will contain what to replace by what.
+        Eg.:list_tuples_data_to_replace = [(a,b), (c,d), (...) ] -> 'a' will be replaced by 'b', 'c' will be replaced by 'd', and so on.
+
+    Returns
+    -------
+    df_out: pd.DataFrame()
+       Dataframe with all indicated values replaced.
+        
+    """
+    df_out = df_.copy()
+    for j, k in list_tuples_data_to_replace:
+        df_out[column] = df_out[column].str.replace(j, k)
+    return df_out
+
+def dataframe_contains(input_df: pd.DataFrame, column: str, value: str)->pd.DataFrame:
+    """
+    Given a dataframe, this function returns a subset of that dataframe by column
+    
+    Parameters
+    ----------
+    input_df : pd.DataFrame
+        Input dataframe from which the subset will be taken.       
+    column : str
+        Column name by which the subsetting will be taken.  
+    value : str
+        String that contains what we need from the column. 
+        Eg.:'dog'
+            'banana|apple|peach'
+
+    Returns
+    -------
+    output_df:  pd.DataFrame
+        This dataframe will be a subset from the input dataframe according to the column value given.  
+        
+    """
+    output_df = input_df[input_df[column].str.contains(pat=value, case=False)]
+    return output_df
 #--------------------------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------HEATMAPS-------------------------------------------
 #--------------------------------------------------------------------------------------------------------------------------------
 def heatmap_rect(df: pd.DataFrame, 
                  title: str, 
-                 mouseover_color: str, 
                  mouseover_selection: alt.vegalite.v4.api.Selection, 
                  color_selection: alt.vegalite.v4.schema.channels.Color)->alt.vegalite.v4.api.Chart:
     """
@@ -24,8 +76,6 @@ def heatmap_rect(df: pd.DataFrame,
         Dataframe whose walues will be plotted with a heatmap.       
     title : str
         Title to give to the plot.        
-    mouseover_color: str
-        Color that will be displayed when hoovering with the mouse over the plot       
     mouseover_selection: altair.vegalite.v4.api.Selection
         The selection object that will be used in chart creation. 
         The type of the selection is one of: ["interval", "single", or "multi"].        
@@ -92,16 +142,34 @@ def heatmap_text(df: pd.DataFrame, color_condition: dict)->alt.vegalite.v4.api.C
               ]
         )
 
-def heatmap(dataframe: pd.DataFrame, mouseover_color: str, title: str)->alt.vegalite.v4.api.Chart:
+def process_csv_for_heatmaps_plot(csv_file: str)->pd.DataFrame:
+    """This method gets the csv for the theoretical predictions file and melts it to make it presentable in the heatmaps plot"""
+    
+    ## Reading csv file and converting data to (Neural network, Platform, Value)
+    df = pd.read_csv(csv_file)
+
+    df1 = pd.DataFrame()
+    columns = (df.loc[:, df.columns!='hardw']).columns #select all columns except first
+    for column in columns:
+        df_=pd.melt(df, id_vars=['hardw'], value_vars=column) #melt df1 into a df1 of 2 columns
+        df1=pd.concat([df1,df_])
+    df1.columns= ['y','x','values'] #setting new column names
+    #replace 0s for NaN values because with 0s the grid doesn't show up
+    df1['values'] = df1['values'].replace({ 0.0:np.nan})
+   
+    return df1
+
+
+def heatmap(csv_file: str, machine_learning_task:str, title: str)->alt.vegalite.v4.api.Chart:
     """
     Function that creates and returns a Heatmap + Text.
     
     Parameters
     ----------
-    dataframe : pd.DataFrame
-        Dataframe whose walues will be plotted with a heatmap.       
-    mouseover_color: str
-        Color that will be displayed when hoovering with the mouse over the plot 
+    csv_file: str
+        File path to the file with the Theoretical predictions       
+    machine_learning_task: str
+        Desired machine learning task to be plotted on the Heatmaps
     title: str
         Title to give to the plot
     Returns
@@ -110,12 +178,28 @@ def heatmap(dataframe: pd.DataFrame, mouseover_color: str, title: str)->alt.vega
         This is an Altair/Vega-Lite Text Heatmap chart.    
         
     """
+   
+    # First process the raw csv file to make it able to be plotted
+    df = process_csv_for_heatmaps_plot(csv_file= csv_file)
+
+    # Now that we have the dataframe in shape to be plotted, choose the neural networks corresponding to the Machine Learning task given.
+    if re.search(machine_learning_task, 'imagenet', re.IGNORECASE):
+        df = dataframe_contains(input_df=df, column='x', value='goog|mob|res|effic')
+
+    elif re.search(machine_learning_task, 'mnist', re.IGNORECASE):
+        df = dataframe_contains(input_df=df, column='x', value='mlp')
+
+    elif re.search(machine_learning_task, 'cifar-10', re.IGNORECASE):
+        df = dataframe_contains(input_df=df, column='x', value='cnv')
+    
+    else: return 'The machine learning task was not recognized, please try another one.'
+
     mouseover_selection = alt.selection_single(on='mouseover', nearest=True)
     color_selection = alt.Color('values:Q', title= 'Input/second', scale=alt.Scale(type='log', scheme='lightmulti'))
     color_condition = alt.condition(alt.datum.values > 1, alt.value('black'), alt.value('white'))
 
-    heatmap_rect_ = heatmap_rect(dataframe, title, mouseover_color, mouseover_selection, color_selection)
-    heatmap_text_ = heatmap_text(dataframe, color_condition) 
+    heatmap_rect_ = heatmap_rect(df, title, mouseover_selection, color_selection)
+    heatmap_text_ = heatmap_text(df, color_condition) 
     
     Heatmap = heatmap_rect_ + heatmap_text_
     return Heatmap
@@ -240,7 +324,7 @@ def line_chart_w_checkbox(data: pd.DataFrame, condition: dict, selection: alt.ve
 
 
 
-def rooflines(dataframe: pd.DataFrame, neural_network: str)->alt.vegalite.v4.api.Chart:
+def rooflines(neural_network: str)->alt.vegalite.v4.api.Chart:
     """
     This function creates an Altair line chart with checkboxes. Creates a lot of them and then sums them up.
     

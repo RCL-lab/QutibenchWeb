@@ -6,11 +6,98 @@ import random
 import re
 import altair as alt
 import warnings
-from utils import *
 
 W = 600
 H = 480
 
+#utils functions------------------------------------
+def replace_data_df(df_: pd.DataFrame(), column:str, list_tuples_data_to_replace: list )-> pd.DataFrame():
+    """Method to replace a substring inside a cell inside a dataframe
+    Given a dataframe and a specific column, this method replaces a string for another, both from the list of tuples
+       
+    Parameters
+    ----------
+     df_: pd.DataFrame()
+        Dataframe with data to be replaced.
+    column: str
+        Column whithin dataframe where all replacements will take place.
+    list_tuples_data_to_replace: list
+        List with tuples which will contain what to replace by what.
+        Eg.:list_tuples_data_to_replace = [(a,b), (c,d), (...) ] -> 'a' will be replaced by 'b', 'c' will be replaced by 'd', and so on.
+
+    Returns
+    -------
+    df_out: pd.DataFrame()
+       Dataframe with all indicated values replaced.
+        
+    """
+    df_out = df_.copy()
+    for j, k in list_tuples_data_to_replace:
+        df_out[column] = df_out[column].str.replace(j, k)
+    return df_out
+
+def dataframe_contains(input_df: pd.DataFrame, column: str, value: str)->pd.DataFrame:
+    """
+    Given a dataframe, this function returns a subset of that dataframe by column
+    
+    Parameters
+    ----------
+    input_df : pd.DataFrame
+        Input dataframe from which the subset will be taken.       
+    column : str
+        Column name by which the subsetting will be taken.  
+    value : str
+        String that contains what we need from the column. 
+        Eg.:'dog'
+            'banana|apple|peach'
+
+    Returns
+    -------
+    output_df:  pd.DataFrame
+        This dataframe will be a subset from the input dataframe according to the column value given.  
+        
+    """
+    output_df = input_df[input_df[column].str.contains(pat=value, case=False)]
+    return output_df
+
+
+def process_csv_for_heatmaps_plot(csv_file: str, machine_learning_task: str)->pd.DataFrame:
+    """This method gets the csv for the theoretical predictions file and melts it to make it presentable in the heatmaps plot"""
+    
+    ## Reading csv file and converting data to (Neural network, Platform, Value)
+    df = pd.read_csv(csv_file)
+
+    df_out = pd.DataFrame()
+    columns = (df.loc[:, df.columns!='hardw']).columns #select all columns except first
+    for column in columns:
+        df_=pd.melt(df, id_vars=['hardw'], value_vars=column) #melt df1 into a df1 of 2 columns
+        df_out=pd.concat([df_out,df_])
+    df_out.columns= ['y','x','values'] #setting new column names
+    #replace 0s for NaN values because with 0s the grid doesn't show up
+    df_out['values'] = df_out['values'].replace({ 0.0:np.nan})
+   
+     # Choose the neural networks corresponding to the Machine Learning task asked for.
+    if re.search(machine_learning_task, 'imagenet', re.IGNORECASE):
+        df_out = dataframe_contains(input_df= df_out, column='x', value='goog|mob|res|effic')
+
+    elif re.search(machine_learning_task, 'mnist', re.IGNORECASE):
+        df_out = dataframe_contains(input_df= df_out, column='x', value='mlp')
+
+    elif re.search(machine_learning_task, 'cifar-10', re.IGNORECASE):
+        df_out = dataframe_contains(input_df= df_out, column='x', value='cnv')
+    
+    else: 
+        print('The machine learning task was not recognized, please try another one.') 
+        return 0
+    
+    return df_out
+ 
+def save_not_matched_data(df, machine_learning_task):
+    """Method that saves the dataframe to a file."""
+    df = df.sort_values(by='color')
+    df.to_csv('data/no_match_' + machine_learning_task + '.csv')
+
+#utils functions------------------------------------
 
 #-------------------------------------------------
 def process_theo_top1(csv_theor_accuracies: str) -> pd.DataFrame():
@@ -40,8 +127,8 @@ def process_theo_top1(csv_theor_accuracies: str) -> pd.DataFrame():
 
 #------------------------------------------------------
 
-def process_theo_fps(df_top1_theo:pd.DataFrame(),csv_files: list) -> pd.DataFrame():
-    """
+def process_theo_fps(df_top1_theo:pd.DataFrame(), csv_file:str) -> pd.DataFrame():
+    """ NOT BEING USED!!
     Method that gets the data from the csv of the Heatmap tables.
     Merges this theoretical df with the given theoretical df (fps+top1) on the 'net_prun_datatype' common column.
     Removes nans from the 'values' column. Changes column order and columns names.
@@ -52,8 +139,8 @@ def process_theo_fps(df_top1_theo:pd.DataFrame(),csv_files: list) -> pd.DataFram
  
     Parameters
     ----------
-    csv_theor_accuracies:str
-        Filepath to the CNNs and their accuracy table. 
+    csv_file:str
+        Filepath to the CNNs and their fps 
     
     Returns
     -------
@@ -61,25 +148,25 @@ def process_theo_fps(df_top1_theo:pd.DataFrame(),csv_files: list) -> pd.DataFram
         Datraframe with 2 columns: |top1 | net_prun_datatype|
         
     """
-    df_fps_theo = pd.DataFrame()
-    for csv_file in csv_files:
-        df_tmp = pd.read_csv(csv_file)
-        df_fps_theo = pd.concat([df_fps_theo, df_tmp])
-    df_fps_theo['x']= df_fps_theo['x'].str.replace('-','_')
-    #    remove rows that have 'nan' in the 'values' column
-    df_fps_theo = df_fps_theo[df_fps_theo['values'].notna()]
-    #    rename columns
+    
+    df_fps_theo = process_csv_for_heatmaps_plot(csv_file)
     df_fps_theo.columns=['hardw','net_prun_datatype','fps']
+    
+    #    remove rows that have 'nan' in the 'values' column
+    df_fps_theo = df_fps_theo[df_fps_theo['fps'].notna()]
 
-    #   Merge both Theoretical dataframes: fps + top1 
+    #    rename columns
+    #   Merge both Theoretical dataframes: fps + top1    
     df_fps_top1_theo = pd.merge(df_top1_theo, df_fps_theo, on='net_prun_datatype', how='outer')
+    
     #  change column order
+    #order columns
     df_fps_top1_theo = df_fps_top1_theo[['net_prun_datatype', 'hardw', 'top1', 'fps']]
     #  change column names
     df_fps_top1_theo.columns = ['net_prun_datatype', 'hardw_datatype', 'top1', 'fps-comp']
     
-    #Notes: 1. make sure everything in 'net_prun_datatype' column has network + pruning + datatype. If not it will fail
-    df_fps_top1_theo = replace_data_df(df_=df_fps_top1_theo, column= 'net_prun_datatype', list_tuples_data_to_replace= [('GoogLeNetv1','GoogLeNetv1_100%'),('MobileNetv1','MobileNetv1_100%'),('GoogleNetv1','GoogleNetv1_100%'), ('EfficientNet_S','EfficientNet-S_100%'), ('EfficientNet_M','EfficientNet-M_100%'), ('EfficientNet_L','EfficientNet-L_100%'), ('%','')])
+    #Note: make sure everything in 'net_prun_datatype' column has NN_Topology + pruning + datatype. If not it will fail
+
     #  now that we have: net_prun_datatype | hardw_datatype | top1 | fps-comp
     return df_fps_top1_theo
 
@@ -308,7 +395,8 @@ def get_several_paretos_df(list_df: pd.DataFrame, groupcol: str, xcol: str, ycol
 
 
 def process_measured_df(df_theoret: pd.DataFrame(), csv_measured: str )-> pd.DataFrame():
-    """ Method that gets the measured dataframe from the csv file and fixes small stuff inside it, concatenates with the theoretical df.
+    """ NOT BEING USED!!
+    Method that gets the measured dataframe from the csv file and fixes small stuff inside it, concatenates with the theoretical df.
    
     Parameters
     ----------
@@ -327,56 +415,37 @@ def process_measured_df(df_theoret: pd.DataFrame(), csv_measured: str )-> pd.Dat
     df_measured = pd.read_csv(csv_measured)
     #   fix samll stuff in the measured dataframe so things match
     df_measured = replace_data_df(df_=df_measured, column='hardw_datatype_net_prun', list_tuples_data_to_replace=[("RN50", "ResNet50"),("MNv1", "MobileNetv1"),('GNv1','GoogLeNetv1'),('100.0','100')])
-    df_measured = replace_data_df(df_=df_measured, column='network', list_tuples_data_to_replace=[("RN50", "ResNet50"),("MNv1", "MobileNetv1"),('GNv1','GoogLeNetv1')])
+    df_measured = replace_data_df(df_=df_measured, column='NN_Topology', list_tuples_data_to_replace=[("RN50", "ResNet50"),("MNv1", "MobileNetv1"),('GNv1','GoogLeNetv1')])
     #  concatenate both measured with theoretical
     df_out = pd.concat([df_theoret, df_measured])
     
     return df_out
 #-------------------------------------------------
 
-def select_cnn_match_theo_for_measured(df_theo: pd.DataFrame(), net_prun_datatype: str) -> pd.DataFrame():
-    """
-    Method that processes the dataframe to make it look like the measured dataframe so they can be matched together later.
-    Eliminates all NaNs and replaces elements to make dfs look alike. 
-   
+def create_delete_columns_theoretical(df_theo: pd.DataFrame()) -> pd.DataFrame():
+    """Method that processes the dataframe to make it look like the measured dataframe so they can be matched together later.
     Parameters
     ----------
     df_theo: pd.DataFrame()
         Dataframe with the data upon which these alterations will be done
-    net_prun_datatype: str
-        Column name which should have the network, pruning factor and datatype.
     Returns
     -------
     df_theo: pd.DataFrame()
         Processed df. 
         
     """
-    # create a subset from the given dataframe
-    #     there is another way to do this 
-    #df_theo = df_superset[df_superset.apply(lambda row: row[net_prun_datatype].split('_')[0] == cnn_keyword, axis=1)]
-    #    the line below is not needed because there is only 1 classification
-    #df_theo = df_superset.loc[df_superset[net_prun_datatype].str.contains(cnn_keyword, na=False)]
-    df_theo = df_theo[df_theo['top1'].notna()]
-    df_theo = df_theo[df_theo['fps-comp'].notna()]
-    
     #   given that we have on theoretical df:  net_prun_datatype | hardw_datatype | top1 | fps-comp
-    #   and that we have on the measured df:   hardw_datatype_net_prun | batch/thread/stream  | hardw | network | fps-comp | top1 | type
-    #We need to:
-    #   1. Create 'network', 'type', 'hardware' and 'hardw_datatype_net_prun'
-    df_theo['network'] = df_theo[net_prun_datatype].str.split('_').str[0]
+    #   and that we have on the measured df:   hardw_datatype_net_prun | batch/thread/stream  | hardw | NN_Topology | fps-comp | top1 | type
+    # We need to:
+    #   1. Create 'NN_Topology', 'type', 'hardware' and 'hardw_datatype_net_prun'
+    df_theo['NN_Topology'] = df_theo['net_prun_datatype'].str.split('_').str[0]
     df_theo['type'] = 'predicted'
-    #replace elemnts out of hardw column - take datatypes out of hardw_datatype column
-    df_theo = replace_data_df(df_=df_theo, column= 'hardw_datatype', list_tuples_data_to_replace=[("-INT2", ""), ("-INT4", ""), ("-INT8", ""), ("-FP16", ""), ("-FP32", "")])      
-    # 'hardw_datatype' column only has the hardware now
-    df_theo['hardw_datatype_net_prun'] = df_theo['hardw_datatype']+'_'+df_theo[net_prun_datatype].str.split('_').str[2] +'_'+ df_theo['network']+'_'+df_theo[net_prun_datatype].str.split('_').str[1]
+    df_theo['hardw'] = df_theo['hardw_datatype'].str.split('_').str[0]
+    df_theo['hardw_datatype_net_prun'] = df_theo['hardw_datatype']+'_'+df_theo['net_prun_datatype'].str.split('_').str[0]+'_'+ df_theo['net_prun_datatype'].str.split('_').str[1]
         
     #   delet unnecessary columns
-    df_theo = df_theo.drop(columns = ['net_prun_datatype'])
-    #  change column order
-    df_theo= df_theo[['hardw_datatype_net_prun', 'hardw_datatype','network', 'fps-comp', 'top1', 'type']]
+    df_theo = df_theo.drop(columns = ['net_prun_datatype','hardw_datatype'])
 
-    #   rename columns
-    df_theo.columns=['hardw_datatype_net_prun','hardw','network', 'fps-comp', 'top1', 'type']
     return df_theo
 #-------------------------------------------------------------
 
@@ -440,29 +509,25 @@ def process_measured_data(csv_filepath:str)->pd.DataFrame():
     """
     df = pd.read_csv(csv_filepath)
     # ResNet50 v15 does not have accuracy measurements yet, so it needs to be taken out
-    # create df from imagenet_df
-    df = df[df.NN_Topology != 'RN50V15']
+    df = df[df.NN_Topology != 'ResNet-50v15']
     # create hardw column to include: hardware + op_mode
     df['hardw'] = df['HWType'] + ('-' + df['Op mode']).fillna('')
     #create hardw_datatype_net_prun col with all those columns merged
     df['hardw_datatype_net_prun'] = df.apply(lambda r: "_".join([r.hardw, r.Datatype, r.NN_Topology, str(r.PruningFactor)]), axis=1)
+    
     #create a subset of the dataframe with only those columns
-    df = df[['hardw_datatype_net_prun','hardw', 'NN_Topology' ,'fps-comp', 'top1','batch/thread/stream']]
+    df = df[['hardw_datatype_net_prun','hardw', 'NN_Topology' ,'fps-comp', 'top1','batch/thread/stream','hw_peak_perf', 'nn_total_operations']]
     #Only get the points corresponding to the biggest batch
-    df = df.groupby('hardw_datatype_net_prun')[['batch/thread/stream','hardw', 'NN_Topology','fps-comp', 'top1']].max()
-    #add type column
+    df = df.groupby('hardw_datatype_net_prun')[['batch/thread/stream','hardw', 'NN_Topology','fps-comp', 'top1', 'hw_peak_perf', 'nn_total_operations']].max()
+    
+    #add and delete columns 
     df['type'] = 'measured'
     # reset index to start being numeric 
     df = df.reset_index()
-    #save it all
-    df.to_csv('data/cleaned_csv/pareto_data_imagenet.csv', index = False)
-    #   change column names
-    df.columns = ['hardw_datatype_net_prun', 'batch/thread/stream', 'hardw', 'network', 'fps-comp', 'top1', 'type']
-    #   fix samll stuff in the df so things match with the other side
-    df = replace_data_df(df_=df, column='hardw_datatype_net_prun', list_tuples_data_to_replace=[("RN50", "ResNet50"),("MNv1", "MobileNetv1"),('GNv1','GoogLeNetv1'),('100.0','100'),('25.0','25') ,('50.0','50'),('30.0','30'),('80.0','80')])
-    df = replace_data_df(df_=df, column='network', list_tuples_data_to_replace=[("RN50", "ResNet50"),("MNv1", "MobileNetv1"),('GNv1','GoogLeNetv1')])
-    #delete unnecessary columns
     df = df.drop(columns=['batch/thread/stream'])
+
+    #   fix samll stuff in the df so things match with the other side
+    df['hardw_datatype_net_prun'] = df['hardw_datatype_net_prun'].str.replace(pat='.0', repl='', regex=False)
 
     return df
 #---------------------------------------------------------------------------------------------------------------
@@ -474,7 +539,7 @@ def identify_pairs_nonpairs(df: pd.DataFrame, column: str) -> pd.DataFrame():
      df: pd.DataFrame()
         Dataframe which will be processed.
      column: str
-         Column which has: hardware platform, datatype, network and pruning factor. It has duplicated values.
+         Column which has: hardware platform, datatype, NN_Topology and pruning factor. It has duplicated values.
     Returns
     -------
     df: pd.DataFrame()
@@ -585,9 +650,43 @@ def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: st
     ).resolve_scale(color='independent',shape='independent').properties(title=title)
     return charts
 
+
 #-----------------------------------------------------
 
-def get_overlapped_pareto(net_keyword: str):
+
+def get_df_theo_fps_top1(machine_learning_task: str) -> pd.DataFrame():
+    """This method get the Theoretical top1 accuracies (of NNs) and performance (fps) of the NNs + hardware and merges these both to get the theoretical performance.
+    Reads this file: data/performance_predictions_imagenet_mnist_cifar.csv
+   
+    Parameters
+    ----------
+     machine_learning_task: str
+        Desired machine learning task to choose from the performance predictions.
+    
+    Returns
+    -------
+    pd.DataFrame()
+    Eg.: Outputs a dataframe like the following:
+         top1      net_prun_datatype       hardw_datatype          fps-comp
+    16   69.24     GoogLeNetv1_100_INT8    Ultra96-DPU_INT8        306.709265
+    17   69.24     GoogLeNetv1_100_INT8    ZCU104-DPU_INT8         1,469.6485    
+    """
+
+    # 1. Get Theoretical TOP1 Accuracies table (Theoretical_Analysis/CNNs and their accuracy...)
+    df_top1_theo = process_theo_top1(csv_theor_accuracies ='data/cnn_topologies_accuracy.csv')
+    
+    # 2. Get Theoretical FPS to match with that Theoretical TOP1 - from Performance Predictions
+    df_fps_theo = process_csv_for_heatmaps_plot("data/performance_predictions_imagenet_mnist_cifar.csv", machine_learning_task)
+    df_fps_theo.columns=['hardw_datatype','net_prun_datatype','fps-comp']
+    
+    # 3. Merge Theoretical top1 + Theoretical fps
+    df_theo_fps_top1 = pd.merge(df_top1_theo, df_fps_theo, on='net_prun_datatype', how='outer')
+    #take nans out- the ones that don't have correspondence- probably because they are from different machine learning task
+    df_theo_fps_top1 = df_theo_fps_top1.dropna()
+    
+    return df_theo_fps_top1
+      
+def get_overlapped_pareto(machine_learning_task: str, title:str):
     """
     Main method to get the overlapped pareto plots.
     What it does: Get top1 acc. -> Get fps correpsonding to previous acc. -> Get measured pareto -> join them -> identify pairs -> plot it
@@ -605,46 +704,37 @@ def get_overlapped_pareto(net_keyword: str):
         This is an Altair/Vega-Lite Heatmap chart. 
         It returns the overlapped pareto plot (theoretical + measured + 2 pareto lines(theoretical+measured)).       
     """
-    # 1. Get the CNNs Accuracies table (Theoretical_Analysis/CNNs and their accuracy...) that only has the top1 accuracy and process it.
-    #   theoretical top1
-    df_top1_theo = process_theo_top1(csv_theor_accuracies ='data/cnn_topologies_accuracy.csv')
-    #now we have: |top1 | net_prun_datatype| 
-    return df_top1_theo
-    # 2. Now we need Theoretical FPS-COMP to match with that Theoretical TOP1
-    # 3. We need to get the above mentioned Theoretical FPS-COMP from the Heatmaps- Performance Predictions and merge them
-    # depending on the user input this is retrieved for the desired Classification Task
-    if re.search(net_keyword, 'imagenet', re.IGNORECASE):
-        df_fps_top1_theo = process_theo_fps(df_top1_theo= df_top1_theo, csv_files=["data/cleaned_csv/performance_prediction_imagenet.csv"])
+    # 1.2.3. Get the theoretical df with accuracies and fps-comp
+    df_theo_fps_top1 = get_df_theo_fps_top1(machine_learning_task)
+      
+    # 4. Get Measured df for the desired Classification Task (experimental_data_m_l_task)
+    if re.search(machine_learning_task, 'imagenet', re.IGNORECASE):      
         df_measured = process_measured_data(csv_filepath= 'data/cleaned_csv/experimental_data_imagenet.csv')
-    elif re.search(net_keyword, 'mnist', re.IGNORECASE):
-        df_fps_top1_theo = process_theo_fps(df_top1_theo= df_top1_theo, csv_files=["data/cleaned_csv/performance_prediction_mnist.csv"])
+    elif re.search(machine_learning_task, 'mnist', re.IGNORECASE):
         df_measured = process_measured_data(csv_filepath= 'data/cleaned_csv/experimental_data_mnist.csv')
-    elif re.search(net_keyword, 'cifar-10', re.IGNORECASE):
-        df_fps_top1_theo = process_theo_fps(df_top1_theo= df_top1_theo, csv_files=["data/cleaned_csv/performance_prediction_cifar10.csv"])
-        df_measured = process_measured_data(csv_filepath= 'data/cleaned_csv/experimental_data_cifar.csv'
-    
-
-    df_fps_top1_theo = select_cnn_match_theo_for_measured(df_theo= df_fps_top1_theo, net_prun_datatype = 'net_prun_datatype')
-    # now we have: |hardw_datatype_net_prun | hardw | network | fps-comp | top1 | type|
-    
-    #  concatenate both measured with theoretical to get the overlapped pareto
-    overlapped_pareto = pd.concat([df_fps_top1_theo, df_measured])
-    # now we have everything together and matched
-
-    #put everything to lowercase
+    elif re.search(machine_learning_task, 'cifar-10', re.IGNORECASE):
+        df_measured = process_measured_data(csv_filepath= 'data/cleaned_csv/experimental_data_cifar.csv')
+       
+    # 5. Improve theoretical to match with Measured df after this
+    df_theo_fps_top1 = create_delete_columns_theoretical(df_theo= df_theo_fps_top1)
+ 
+    # 6. Merge Measured + Theoretical = Overlapped Pareto df
+    overlapped_pareto = pd.concat([df_theo_fps_top1, df_measured])
+   
+    # 7. Small changes like: apply lowercase, organizing alphabetically by column
     overlapped_pareto.hardw_datatype_net_prun = overlapped_pareto.hardw_datatype_net_prun.str.casefold() 
-    #organize by column alpabetically
     overlapped_pareto= overlapped_pareto.sort_values(by='hardw_datatype_net_prun')
 
-    # identify all pairs and create a special column for them 
+    # 8. Identify Pairs and create a special column for them 
     overlapped_pareto = identify_pairs_nonpairs(df=overlapped_pareto, column='hardw_datatype_net_prun')
+        
+    save_not_matched_data(overlapped_pareto, machine_learning_task)
     
-    #overlapped_pareto = overlapped_pareto.drop(overlapped_pareto[overlapped_pareto.type=='predicted_no_match|measured_no_match'].index)
+    # 9. Delete all with no match
+    overlapped_pareto = overlapped_pareto.loc[(overlapped_pareto.color !='measured_no_match') &(overlapped_pareto.color !='predicted_no_match')  ]
     
-    # now we have: |hardw_datatype_net_prun | hardw | network | fps-comp | top1 | type | color|
-    return overlapped_pareto
-    #plot it
-    return plot_it_now(df= overlapped_pareto, xcol= 'fps-comp', ycol= 'top1', groupcol= 'color', title='Overlapped Pareto Plots Theoretical + Measured for' + ' ' + net_keyword.upper())    
+    #return overlapped_pareto
+    return plot_it_now(df= overlapped_pareto, xcol= 'fps-comp', ycol= 'top1', groupcol= 'color', title=title)    
 
 #----------------------------------------------------
 
@@ -761,7 +851,7 @@ def get_point_chart_selection(df: pd.DataFrame, color_groupcol: str,
 
 #---------------------------------------------------------------
 
-def theor_pareto(net_keyword, title: str) ->alt.vegalite.v4.api.Chart:
+def theor_pareto(machine_learning_task, title: str) ->alt.vegalite.v4.api.Chart:
     """Creates a Theoretical Pareto Plot.
    
    
@@ -782,25 +872,26 @@ def theor_pareto(net_keyword, title: str) ->alt.vegalite.v4.api.Chart:
     ycol='top1'
     groupcol='hardw_datatype_net_prun'
     colors=['#FFA500']
-    # 1. Get the CNNs Accuracies table (Theoretical_Analysis/CNNs and their accuracy...) that only has the top1 accuracy and process it.
-    #   theoretical top1  
+    
+    # 1. Get Theoretical TOP1 Accuracies table (Theoretical_Analysis/CNNs and their accuracy...)
     df_top1_theo = process_theo_top1(csv_theor_accuracies ='data/cnn_topologies_accuracy.csv')
     
-    if re.search(net_keyword, 'imagenet', re.IGNORECASE):           
-        df_fps_top1_theo = process_theo_fps(df_top1_theo= df_top1_theo, csv_files=["data/cleaned_csv/performance_prediction_imagenet.csv"])
-    elif re.search(net_keyword, 'mnist', re.IGNORECASE):   
-        df_fps_top1_theo = process_theo_fps(df_top1_theo= df_top1_theo, csv_files=["data/cleaned_csv/performance_prediction_mnist.csv"])
-    elif re.search(net_keyword, 'cifar-10', re.IGNORECASE):   
-        df_fps_top1_theo = process_theo_fps(df_top1_theo= df_top1_theo, csv_files=["data/cleaned_csv/performance_prediction_cifar10.csv"])     
+    # 2. Get Theoretical FPS to match with that Theoretical TOP1 - from Performance Predictions
+    df_fps_theo = process_csv_for_heatmaps_plot("data/performance_predictions_imagenet_mnist_cifar.csv", machine_learning_task)
+    df_fps_theo.columns=['hardw_datatype','net_prun_datatype','fps-comp']
     
-    df_fps_top1_theo = select_cnn_match_theo_for_measured(df_theo= df_fps_top1_theo, net_prun_datatype = 'net_prun_datatype')
-    # now we have: |hardw_datatype_net_prun | hardw | network | fps-comp | top1 | type|
+    # 3. Merge Theoretical top1 + Theoretical fps
+    df_theo_fps_top1 = pd.merge(df_top1_theo, df_fps_theo, on='net_prun_datatype', how='outer')
+    #take nans out- the ones that don't have correspondence- probably because they are from different machine learning task
+    df_theo_fps_top1 = df_theo_fps_top1.dropna()
     
+    # 5. Improve Theoretical to match with Measured df after this
+    df_theo_fps_top1 = create_delete_columns_theoretical(df_theo= df_theo_fps_top1)
     
-    df_charts = get_several_paretos_df(list_df = [df_fps_top1_theo], xcol= xcol, ycol= ycol, groupcol= groupcol, colors=colors)
-    points = get_point_chart(df= df_fps_top1_theo, groupcol= groupcol, xcol= xcol, ycol=ycol, title=title) 
+    df_charts = get_several_paretos_df(list_df = [df_theo_fps_top1], xcol= xcol, ycol= ycol, groupcol= groupcol, colors=colors)
+    points = get_point_chart(df= df_theo_fps_top1, groupcol= groupcol, xcol= xcol, ycol=ycol, title=title) 
+    
     return (points + df_charts.iloc[0,0])
-
 #----------------------------------------------------
 
 def get_percentage_colum(df: pd.DataFrame, col_elements: str, newcol: str ) -> pd.DataFrame:
@@ -836,8 +927,10 @@ def get_percentage_colum(df: pd.DataFrame, col_elements: str, newcol: str ) -> p
     percentage= []
     for par in pairs:
         df_pair = df_.loc[df_[col_elements] == par]
+        print(df_pair)
         theoret = df_pair.loc[df_pair.type == 'predicted','fps-comp']
         measured = df_pair.loc[df_pair.type == 'measured','fps-comp']
+        print(measured)
         percentage.append(str(round((measured.values[0]/theoret.values[0])*100,1)) + '%')
 
     dict_= {key:value for key,value in zip(pairs,percentage)}
@@ -880,6 +973,7 @@ def fill_values(col_value: str, dict_: dict)->int:
 
 
 def get_peak_perf_gops_df(df_: pd.DataFrame ) ->pd.DataFrame:
+        # NOT BEING USED BECAUSE ADDED 3 COLUMNS TO THE BACKUP CSV
     """-Selects a subset of the given df (the 'hardw_datatype_net_prun' column)
         -Gets Peak Compute Performance from the csv file (peakPerfBandHardPlatf) and 
         fills the given df with that value for each hardware in a separate column called 'peak_compute'
@@ -908,36 +1002,37 @@ def get_peak_perf_gops_df(df_: pd.DataFrame ) ->pd.DataFrame:
           ----------------------------------------------------------------------------
     """
     # Create a subset form
-    efficiency_df = df_.loc[:, ['hardw_datatype_net_prun']]
+    efficiency_df = df_.loc[:, ['hw_datatype_prun_net']]
     efficiency_df['type'] = 'Theoret. Peak Compute'
-    #G  et Peak Compute for all hardware
+    #Get Peak Compute for all hardware
     peak_compute_hardw_df=pd.read_csv('data/peakPerfBandHardPlatf.csv')
     peak_compute_hardw_dict=pd.Series(peak_compute_hardw_df.Peak_Performance.values,index=peak_compute_hardw_df.Name).to_dict()
     efficiency_df['peak_compute'] = ''
-    efficiency_df['peak_compute']=efficiency_df.apply(lambda row: fill_values(row.hardw_datatype_net_prun, peak_compute_hardw_dict), axis=1)
-
+    efficiency_df['peak_compute']=efficiency_df.apply(lambda row: fill_values(row.hw_datatype_prun_net, peak_compute_hardw_dict), axis=1)
     #Get GOPS for all CNNs
     gops_df = pd.read_csv('data/cnn_topologies_compute_memory_requirements.csv')
     #get first two columns
     gops_df = gops_df.loc[:,[' ','Total OPs']]
     #rename column
-    gops_df.columns=['network', 'gops']
+    gops_df.columns=['NN_Topology', 'gops']
     #remove first row with double names
     gops_df= gops_df.iloc[1:,:]
     # remove %, correct ResNet-50 to ResNet50...
-    gops_df = replace_data_df(df_=gops_df, column= 'network', list_tuples_data_to_replace= [('%',''),('ResNet-50','ResNet50'),('EfficientNet Edge L','EfficientNetL'),('EfficientNet Edge S','EfficientNetS'),('EfficientNet Edge M','EfficientNetM')])
+    #comentei a linha abaixo agora
+    #gops_df = replace_data_df(df_=gops_df, column= 'NN_Topology', list_tuples_data_to_replace= [('%',''),('ResNet-50','ResNet50'),('EfficientNet Edge L','EfficientNetL'),('EfficientNet Edge S','EfficientNetS'),('EfficientNet Edge M','EfficientNetM')])
     #create dictionary out of the df
-    gops_dict=pd.Series(gops_df.gops.values,index=gops_df.network).to_dict()
+    gops_dict=pd.Series(gops_df.gops.values,index=gops_df.NN_Topology).to_dict()
     #create a new column with the GOPs values
-    efficiency_df['gops'] = efficiency_df.apply(lambda row: fill_values(row.hardw_datatype_net_prun, gops_dict), axis=1)
+    efficiency_df['gops'] = efficiency_df.apply(lambda row: fill_values(row.hw_datatype_prun_net, gops_dict), axis=1)
     #now that all is done lets create the theoretical performance column which will be called 'fps-comp' and calculate the numbers
+    print(efficiency_df)
     try:
         efficiency_df['fps-comp'] = efficiency_df.apply(lambda row: float(row.peak_compute)*1000/float(row.gops), axis=1)
     except ZeroDivisionError as err:
-        print('An error has occurred. Possibly GOPs CNN value was 0. This means there was a mismatch between names in the data coming from cnn_topologies_compute_memory_requirements.csv file and the dataframe given as input.', err)
+        print('Zero Division Error. An error has occurred. Possibly GOPs CNN value was 0. This means there was a mismatch between names in the data coming from cnn_topologies_compute_memory_requirements.csv file and the dataframe given as input.', err)
     
     efficiency_df = efficiency_df.drop(columns=['gops','peak_compute'])
-
+   
     #remove all rows that have fps-comp = 0
     efficiency_df= efficiency_df.loc[efficiency_df['fps-comp'] != 0, :]
     
@@ -989,7 +1084,7 @@ def faceted_bar_chart(df: pd.DataFrame, xcol: str, ycol:str, colorcol: str, text
 
 #----------------------------------------------------
 
-def efficiency_plot(net_keyword: str, df_theo_peak_compute: pd.DataFrame, title: str) -> alt.vegalite.v4.api.Chart:
+def efficiency_plot(machine_learning_task: str, title: str) -> alt.vegalite.v4.api.Chart:
     """
     Method that creates a faceted bar chart.
     In the y axis we have fps-compute and in the x axis we have several combinations of hardware platorms and neural networks. 
@@ -1004,78 +1099,92 @@ def efficiency_plot(net_keyword: str, df_theo_peak_compute: pd.DataFrame, title:
     -------
      Bar chart: alt.vegalite.v4.api.Chart
         Simple Faceted Bar chart with text on top of the columns and text inside the plot (percentage) 
-       
-        
     """
     
-    # 1. Get the CNNs Accuracies table (Theoretical_Analysis/CNNs and their accuracy...) that only has the top1 accuracy and process it.
-    df_top1_theo = process_theo_top1(csv_theor_accuracies ='data/cnn_topologies_accuracy.csv')
-    #now we have: |top1 | net_prun_datatype| 
-
-    # 2. Now we need Theoretical FPS-COMP to match with that Theoretical TOP1
-    # 3. We need to get the above mentioned Theoretical FPS-COMP from the Heatmaps- Performance Predictions and merge them
-    # depending on the user input this is retrieved for the desired Classification Task
-    df_fps_top1_theo = process_theo_fps(df_top1_theo= df_top1_theo, csv_files=["data/cleaned_csv/performance_prediction_imagenet.csv"])
-    df_measured = pd.read_csv('data/cleaned_csv/pareto_data_imagenet.csv')
-
-    #see which classification type is required
-    if re.search(net_keyword, 'imagenet', re.IGNORECASE):           
-        df_fps_top1_theo = process_theo_fps(df_top1_theo= df_top1_theo, csv_files=["data/cleaned_csv/performance_prediction_imagenet.csv"])
-        df_measured = pd.read_csv('data/cleaned_csv/pareto_data_imagenet.csv')
-    elif re.search(net_keyword, 'mnist', re.IGNORECASE):   
-        df_fps_top1_theo = process_theo_fps(df_top1_theo= df_top1_theo, csv_files=["data/cleaned_csv/performance_prediction_mnist.csv"])
-        df_measured = pd.read_csv('data/cleaned_csv/pareto_data_mnist.csv')
-    elif re.search(net_keyword, 'cifar-10', re.IGNORECASE):   
-        df_fps_top1_theo = process_theo_fps(df_top1_theo= df_top1_theo, csv_files=["data/cleaned_csv/performance_prediction_cifar10.csv"])     
-        df_measured = pd.read_csv('data/cleaned_csv/pareto_data_cifar.csv')
+    # 1.2.3. Get the theoretical df with accuracies and fps-comp
+    df_theo_fps_top1 = get_df_theo_fps_top1(machine_learning_task) 
+    df_theo_fps_top1.rename({'fps-comp': 'predicted'}, axis=1, inplace=True)
     
-    df_fps_top1_theo = select_cnn_match_theo_for_measured(df_theo= df_fps_top1_theo, net_prun_datatype = 'net_prun_datatype')
-    # now we have: |hardw_datatype_net_prun | hardw | network | fps-comp | top1 | type|
-
-    #  concatenate both measured with theoretical to get the overlapped
-    overlapped_pareto = pd.concat([df_fps_top1_theo, df_measured])
-    # now we have everything together and matched
-
+    # 4. Get Measured df for the desired Classification Task (experimental_data_m_l_task)
+    if re.search(machine_learning_task, 'imagenet', re.IGNORECASE):      
+        df_measured = process_measured_data(csv_filepath= 'data/cleaned_csv/experimental_data_imagenet.csv')
+    elif re.search(machine_learning_task, 'mnist', re.IGNORECASE):
+        df_measured = process_measured_data(csv_filepath= 'data/cleaned_csv/experimental_data_mnist.csv')
+    elif re.search(machine_learning_task, 'cifar-10', re.IGNORECASE):
+        df_measured = process_measured_data(csv_filepath= 'data/cleaned_csv/experimental_data_cifar.csv')
     
-    # identify all pairs and create a special column for them 
+    # 5. Improve theoretical to match with Measured df after this
+    df_theo_fps_top1 = create_delete_columns_theoretical(df_theo= df_theo_fps_top1)
+    
+    df_measured.rename({'fps-comp': 'measured'}, axis=1, inplace=True)
+    
+    
+  
+    # 6. Merge Measured + Theoretical = Overlapped Pareto df
+    overlapped_pareto = pd.concat([df_theo_fps_top1, df_measured])
+    
+    overlapped_pareto['Theoret. Peak Compute'] = overlapped_pareto.apply(lambda row: float(row.hw_peak_perf)*1000/float(row.nn_total_operations), axis=1)
+    df_measured.rename({'hw_peak_perf': 'Theoret. Peak Compute'}, axis=1, inplace=True)
+    overlapped_pareto = pd.melt(overlapped_pareto, id_vars=['hardw_datatype_net_prun','NN_Topology','hardw'], value_vars=['predicted','measured','Theoret. Peak Compute'],var_name='type', value_name='fps-comp' )
+    overlapped_pareto= overlapped_pareto.sort_values(by='hardw_datatype_net_prun')
+    overlapped_pareto = overlapped_pareto.dropna()
+    
+    # 7. Small changes like: apply lowercase, organizing alphabetically by column
+    overlapped_pareto.hardw_datatype_net_prun = overlapped_pareto.hardw_datatype_net_prun.str.casefold() 
+    overlapped_pareto= overlapped_pareto.sort_values(by='hardw_datatype_net_prun')
+   
+    # 8. Identify Pairs and create a special column for them 
     overlapped_pareto = identify_pairs_nonpairs(df=overlapped_pareto, column='hardw_datatype_net_prun')
-    # now we have: |hardw_datatype_net_prun | hardw | network | fps-comp | top1 | type | color|
+
+    # 9. Remove the ones with no match
+    #overlapped_pareto = overlapped_pareto.loc[(overlapped_pareto.color!='measured_no_match') & (overlapped_pareto.color!='predicted_no_match')]
     
-    #remove the ones that don't have a match
-    overlapped_pareto = overlapped_pareto.loc[(overlapped_pareto.color!='measured_no_match') & (overlapped_pareto.color!='predicted_no_match')]
     
     #create a percentage column
     overlapped_pareto = get_percentage_colum(df=overlapped_pareto, col_elements='hardw_datatype_net_prun', newcol='percentage')
+   
+    #overlapped_pareto.rename({'hw_peak_perf': 'Theoret. Peak Compute'}, axis=1, inplace=True)
+  
+   
+    
+    return overlapped_pareto
+
     
     #merge with peak compute df which has the data for te 3rd bar 
-    overlapped_pareto= pd.concat([overlapped_pareto,df_theo_peak_compute])
+
     overlapped_pareto= overlapped_pareto.fillna('')
     overlapped_pareto['hardw'] = overlapped_pareto['hardw_datatype_net_prun'].str.split('_').str[0]
 
     overlapped_pareto =overlapped_pareto.sort_values(by='hardw_datatype_net_prun')
-
+    
     #count how many times each 'hardw_datatype_net_prun' combination is repeated
     df_tmp =overlapped_pareto['hardw_datatype_net_prun'].value_counts().to_frame().rename(columns={'hardw_datatype_net_prun':'count'})
+   
     #get the ones that are only repeated once
     list_to_remove =df_tmp.loc[df_tmp['count'] < 3, :].index
     #remove them 
-    overlapped_pareto = overlapped_pareto[~overlapped_pareto.hardw_datatype_net_prun.isin(list_to_remove)]
+
+    #overlapped_pareto = overlapped_pareto[~overlapped_pareto.hardw_datatype_net_prun.isin(list_to_remove)]
     
     #split in case there are too many rows, because the faceted bar chart will be too full
     if overlapped_pareto.hardw_datatype_net_prun.unique().size < 8:
         return faceted_bar_chart(df=overlapped_pareto , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) 
     
-    
-    usb_devices_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.contains('EdgeTPU|NCS|A53')]
-    fpga_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.contains('ZCU|Ultra')]
-    gpu_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.contains('TX2')]
+    #print(overlapped_pareto)
+    usb_devices_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.contains('edge|ncs|a53')]
+    fpga_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.contains('zcu|ultra')]
+    gpu_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.contains('tx2')]
 
+    print(usb_devices_df)
     # Plot it - Faceted Bar chart
     #return faceted_bar_chart(df=usb_devices_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) | faceted_bar_chart(df=fpga_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) | faceted_bar_chart(df=gpu_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title) 
     a=faceted_bar_chart(df=usb_devices_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) 
     b=faceted_bar_chart(df=fpga_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) 
     c=faceted_bar_chart(df=gpu_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title) 
-    return (a.display() or b.display() or c.display())
-    #return  overlapped_pareto
-    #----------------------------------------------------
-
+    
+    #return a.display()
+    #return (a.display() or b.display() or c.display())
+    return  overlapped_pareto
+   
+    #------------------------------------------------------------------
+    

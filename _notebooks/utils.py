@@ -69,3 +69,19 @@ def replace_data_df(df_: pd.DataFrame(), column:str, list_tuples_data_to_replace
         df_out[column] = df_out[column].str.replace(j, k)
     return df_out
 #-------------------------------------------------
+def process_csv_for_heatmaps_plot(csv_file: str)->pd.DataFrame:
+    """This method gets the csv for the theoretical predictions file and melts it to make it presentable in the heatmaps plot"""
+    
+    ## Reading csv file and converting data to (Neural network, Platform, Value)
+    df = pd.read_csv(csv_file)
+
+    df1 = pd.DataFrame()
+    columns = (df.loc[:, df.columns!='hardw']).columns #select all columns except first
+    for column in columns:
+        df_=pd.melt(df, id_vars=['hardw'], value_vars=column) #melt df1 into a df1 of 2 columns
+        df1=pd.concat([df1,df_])
+    df1.columns= ['y','x','values'] #setting new column names
+    #replace 0s for NaN values because with 0s the grid doesn't show up
+    df1['values'] = df1['values'].replace({ 0.0:np.nan})
+   
+    return df1

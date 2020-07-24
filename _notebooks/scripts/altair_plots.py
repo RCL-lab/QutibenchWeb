@@ -60,6 +60,38 @@ def dataframe_contains(input_df: pd.DataFrame, column: str, value: str)->pd.Data
     """
     output_df = input_df[input_df[column].str.contains(pat=value, case=False)]
     return output_df
+
+def process_csv_for_heatmaps_plot(csv_file: str, machine_learning_task: str)->pd.DataFrame:
+    """This method gets the csv for the theoretical predictions file and melts it to make it presentable in the heatmaps plot"""
+    
+    ## Reading csv file and converting data to (Neural network, Platform, Value)
+    df = pd.read_csv(csv_file)
+
+    df_out = pd.DataFrame()
+    columns = (df.loc[:, df.columns!='hardw']).columns #select all columns except first
+    for column in columns:
+        df_=pd.melt(df, id_vars=['hardw'], value_vars=column) #melt df1 into a df1 of 2 columns
+        df_out=pd.concat([df_out,df_])
+    df_out.columns= ['y','x','values'] #setting new column names
+    #replace 0s for NaN values because with 0s the grid doesn't show up
+    df_out['values'] = df_out['values'].replace({ 0.0:np.nan})
+   
+     # Choose the neural networks corresponding to the Machine Learning task asked for.
+    if re.search(machine_learning_task, 'imagenet', re.IGNORECASE):
+        df_out = dataframe_contains(input_df= df_out, column='x', value='goog|mob|res|effic')
+
+    elif re.search(machine_learning_task, 'mnist', re.IGNORECASE):
+        df_out = dataframe_contains(input_df= df_out, column='x', value='mlp')
+
+    elif re.search(machine_learning_task, 'cifar-10', re.IGNORECASE):
+        df_out = dataframe_contains(input_df= df_out, column='x', value='cnv')
+    
+    else: 
+        print('The machine learning task was not recognized, please try another one.') 
+        return 0
+    
+    return df_out
+
 #--------------------------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------HEATMAPS-------------------------------------------
 #--------------------------------------------------------------------------------------------------------------------------------
@@ -142,22 +174,7 @@ def heatmap_text(df: pd.DataFrame, color_condition: dict)->alt.vegalite.v4.api.C
               ]
         )
 
-def process_csv_for_heatmaps_plot(csv_file: str)->pd.DataFrame:
-    """This method gets the csv for the theoretical predictions file and melts it to make it presentable in the heatmaps plot"""
-    
-    ## Reading csv file and converting data to (Neural network, Platform, Value)
-    df = pd.read_csv(csv_file)
 
-    df1 = pd.DataFrame()
-    columns = (df.loc[:, df.columns!='hardw']).columns #select all columns except first
-    for column in columns:
-        df_=pd.melt(df, id_vars=['hardw'], value_vars=column) #melt df1 into a df1 of 2 columns
-        df1=pd.concat([df1,df_])
-    df1.columns= ['y','x','values'] #setting new column names
-    #replace 0s for NaN values because with 0s the grid doesn't show up
-    df1['values'] = df1['values'].replace({ 0.0:np.nan})
-   
-    return df1
 
 
 def heatmap(csv_file: str, machine_learning_task:str, title: str)->alt.vegalite.v4.api.Chart:
@@ -180,19 +197,7 @@ def heatmap(csv_file: str, machine_learning_task:str, title: str)->alt.vegalite.
     """
    
     # First process the raw csv file to make it able to be plotted
-    df = process_csv_for_heatmaps_plot(csv_file= csv_file)
-
-    # Now that we have the dataframe in shape to be plotted, choose the neural networks corresponding to the Machine Learning task given.
-    if re.search(machine_learning_task, 'imagenet', re.IGNORECASE):
-        df = dataframe_contains(input_df=df, column='x', value='goog|mob|res|effic')
-
-    elif re.search(machine_learning_task, 'mnist', re.IGNORECASE):
-        df = dataframe_contains(input_df=df, column='x', value='mlp')
-
-    elif re.search(machine_learning_task, 'cifar-10', re.IGNORECASE):
-        df = dataframe_contains(input_df=df, column='x', value='cnv')
-    
-    else: return 'The machine learning task was not recognized, please try another one.'
+    df = process_csv_for_heatmaps_plot(csv_file= csv_file, machine_learning_task='imagenet')
 
     mouseover_selection = alt.selection_single(on='mouseover', nearest=True)
     color_selection = alt.Color('values:Q', title= 'Input/second', scale=alt.Scale(type='log', scheme='lightmulti'))
@@ -483,7 +488,9 @@ def boxplot(df:pd.DataFrame(), xaxis:str, yaxis: str, color_col: str, facet_colu
 
 def get_pareto_df(df: pd.DataFrame(), groupcol: str, xcol: str, ycol: str) -> pd.DataFrame():
     """Creates a pareto line from the dataframe. This function doesn't correctly correspond x to y datapoints"""
+    print(df)
     pareto_line_df = df.groupby(groupcol)[xcol].max().to_frame("x")
+    
     pareto_line_df['y'] = df.groupby(groupcol)[ycol].agg(lambda x: x.value_counts().index[0])
     pareto_line_df.sort_values('y', ascending=False, inplace=True)
     pareto_line_df['x'] = pareto_line_df.x.cummax()

@@ -1,9 +1,9 @@
 ,top1,fps-comp,NN_Topology,type,hardw,hardw_datatype_net_prun,hw_peak_perf,nn_total_operations,pairs,color
-15,98.49,985.2595928,MLP,measured,U96-Quadcore A53,u96-quadcore a53_int2_mlp_50,0.192,0.0058200000000000005,False,measured_no_match
+15,98.49,985.2595928,MLP,measured,U96-Quadcore-A53,u96-quadcore-a53_int2_mlp_50,0.192,0.0058200000000000005,False,measured_no_match
 289,97.44,14925.0,MLP,predicted,TX2-maxn,tx2-maxn_fp32_mlp_25,,,False,predicted_no_match
 84,98.77,3840.0,MLP,predicted,ZCU104-FINN,zcu104-finn_int4_mlp_100,,,False,predicted_no_match
-19,98.62,984.9411728,MLP,measured,U96-Quadcore A53,u96-quadcore a53_int4_mlp_50,0.192,0.0058200000000000005,False,measured_no_match
-18,98.29,3110.117601000001,MLP,measured,U96-Quadcore A53,u96-quadcore a53_int4_mlp_25,0.192,0.0019,False,measured_no_match
+19,98.62,984.9411728,MLP,measured,U96-Quadcore-A53,u96-quadcore-a53_int4_mlp_50,0.192,0.0058200000000000005,False,measured_no_match
+18,98.29,3110.117601000001,MLP,measured,U96-Quadcore-A53,u96-quadcore-a53_int4_mlp_25,0.192,0.0019,False,measured_no_match
 174,97.3,2985.0,MLP,predicted,TX2-maxn,tx2-maxn_fp16_mlp_100,,,False,predicted_no_match
 210,97.49,29850.0,MLP,predicted,TX2-maxn,tx2-maxn_fp16_mlp_25,,,False,predicted_no_match
 192,97.45,9950.0,MLP,predicted,TX2-maxn,tx2-maxn_fp16_mlp_50,,,False,predicted_no_match
@@ -12,8 +12,8 @@
 271,97.46,4975.0,MLP,predicted,TX2-maxn,tx2-maxn_fp32_mlp_50,,,False,predicted_no_match
 178,97.3,2985.0,MLP,predicted,TX2-maxq,tx2-maxq_fp16_mlp_100,,,False,predicted_no_match
 228,97.95,89281.44142,MLP,predicted,TX2-maxn,tx2-maxn_fp16_mlp_12.5,,,False,predicted_no_match
-16,98.77,294.365206,MLP,measured,U96-Quadcore A53,u96-quadcore a53_int4_mlp_100,0.192,0.02,False,measured_no_match
-17,97.54,8535.609496,MLP,measured,U96-Quadcore A53,u96-quadcore a53_int4_mlp_12.5,0.192,0.0007,False,measured_no_match
+16,98.77,294.365206,MLP,measured,U96-Quadcore-A53,u96-quadcore-a53_int4_mlp_100,0.192,0.02,False,measured_no_match
+17,97.54,8535.609496,MLP,measured,U96-Quadcore-A53,u96-quadcore-a53_int4_mlp_12.5,0.192,0.0007,False,measured_no_match
 232,97.95,89281.44142,MLP,predicted,TX2-maxq,tx2-maxq_fp16_mlp_12.5,,,False,predicted_no_match
 214,97.49,29850.0,MLP,predicted,TX2-maxq,tx2-maxq_fp16_mlp_25,,,False,predicted_no_match
 196,97.45,9950.0,MLP,predicted,TX2-maxq,tx2-maxq_fp16_mlp_50,,,False,predicted_no_match
@@ -21,9 +21,9 @@
 257,97.31,1492.5,MLP,predicted,TX2-maxq,tx2-maxq_fp32_mlp_100,,,False,predicted_no_match
 293,97.44,14925.0,MLP,predicted,TX2-maxq,tx2-maxq_fp32_mlp_25,,,False,predicted_no_match
 275,97.46,4975.0,MLP,predicted,TX2-maxq,tx2-maxq_fp32_mlp_50,,,False,predicted_no_match
-12,98.75,294.0744008,MLP,measured,U96-Quadcore A53,u96-quadcore a53_int2_mlp_100,0.192,0.02,False,measured_no_match
-13,96.85,8493.696085,MLP,measured,U96-Quadcore A53,u96-quadcore a53_int2_mlp_12.5,0.192,0.0007,False,measured_no_match
-14,98.04,3104.686136,MLP,measured,U96-Quadcore A53,u96-quadcore a53_int2_mlp_25,0.192,0.0019,False,measured_no_match
+12,98.75,294.0744008,MLP,measured,U96-Quadcore-A53,u96-quadcore-a53_int2_mlp_100,0.192,0.02,False,measured_no_match
+13,96.85,8493.696085,MLP,measured,U96-Quadcore-A53,u96-quadcore-a53_int2_mlp_12.5,0.192,0.0007,False,measured_no_match
+14,98.04,3104.686136,MLP,measured,U96-Quadcore-A53,u96-quadcore-a53_int2_mlp_25,0.192,0.0019,False,measured_no_match
 176,97.3,2985.0,MLP,predicted,TX2-maxp,tx2-maxp_fp16_mlp_100,,,True,tx2-maxp_fp16_mlp_100
 6,97.44,220832.0,MLP,measured,TX2-maxp,tx2-maxp_fp16_mlp_25,1.15,0.0019,True,tx2-maxp_fp16_mlp_25
 230,97.95,89281.44142,MLP,predicted,TX2-maxp,tx2-maxp_fp16_mlp_12.5,,,True,tx2-maxp_fp16_mlp_12.5

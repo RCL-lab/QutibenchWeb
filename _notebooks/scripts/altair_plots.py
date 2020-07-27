@@ -488,9 +488,8 @@ def boxplot(df:pd.DataFrame(), xaxis:str, yaxis: str, color_col: str, facet_colu
 
 def get_pareto_df(df: pd.DataFrame(), groupcol: str, xcol: str, ycol: str) -> pd.DataFrame():
     """Creates a pareto line from the dataframe. This function doesn't correctly correspond x to y datapoints"""
-    print(df)
+
     pareto_line_df = df.groupby(groupcol)[xcol].max().to_frame("x")
-    
     pareto_line_df['y'] = df.groupby(groupcol)[ycol].agg(lambda x: x.value_counts().index[0])
     pareto_line_df.sort_values('y', ascending=False, inplace=True)
     pareto_line_df['x'] = pareto_line_df.x.cummax()
@@ -560,7 +559,7 @@ def pareto_graph(df: pd.DataFrame(), groupcol: str , xcol: str, ycol: str, W: in
     -------
         Line chart + Pareto chart          
     """
-    df_pareto = get_pareto_df(df, groupcol, xcol, ycol)
+    df_pareto = get_pareto_df_improved(df, groupcol, xcol, ycol)
 
     df_lines = alt.Chart(df).mark_line(point=True).encode(
         x=xcol,

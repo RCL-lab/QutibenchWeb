@@ -197,7 +197,7 @@ def heatmap(csv_file: str, machine_learning_task:str, title: str)->alt.vegalite.
     """
    
     # First process the raw csv file to make it able to be plotted
-    df = process_csv_for_heatmaps_plot(csv_file= csv_file, machine_learning_task='imagenet')
+    df = process_csv_for_heatmaps_plot(csv_file= csv_file, machine_learning_task=machine_learning_task)
 
     mouseover_selection = alt.selection_single(on='mouseover', nearest=True)
     color_selection = alt.Color('values:Q', title= 'Input/second', scale=alt.Scale(type='log', scheme='lightmulti'))

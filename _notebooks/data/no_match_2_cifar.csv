@@ -1,10 +1,10 @@
 ,top1,fps-comp,NN_Topology,type,hardw,hardw_datatype_net_prun,hw_peak_perf,nn_total_operations,pairs,color
 5,86.86,12457.94043,CNV,predicted,ZCU104-BISMO,zcu104-bismo_int2_cnv_100,,,False,predicted_no_match
-28,73.64,766.045053,CNV,measured,U96-Quadcore A53,u96-quadcore a53_int2_cnv_12.5,0.192,0.01,False,measured_no_match
-29,79.89,363.667358,CNV,measured,U96-Quadcore A53,u96-quadcore a53_int2_cnv_25,0.192,0.03,False,measured_no_match
-30,84.29,104.3136124,CNV,measured,U96-Quadcore A53,u96-quadcore a53_int2_cnv_50,0.192,0.12,False,measured_no_match
-31,75.85,761.5829025,CNV,measured,U96-Quadcore A53,u96-quadcore a53_int4_cnv_12.5,0.192,0.01,False,measured_no_match
-32,81.09,361.91828,CNV,measured,U96-Quadcore A53,u96-quadcore a53_int4_cnv_25,0.192,0.03,False,measured_no_match
+28,73.64,766.045053,CNV,measured,U96-Quadcore-A53,u96-quadcore-a53_int2_cnv_12.5,0.192,0.01,False,measured_no_match
+29,79.89,363.667358,CNV,measured,U96-Quadcore-A53,u96-quadcore-a53_int2_cnv_25,0.192,0.03,False,measured_no_match
+30,84.29,104.3136124,CNV,measured,U96-Quadcore-A53,u96-quadcore-a53_int2_cnv_50,0.192,0.12,False,measured_no_match
+31,75.85,761.5829025,CNV,measured,U96-Quadcore-A53,u96-quadcore-a53_int4_cnv_12.5,0.192,0.01,False,measured_no_match
+32,81.09,361.91828,CNV,measured,U96-Quadcore-A53,u96-quadcore-a53_int4_cnv_25,0.192,0.03,False,measured_no_match
 82,87.4,6228.9702130000005,CNV,predicted,ZCU104-BISMO,zcu104-bismo_int4_cnv_100,,,False,predicted_no_match
 100,84.88,24665.6,CNV,predicted,ZCU104-BISMO,zcu104-bismo_int4_cnv_50,,,False,predicted_no_match
 3,85.55,739.209,CNV,measured,NCS,ncs_fp16_cnv_50,0.5,0.12,True,ncs_fp16_cnv_50
@@ -60,24 +60,24 @@
 44,81.09,15342.62,CNV,measured,ZCU104-FINN,zcu104-finn_int4_cnv_25,8.8,0.03,True,zcu104-finn_int4_cnv_25
 271,85.6,3666.666667,CNV,predicted,TX2-maxq,tx2-maxq_fp32_cnv_50,,,True,tx2-maxq_fp32_cnv_50
 59,73.64,638592.0,CNV,predicted,ZCU104-BISMO,zcu104-bismo_int2_cnv_12.5,,,True,zcu104-bismo_int2_cnv_12.5
-147,75.85,19200.0,CNV,predicted,U96-Quadcore A53,u96-quadcore a53_int8_cnv_12.5,,,True,u96-quadcore a53_int8_cnv_12.5
-234,77.82,17710.95,CNV,predicted,U96-Quadcore A53,u96-quadcore a53_int8_cnv_12.5,,,True,u96-quadcore a53_int8_cnv_12.5
+147,75.85,19200.0,CNV,predicted,U96-Quadcore-A53,u96-quadcore-a53_int8_cnv_12.5,,,True,u96-quadcore-a53_int8_cnv_12.5
+234,77.82,17710.95,CNV,predicted,U96-Quadcore-A53,u96-quadcore-a53_int8_cnv_12.5,,,True,u96-quadcore-a53_int8_cnv_12.5
 27,85.6,2928.61,CNV,measured,TX2-maxq,tx2-maxq_fp32_cnv_50,0.44,0.12,True,tx2-maxq_fp32_cnv_50
-180,87.02,345.5131915,CNV,predicted,U96-Quadcore A53,u96-quadcore a53_int8_cnv_100,,,True,u96-quadcore a53_int8_cnv_100
-17,86.86,408.5106383,CNV,predicted,U96-Quadcore A53,u96-quadcore a53_int8_cnv_100,,,True,u96-quadcore a53_int8_cnv_100
-93,87.4,408.5106383,CNV,predicted,U96-Quadcore A53,u96-quadcore a53_int8_cnv_100,,,True,u96-quadcore a53_int8_cnv_100
-258,87.06,172.7565957,CNV,predicted,U96-Quadcore A53,u96-quadcore a53_int8_cnv_100,,,True,u96-quadcore a53_int8_cnv_100
-312,77.84,8855.475,CNV,predicted,U96-Quadcore A53,u96-quadcore a53_int8_cnv_12.5,,,True,u96-quadcore a53_int8_cnv_12.5
-276,85.6,684.085,CNV,predicted,U96-Quadcore A53,u96-quadcore a53_int8_cnv_50,,,True,u96-quadcore a53_int8_cnv_50
-71,73.64,19200.0,CNV,predicted,U96-Quadcore A53,u96-quadcore a53_int8_cnv_12.5,,,True,u96-quadcore a53_int8_cnv_12.5
+180,87.02,345.5131915,CNV,predicted,U96-Quadcore-A53,u96-quadcore-a53_int8_cnv_100,,,True,u96-quadcore-a53_int8_cnv_100
+17,86.86,408.5106383,CNV,predicted,U96-Quadcore-A53,u96-quadcore-a53_int8_cnv_100,,,True,u96-quadcore-a53_int8_cnv_100
+93,87.4,408.5106383,CNV,predicted,U96-Quadcore-A53,u96-quadcore-a53_int8_cnv_100,,,True,u96-quadcore-a53_int8_cnv_100
+258,87.06,172.7565957,CNV,predicted,U96-Quadcore-A53,u96-quadcore-a53_int8_cnv_100,,,True,u96-quadcore-a53_int8_cnv_100
+312,77.84,8855.475,CNV,predicted,U96-Quadcore-A53,u96-quadcore-a53_int8_cnv_12.5,,,True,u96-quadcore-a53_int8_cnv_12.5
+276,85.6,684.085,CNV,predicted,U96-Quadcore-A53,u96-quadcore-a53_int8_cnv_50,,,True,u96-quadcore-a53_int8_cnv_50
+71,73.64,19200.0,CNV,predicted,U96-Quadcore-A53,u96-quadcore-a53_int8_cnv_12.5,,,True,u96-quadcore-a53_int8_cnv_12.5
 179,87.02,1038.1617019999999,CNV,predicted,NCS,ncs_fp16_cnv_100,,,True,ncs_fp16_cnv_100
-294,83.25,2795.625,CNV,predicted,U96-Quadcore A53,u96-quadcore a53_int8_cnv_25,,,True,u96-quadcore a53_int8_cnv_25
-129,81.09,6400.0,CNV,predicted,U96-Quadcore A53,u96-quadcore a53_int8_cnv_25,,,True,u96-quadcore a53_int8_cnv_25
-53,79.89,6400.0,CNV,predicted,U96-Quadcore A53,u96-quadcore a53_int8_cnv_25,,,True,u96-quadcore a53_int8_cnv_25
-216,83.28,5591.25,CNV,predicted,U96-Quadcore A53,u96-quadcore a53_int8_cnv_25,,,True,u96-quadcore a53_int8_cnv_25
-35,84.29,1600.0,CNV,predicted,U96-Quadcore A53,u96-quadcore a53_int8_cnv_50,,,True,u96-quadcore a53_int8_cnv_50
-198,85.55,1368.17,CNV,predicted,U96-Quadcore A53,u96-quadcore a53_int8_cnv_50,,,True,u96-quadcore a53_int8_cnv_50
-111,84.88,1600.0,CNV,predicted,U96-Quadcore A53,u96-quadcore a53_int8_cnv_50,,,True,u96-quadcore a53_int8_cnv_50
+294,83.25,2795.625,CNV,predicted,U96-Quadcore-A53,u96-quadcore-a53_int8_cnv_25,,,True,u96-quadcore-a53_int8_cnv_25
+129,81.09,6400.0,CNV,predicted,U96-Quadcore-A53,u96-quadcore-a53_int8_cnv_25,,,True,u96-quadcore-a53_int8_cnv_25
+53,79.89,6400.0,CNV,predicted,U96-Quadcore-A53,u96-quadcore-a53_int8_cnv_25,,,True,u96-quadcore-a53_int8_cnv_25
+216,83.28,5591.25,CNV,predicted,U96-Quadcore-A53,u96-quadcore-a53_int8_cnv_25,,,True,u96-quadcore-a53_int8_cnv_25
+35,84.29,1600.0,CNV,predicted,U96-Quadcore-A53,u96-quadcore-a53_int8_cnv_50,,,True,u96-quadcore-a53_int8_cnv_50
+198,85.55,1368.17,CNV,predicted,U96-Quadcore-A53,u96-quadcore-a53_int8_cnv_50,,,True,u96-quadcore-a53_int8_cnv_50
+111,84.88,1600.0,CNV,predicted,U96-Quadcore-A53,u96-quadcore-a53_int8_cnv_50,,,True,u96-quadcore-a53_int8_cnv_50
 116,81.09,100800.0,CNV,predicted,ZCU104-FINN,zcu104-finn_int4_cnv_25,,,True,zcu104-finn_int4_cnv_25
 267,85.6,5583.333333,CNV,predicted,TX2-maxn,tx2-maxn_fp32_cnv_50,,,True,tx2-maxn_fp32_cnv_50
 43,75.85,25206.016,CNV,measured,ZCU104-FINN,zcu104-finn_int4_cnv_12.5,8.8,0.01,True,zcu104-finn_int4_cnv_12.5

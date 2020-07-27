@@ -94,8 +94,8 @@ def process_csv_for_heatmaps_plot(csv_file: str, machine_learning_task: str)->pd
  
 def save_not_matched_data(df, machine_learning_task):
     """Method that saves the dataframe to a file."""
-    df = df.sort_values(by='color')
-    df.to_csv('data/no_match_' + machine_learning_task + '.csv')
+    df = df.sort_values(by='pairs')
+    df.to_csv('data/no_match_2_' + machine_learning_task + '.csv')
 
 #utils functions------------------------------------
 
@@ -412,7 +412,8 @@ def process_measured_df(df_theoret: pd.DataFrame(), csv_measured: str )-> pd.Dat
         
     """
     #   get the measured dataframe
-    df_measured = pd.read_csv(csv_measured)
+    
+    df_measured= pd.read_csv(csv_measured)
     #   fix samll stuff in the measured dataframe so things match
     df_measured = replace_data_df(df_=df_measured, column='hardw_datatype_net_prun', list_tuples_data_to_replace=[("RN50", "ResNet50"),("MNv1", "MobileNetv1"),('GNv1','GoogLeNetv1'),('100.0','100')])
     df_measured = replace_data_df(df_=df_measured, column='NN_Topology', list_tuples_data_to_replace=[("RN50", "ResNet50"),("MNv1", "MobileNetv1"),('GNv1','GoogLeNetv1')])
@@ -727,7 +728,8 @@ def get_overlapped_pareto(machine_learning_task: str, title:str):
 
     # 8. Identify Pairs and create a special column for them 
     overlapped_pareto = identify_pairs_nonpairs(df=overlapped_pareto, column='hardw_datatype_net_prun')
-        
+    
+    overlapped_pareto= overlapped_pareto.sort_values(by='pairs')
     save_not_matched_data(overlapped_pareto, machine_learning_task)
     
     # 9. Delete all with no match
@@ -927,12 +929,9 @@ def get_percentage_colum(df: pd.DataFrame, col_elements: str, newcol: str ) -> p
     percentage= []
     for par in pairs:
         df_pair = df_.loc[df_[col_elements] == par]
-        print(df_pair)
         theoret = df_pair.loc[df_pair.type == 'predicted','fps-comp']
         measured = df_pair.loc[df_pair.type == 'measured','fps-comp']
-        print(measured)
         percentage.append(str(round((measured.values[0]/theoret.values[0])*100,1)) + '%')
-
     dict_= {key:value for key,value in zip(pairs,percentage)}
     df_['percentage'] = df_.apply(lambda row: dict_[row[col_elements]]  if row[col_elements] in dict_ and row.type=='measured' else '', axis=1)
     return df_
@@ -1080,7 +1079,7 @@ def faceted_bar_chart(df: pd.DataFrame, xcol: str, ycol:str, colorcol: str, text
     )
     return alt.layer(bars, text, data=df).facet(
         column=alt.Column(columncol+':N', header=alt.Header(labelAngle=-85, labelAlign='right'), title=title)
-    )
+    ).interactive()
 
 #----------------------------------------------------
 
@@ -1118,15 +1117,13 @@ def efficiency_plot(machine_learning_task: str, title: str) -> alt.vegalite.v4.a
     
     df_measured.rename({'fps-comp': 'measured'}, axis=1, inplace=True)
     
-    
-  
     # 6. Merge Measured + Theoretical = Overlapped Pareto df
     overlapped_pareto = pd.concat([df_theo_fps_top1, df_measured])
     
-    overlapped_pareto['Theoret. Peak Compute'] = overlapped_pareto.apply(lambda row: float(row.hw_peak_perf)*1000/float(row.nn_total_operations), axis=1)
-    df_measured.rename({'hw_peak_perf': 'Theoret. Peak Compute'}, axis=1, inplace=True)
+    overlapped_pareto['Theoret. Peak Compute'] = overlapped_pareto.apply(lambda row: float(row.hw_peak_perf)*1000 / float(row.nn_total_operations),  axis=1)
+   
     overlapped_pareto = pd.melt(overlapped_pareto, id_vars=['hardw_datatype_net_prun','NN_Topology','hardw'], value_vars=['predicted','measured','Theoret. Peak Compute'],var_name='type', value_name='fps-comp' )
-    overlapped_pareto= overlapped_pareto.sort_values(by='hardw_datatype_net_prun')
+
     overlapped_pareto = overlapped_pareto.dropna()
     
     # 7. Small changes like: apply lowercase, organizing alphabetically by column
@@ -1137,54 +1134,35 @@ def efficiency_plot(machine_learning_task: str, title: str) -> alt.vegalite.v4.a
     overlapped_pareto = identify_pairs_nonpairs(df=overlapped_pareto, column='hardw_datatype_net_prun')
 
     # 9. Remove the ones with no match
-    #overlapped_pareto = overlapped_pareto.loc[(overlapped_pareto.color!='measured_no_match') & (overlapped_pareto.color!='predicted_no_match')]
+    overlapped_pareto = overlapped_pareto.loc[(overlapped_pareto.color!='measured_no_match') & (overlapped_pareto.color!='predicted_no_match')]
     
-    
-    #create a percentage column
-    overlapped_pareto = get_percentage_colum(df=overlapped_pareto, col_elements='hardw_datatype_net_prun', newcol='percentage')
-   
-    #overlapped_pareto.rename({'hw_peak_perf': 'Theoret. Peak Compute'}, axis=1, inplace=True)
-  
-   
-    
-    return overlapped_pareto
-
-    
-    #merge with peak compute df which has the data for te 3rd bar 
-
-    overlapped_pareto= overlapped_pareto.fillna('')
-    overlapped_pareto['hardw'] = overlapped_pareto['hardw_datatype_net_prun'].str.split('_').str[0]
-
-    overlapped_pareto =overlapped_pareto.sort_values(by='hardw_datatype_net_prun')
-    
-    #count how many times each 'hardw_datatype_net_prun' combination is repeated
-    df_tmp =overlapped_pareto['hardw_datatype_net_prun'].value_counts().to_frame().rename(columns={'hardw_datatype_net_prun':'count'})
-   
-    #get the ones that are only repeated once
+     # 10. Count how many times each 'hardw_datatype_net_prun' combination is repeated
+    df_tmp =overlapped_pareto['hardw_datatype_net_prun'].value_counts().to_frame().rename(columns={'hardw_datatype_net_prun':'count'})  
+    #get the ones that are only repeated less than 3 times
     list_to_remove =df_tmp.loc[df_tmp['count'] < 3, :].index
     #remove them 
-
-    #overlapped_pareto = overlapped_pareto[~overlapped_pareto.hardw_datatype_net_prun.isin(list_to_remove)]
+    overlapped_pareto = overlapped_pareto[~overlapped_pareto.hardw_datatype_net_prun.isin(list_to_remove)]
+       
+    #return overlapped_pareto
+    #create a percentage column
+    overlapped_pareto = get_percentage_colum(df=overlapped_pareto, col_elements='hardw_datatype_net_prun', newcol='percentage')   
+    
     
     #split in case there are too many rows, because the faceted bar chart will be too full
     if overlapped_pareto.hardw_datatype_net_prun.unique().size < 8:
         return faceted_bar_chart(df=overlapped_pareto , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) 
     
-    #print(overlapped_pareto)
-    usb_devices_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.contains('edge|ncs|a53')]
-    fpga_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.contains('zcu|ultra')]
-    gpu_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.contains('tx2')]
+    usb_devices_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.lower().str.contains('dge|ncs|a53')]
+    fpga_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.lower().str.contains('zcu|ultra')]
+    gpu_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.lower().str.contains('tx2')]
 
-    print(usb_devices_df)
     # Plot it - Faceted Bar chart
-    #return faceted_bar_chart(df=usb_devices_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) | faceted_bar_chart(df=fpga_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) | faceted_bar_chart(df=gpu_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title) 
     a=faceted_bar_chart(df=usb_devices_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) 
     b=faceted_bar_chart(df=fpga_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) 
     c=faceted_bar_chart(df=gpu_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title) 
     
-    #return a.display()
-    #return (a.display() or b.display() or c.display())
-    return  overlapped_pareto
+    return (a.display() or b.display() or c.display())
+    #return  overlapped_pareto
    
     #------------------------------------------------------------------
     

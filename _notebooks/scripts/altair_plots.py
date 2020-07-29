@@ -68,9 +68,9 @@ def process_csv_for_heatmaps_plot(csv_file: str, machine_learning_task: str)->pd
     df = pd.read_csv(csv_file)
 
     df_out = pd.DataFrame()
-    columns = (df.loc[:, df.columns!='hardw']).columns #select all columns except first
+    columns = (df.loc[:, df.columns!='HWType']).columns #select all columns except first
     for column in columns:
-        df_=pd.melt(df, id_vars=['hardw'], value_vars=column) #melt df1 into a df1 of 2 columns
+        df_=pd.melt(df, id_vars=['HWType'], value_vars=column) #melt df1 into a df1 of 2 columns
         df_out=pd.concat([df_out,df_])
     df_out.columns= ['y','x','values'] #setting new column names
     #replace 0s for NaN values because with 0s the grid doesn't show up

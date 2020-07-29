@@ -68,9 +68,9 @@ def process_csv_for_heatmaps_plot(csv_file: str, machine_learning_task: str)->pd
     df = pd.read_csv(csv_file)
 
     df_out = pd.DataFrame()
-    columns = (df.loc[:, df.columns!='hardw']).columns #select all columns except first
+    columns = (df.loc[:, df.columns!='HWType']).columns #select all columns except first
     for column in columns:
-        df_=pd.melt(df, id_vars=['hardw'], value_vars=column) #melt df1 into a df1 of 2 columns
+        df_=pd.melt(df, id_vars=['HWType'], value_vars=column) #melt df1 into a df1 of 2 columns
         df_out=pd.concat([df_out,df_])
     df_out.columns= ['y','x','values'] #setting new column names
     #replace 0s for NaN values because with 0s the grid doesn't show up
@@ -95,7 +95,7 @@ def process_csv_for_heatmaps_plot(csv_file: str, machine_learning_task: str)->pd
 def save_not_matched_data(df, machine_learning_task):
     """Method that saves the dataframe to a file."""
     df = df.sort_values(by='pairs')
-    df.to_csv('data/no_match_2_' + machine_learning_task + '.csv')
+    df.to_csv('data/no_match_3_' + machine_learning_task + '.csv')
 
 #utils functions------------------------------------
 
@@ -150,7 +150,7 @@ def process_theo_fps(df_top1_theo:pd.DataFrame(), csv_file:str) -> pd.DataFrame(
     """
     
     df_fps_theo = process_csv_for_heatmaps_plot(csv_file)
-    df_fps_theo.columns=['hardw','net_prun_datatype','fps']
+    df_fps_theo.columns=['HWType','net_prun_datatype','fps']
     
     #    remove rows that have 'nan' in the 'values' column
     df_fps_theo = df_fps_theo[df_fps_theo['fps'].notna()]
@@ -161,7 +161,7 @@ def process_theo_fps(df_top1_theo:pd.DataFrame(), csv_file:str) -> pd.DataFrame(
     
     #  change column order
     #order columns
-    df_fps_top1_theo = df_fps_top1_theo[['net_prun_datatype', 'hardw', 'top1', 'fps']]
+    df_fps_top1_theo = df_fps_top1_theo[['net_prun_datatype', 'HWType', 'top1', 'fps']]
     #  change column names
     df_fps_top1_theo.columns = ['net_prun_datatype', 'hardw_datatype', 'top1', 'fps-comp']
     
@@ -292,7 +292,7 @@ def get_point_chart_enhanced(df: pd.DataFrame, color_groupcol: str,  shape_group
         baseline='middle',
         dx=7
     ).encode(
-        text='hardw'
+        text='HWType'
     )
     return (points + text).interactive()
 #----------------------------------------------------
@@ -441,8 +441,13 @@ def create_delete_columns_theoretical(df_theo: pd.DataFrame()) -> pd.DataFrame()
     #   1. Create 'NN_Topology', 'type', 'hardware' and 'hardw_datatype_net_prun'
     df_theo['NN_Topology'] = df_theo['net_prun_datatype'].str.split('_').str[0]
     df_theo['type'] = 'predicted'
-    df_theo['hardw'] = df_theo['hardw_datatype'].str.split('_').str[0]
-    df_theo['hardw_datatype_net_prun'] = df_theo['hardw_datatype']+'_'+df_theo['net_prun_datatype'].str.split('_').str[0]+'_'+ df_theo['net_prun_datatype'].str.split('_').str[1]
+    df_theo['HWType'] = df_theo['hardw_datatype'].str.split('_').str[0]
+    #the following operation has in consideration this df, note the mismatch in the A53, which is okay
+    # top1    net_prun_datatype    hardw_datatype              fps-comp
+    # 96.85    MLP_12.5_INT2       ZCU104-FINN_INT2         229,709.0352000
+    # 96.85    MLP_12.5_INT2       ZCU104-BISMO_INT2        229,709.0352000
+    # 96.85    MLP_12.5_INT2       U96-Quadcore-A53_INT8    50,966.6921900
+    df_theo['hardw_datatype_net_prun'] = df_theo['hardw_datatype'].str.split('_').str[0] +'_'+ df_theo['net_prun_datatype'].str.split('_').str[2]+'_'+ df_theo['net_prun_datatype'].str.split('_').str[0]+'_'+ df_theo['net_prun_datatype'].str.split('_').str[1]
         
     #   delet unnecessary columns
     df_theo = df_theo.drop(columns = ['net_prun_datatype','hardw_datatype'])
@@ -511,15 +516,15 @@ def process_measured_data(csv_filepath:str)->pd.DataFrame():
     df = pd.read_csv(csv_filepath)
     # ResNet50 v15 does not have accuracy measurements yet, so it needs to be taken out
     df = df[df.NN_Topology != 'ResNet-50v15']
-    # create hardw column to include: hardware + op_mode
-    df['hardw'] = df['HWType'] + ('-' + df['Op mode']).fillna('')
+    # create hardw column to include: hardware + op_mode - already done in mnist ipynb
+    #df['hardw'] = df['HWType'] + ('-' + df['Op mode']).fillna('')
     #create hardw_datatype_net_prun col with all those columns merged
-    df['hardw_datatype_net_prun'] = df.apply(lambda r: "_".join([r.hardw, r.Datatype, r.NN_Topology, str(r.PruningFactor)]), axis=1)
+    df['hardw_datatype_net_prun'] = df.apply(lambda r: "_".join([r.HWType, r.Datatype, r.NN_Topology, str(r.PruningFactor)]), axis=1)
     
     #create a subset of the dataframe with only those columns
-    df = df[['hardw_datatype_net_prun','hardw', 'NN_Topology' ,'fps-comp', 'top1','batch/thread/stream','hw_peak_perf', 'nn_total_operations']]
+    df = df[['hardw_datatype_net_prun','HWType', 'NN_Topology' ,'fps-comp', 'top1','batch/thread/stream','hw_peak_perf', 'nn_total_operations']]
     #Only get the points corresponding to the biggest batch
-    df = df.groupby('hardw_datatype_net_prun')[['batch/thread/stream','hardw', 'NN_Topology','fps-comp', 'top1', 'hw_peak_perf', 'nn_total_operations']].max()
+    df = df.groupby('hardw_datatype_net_prun')[['batch/thread/stream','HWType', 'NN_Topology','fps-comp', 'top1', 'hw_peak_perf', 'nn_total_operations']].max()
     
     #add and delete columns 
     df['type'] = 'measured'
@@ -601,14 +606,16 @@ def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: st
     range_= spot_no_match(list_= domain)
     
     #Select data from the dataframe to bind to each checkbox
-    measu_no_match_data= df[df[groupcol].str.contains("measured")]
-    predic_no_match_data= df[df[groupcol].str.contains("predicted")]
     FINN_data= df.loc[df[groupcol].str.contains("finn")]
     BISMO_data= df.loc[df[groupcol].str.contains("bismo")]
     A53_data= df.loc[df[groupcol].str.contains("a53")]
     TX2_data= df.loc[df[groupcol].str.contains("tx2")]
     NCS_data= df.loc[df[groupcol].str.contains("ncs")]
     TPU_data= df.loc[df[groupcol].str.contains("tpu")]
+    DPU_data= df.loc[df[groupcol].str.contains("dpu")]
+   
+    if FINN_data.shape[0] + BISMO_data.shape[0] + A53_data.shape[0] + TX2_data.shape[0] + NCS_data.shape[0] + TPU_data.shape[0] + DPU_data.shape[0] != len(df.index):
+        print('There are datapoints missing in the plot')
     
     #The type of binding will be a checkbox
     filter_checkbox = alt.binding_checkbox()
@@ -622,32 +629,31 @@ def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: st
     TX2_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="TX2")
     NCS_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="NCS")
     TPU_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="TPU")
+    DPU_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="DPU")
     
     legend_title_groupcol ='Hardw_Datatype_Net_Prun'
     #Color Conditions for each plot
-    #measu_no_match_cond= alt.condition(measu_no_match_select,  alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_),  legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
-    #predicted_no_match_cond = alt.condition(predicted_no_match_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)), alt.value(None))
     FINN_cond    = alt.condition(FINN_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
     BISMO_cond   = alt.condition(BISMO_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
     A53_cond     = alt.condition(A53_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
     TX2_cond     = alt.condition(TX2_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
     NCS_cond     = alt.condition(NCS_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
-    TPU_cond     = alt.condition(TPU_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value("white"))
+    TPU_cond     = alt.condition(TPU_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
+    DPU_cond     = alt.condition(DPU_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
     
     #Create the charts
-    #measu_no_match_chart=get_point_chart_selection(df= measu_no_match_data, condition=measu_no_match_cond, selection=measu_no_match_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
-    #predic_no_match_chart=get_point_chart_selection(df= predic_no_match_data,condition=predicted_no_match_cond, selection=predicted_no_match_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
     FINN_chart=get_point_chart_selection(df= FINN_data, condition=FINN_cond, selection=FINN_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
-    BISMO_chart=get_point_chart_selection(df= BISMO_data,condition=BISMO_cond, selection=BISMO_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
-    A53_chart=get_point_chart_selection(df= A53_data,condition=A53_cond, selection=A53_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
-    TX2_chart=get_point_chart_selection(df= TX2_data,condition=TX2_cond, selection=TX2_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
-    NCS_chart=get_point_chart_selection(df= NCS_data,condition=NCS_cond, selection=NCS_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
-    TPU_chart=get_point_chart_selection(df= TPU_data,condition=TPU_cond, selection=TPU_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    BISMO_chart=get_point_chart_selection(df= BISMO_data, condition=BISMO_cond, selection=BISMO_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    A53_chart=get_point_chart_selection(df= A53_data, condition=A53_cond, selection=A53_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    TX2_chart=get_point_chart_selection(df= TX2_data, condition=TX2_cond, selection=TX2_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    NCS_chart=get_point_chart_selection(df= NCS_data, condition=NCS_cond, selection=NCS_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    TPU_chart=get_point_chart_selection(df= TPU_data, condition=TPU_cond, selection=TPU_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
+    DPU_chart=get_point_chart_selection(df= DPU_data, condition=DPU_cond, selection=DPU_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )
     warnings.filterwarnings("ignore")
     #sum the pareto lines
     chart = df_charts.charts.sum(numeric_only = False)
     #layer the pareto lines with the points chart with checkboxes
-    charts = alt.layer(FINN_chart + BISMO_chart + A53_chart+ TX2_chart+ NCS_chart +TPU_chart + chart
+    charts = alt.layer(FINN_chart + BISMO_chart + A53_chart+ TX2_chart+ NCS_chart +TPU_chart + DPU_chart +chart
     ).resolve_scale(color='independent',shape='independent').properties(title=title)
     return charts
 
@@ -684,7 +690,7 @@ def get_df_theo_fps_top1(machine_learning_task: str) -> pd.DataFrame():
     df_theo_fps_top1 = pd.merge(df_top1_theo, df_fps_theo, on='net_prun_datatype', how='outer')
     #take nans out- the ones that don't have correspondence- probably because they are from different machine learning task
     df_theo_fps_top1 = df_theo_fps_top1.dropna()
-    
+
     return df_theo_fps_top1
       
 def get_overlapped_pareto(machine_learning_task: str, title:str):
@@ -707,7 +713,7 @@ def get_overlapped_pareto(machine_learning_task: str, title:str):
     """
     # 1.2.3. Get the theoretical df with accuracies and fps-comp
     df_theo_fps_top1 = get_df_theo_fps_top1(machine_learning_task)
-      
+    
     # 4. Get Measured df for the desired Classification Task (experimental_data_m_l_task)
     if re.search(machine_learning_task, 'imagenet', re.IGNORECASE):      
         df_measured = process_measured_data(csv_filepath= 'data/cleaned_csv/experimental_data_imagenet.csv')
@@ -715,10 +721,10 @@ def get_overlapped_pareto(machine_learning_task: str, title:str):
         df_measured = process_measured_data(csv_filepath= 'data/cleaned_csv/experimental_data_mnist.csv')
     elif re.search(machine_learning_task, 'cifar-10', re.IGNORECASE):
         df_measured = process_measured_data(csv_filepath= 'data/cleaned_csv/experimental_data_cifar.csv')
-       
-    # 5. Improve theoretical to match with Measured df after this
+
+    # 5. Improve theoretical to match with Measured df after this,also creates columns based on another ones,deals w/ datatypes and pruning
     df_theo_fps_top1 = create_delete_columns_theoretical(df_theo= df_theo_fps_top1)
- 
+
     # 6. Merge Measured + Theoretical = Overlapped Pareto df
     overlapped_pareto = pd.concat([df_theo_fps_top1, df_measured])
    
@@ -778,7 +784,7 @@ def get_point_chart(df: pd.DataFrame, groupcol: str, xcol: str, ycol:str, title:
         baseline='middle',
         dx=7
     ).encode(
-        text='hardw'
+        text='HWType'
     )
     return (points+text).interactive()
 #----------------------------------------------------
@@ -847,7 +853,7 @@ def get_point_chart_selection(df: pd.DataFrame, color_groupcol: str,
         baseline='middle',
         dx=7
     ).encode(
-        text='hardw'
+        text='HWType'
     )
     return (points + text).interactive().add_selection(selection)
 
@@ -1024,7 +1030,6 @@ def get_peak_perf_gops_df(df_: pd.DataFrame ) ->pd.DataFrame:
     #create a new column with the GOPs values
     efficiency_df['gops'] = efficiency_df.apply(lambda row: fill_values(row.hw_datatype_prun_net, gops_dict), axis=1)
     #now that all is done lets create the theoretical performance column which will be called 'fps-comp' and calculate the numbers
-    print(efficiency_df)
     try:
         efficiency_df['fps-comp'] = efficiency_df.apply(lambda row: float(row.peak_compute)*1000/float(row.gops), axis=1)
     except ZeroDivisionError as err:
@@ -1122,7 +1127,7 @@ def efficiency_plot(machine_learning_task: str, title: str) -> alt.vegalite.v4.a
     
     overlapped_pareto['Theoret. Peak Compute'] = overlapped_pareto.apply(lambda row: float(row.hw_peak_perf)*1000 / float(row.nn_total_operations),  axis=1)
    
-    overlapped_pareto = pd.melt(overlapped_pareto, id_vars=['hardw_datatype_net_prun','NN_Topology','hardw'], value_vars=['predicted','measured','Theoret. Peak Compute'],var_name='type', value_name='fps-comp' )
+    overlapped_pareto = pd.melt(overlapped_pareto, id_vars=['hardw_datatype_net_prun','NN_Topology','HWType'], value_vars=['predicted','measured','Theoret. Peak Compute'],var_name='type', value_name='fps-comp' )
 
     overlapped_pareto = overlapped_pareto.dropna()
     
@@ -1152,9 +1157,9 @@ def efficiency_plot(machine_learning_task: str, title: str) -> alt.vegalite.v4.a
     if overlapped_pareto.hardw_datatype_net_prun.unique().size < 8:
         return faceted_bar_chart(df=overlapped_pareto , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) 
     
-    usb_devices_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.lower().str.contains('dge|ncs|a53')]
-    fpga_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.lower().str.contains('zcu|ultra')]
-    gpu_df= overlapped_pareto.loc[overlapped_pareto.hardw.str.lower().str.contains('tx2')]
+    usb_devices_df= overlapped_pareto.loc[overlapped_pareto.HWType.str.lower().str.contains('dge|ncs|a53')]
+    fpga_df= overlapped_pareto.loc[overlapped_pareto.HWType.str.lower().str.contains('zcu|ultra')]
+    gpu_df= overlapped_pareto.loc[overlapped_pareto.HWType.str.lower().str.contains('tx2')]
 
     # Plot it - Faceted Bar chart
     a=faceted_bar_chart(df=usb_devices_df , xcol='type', ycol='fps-comp', colorcol='type', textcol='percentage', columncol='hardw_datatype_net_prun', title=title ) 

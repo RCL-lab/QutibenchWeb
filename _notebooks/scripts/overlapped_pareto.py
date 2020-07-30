@@ -654,7 +654,7 @@ def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: st
     chart = df_charts.charts.sum(numeric_only = False)
     #layer the pareto lines with the points chart with checkboxes
     charts = alt.layer(FINN_chart + BISMO_chart + A53_chart+ TX2_chart+ NCS_chart +TPU_chart + DPU_chart +chart
-    ).resolve_scale(color='independent',shape='independent').properties(title=title)
+    ).resolve_scale(color='independent',shape='independent').properties(title=title).configure_legend(symbolOpacity=0.1)
     return charts
 
 
@@ -855,7 +855,8 @@ def get_point_chart_selection(df: pd.DataFrame, color_groupcol: str,
     ).encode(
         text='HWType'
     )
-    return (points + text).interactive().add_selection(selection)
+    layered_chart = alt.layer(points, text).interactive().add_selection(selection)
+    return layered_chart
 
 #---------------------------------------------------------------
 

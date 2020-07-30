@@ -1,0 +1,80 @@
+	Data-level Documentation for quantitive data
+
+Data type: text 
+file type:ASCII text, csv 
+format: .txt; .csv
+size:0.148 MB 
+data processing scripts: none
+
+Information about the column headers in files:
+-Variable: NN_Topology
+-Variable label: Neural network topology
+
+-Variable: HWType
+-Variable label: Hardware platform name  
+
+-Variable: Datatype
+-Variable label: Datatype 
+
+-Variable: Op mode
+-Variable label: Operation mode of the Hardware Platform 
+
+-Variable: batch/thread/stream	
+-Variable label:  Batch size fed to the neural network 
+
+-Variable: lat-sys
+-Variable label: System latency
+
+-Variable: lat-comp
+-Variable label:  Computing latency
+
+-Variable: fps-system 
+-Variable label:  Frames per second of the entire system
+
+-Variable: fps-comp
+-Variable label: Frames per second of computing
+
+-Variable: tp-system
+-Variable label: System throughput
+
+-Variable: tp-comp
+-Variable label: Computing throughput
+
+-Variable: top1
+-Variable label: Top1 accuracy [%]
+
+-Variable: top5 [%]
+-Variable label: Top5 accuracy [%]
+
+-Variable: Base_Pwr_W
+-Variable label: Hardware base power consumtpion [Watts]
+
+-Variable: Idle_Pwr_W
+-Variable label: Hardware idle power consumtpion [Watts]
+
+-Variable: Full_Pwr_W
+-Variable label: Hardware full power consumtpion [Watts]
+
+-Variable: GOPS
+-Variable label: Giga operations per second
+
+-Variable: PruningFactor
+-Variable label: Pruning factor
+
+-Variable: level
+-Variable label: Abstraction levels defined for the QuTiBench benchmarking methodology.
+-Variable values: l0-Theoretical; l1-Compute only; l2-Compute and data movements; l3- Performance and accuracy
+
+-Variable: hw_datatype_prun
+-Variable label: Concatenation between hardware platform, datatype and pruning factor
+
+-Variable: norm-lat-comp
+-Variable label: Normalized computing latency
+
+-Variable: datatype_model
+-Variable label: Concatenation between datatype and neural network model
+
+-Variable: tag
+-Variable label: concatenation between hardware platform, datatype, neural network and pruning factor.
+
+

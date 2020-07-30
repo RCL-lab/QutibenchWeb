@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<metadata
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<dc:title>Dataset about Optimizing CNNs on Heterogeneous  Accelerators using a Novel Benchmarking Approach. </dc:title>
+<dc:creator>Michaela Blott</dc:creator>
+<dc:subject>CNNs and hardware platforms</dc:subject>
+<dc:description>There are numerous machine learning tasks, and each of these can be trained with different datasets and different neural network topologies, and depending on these factors (as well as numerical representations, learning techniques and hyperparameter selection), the end solution can produce different results with the key figure of merit being accuracy. Regarding the implementations, there are numerous choices with different hardware platforms each of which can run different implementation alternatives and different deployment parameters including batch sizes and power modes. All of the implementation alternatives will deliver different performance characteristics. This dataset collects data on the numerous experiments combining several hardware platforms with applications. Data on performance, accuracy and power consumption were extracted.</dc:description>
+<dc:publisher>Xilinx</dc:publisher>
+<dc:contributor>Michala Blott, Miriam Leeser, Linda Doyle, Johannes Kath, Lisa Halder, Zachary Neveu, Alina Vasilciuc</dc:contributor>
+<dc:date>2018</dc:date>
+<dc:type>Text</dc:type>
+<dc:format>csv,ASCII Text</dc:format>
+<dc:identifier>https://rcl-lab.github.io/QutibenchWeb/</dc:identifier>
+<dc:source>https://dl.acm.org/doi/10.1145/3358700 </dc:source>
+<dc:language>Eng</dc:language>
+<dc:relation>https://dl.acm.org/doi/10.1145/3358700</dc:relation>
+<dc:rights>Xilinx</dc:rights>
+
+</metadata>

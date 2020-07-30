@@ -1,0 +1,123 @@
+
+Project-Level Documentation
+1.For what purpose was the data created?
+	Numerous algorithmic optimization techniques have been proposed to alleviate the computational complexity of convolutional neural networks. Given the broad selection of AI accelerators, it is not obvious which approach benefits from which optimization most. The design space includes a large number of deployment settings (batch sizes, power modes, etc.) and unclear measurement methods. This research provides clarity into this design space, leveraging a novel benchmarking approach. We provide a theoretical evaluation of different CNNs and hardware platforms, focusing on understanding the impact of pruning and quantization as primary optimization techniques. We benchmark across a spectrum of FPGA, GPU, TPU and VLIW processors for systematically pruned and quantized neural networks (ResNet50, GoogLeNetv1, MobileNetv1, a VGG derivative, a multilayer perceptron) over many deployment options, considering power, latency, and throughput at a specific accuracy. This dataset holds data from all measuremets done.
+
+2.The title of the project;
+	Dataset about Optimizing CNNs on Heterogeneous Accelerators using a Novel Benchmarking Approach. 
+
+3.Author(s)/creator(s) of the dataset;
+	Michaela Blott
+	Miriam Leeser
+	Johannes Kath
+	Lisa Halder
+	Linda Doyle
+	Alina Vasilciuc
+
+4.Other co-workers and their roles;
+	Zachary Neveu: Developer of the web portal.
+	Alina Vasilciuc: Developer of the web portal.
+
+5.The institution of the author(s)/creator(s);
+	Xilinx
+	Northeastern University 
+	Trinity College Dublin
+
+6.Funders;
+	Non aplicable
+
+7.Grant numbers;
+	Non aplicable
+
+8.Publications from the data.
+	https://dl.acm.org/doi/10.1145/3358700
+	https://dl.acm.org/doi/10.1145/3358700
+
+9.What does the dataset contain? Describe what is in a dataset: Kind of data (interviews, images, questionnaires, etc.);
+	Dataset consists of numerical measurements made to several hadware accelerators running several types of neural networks
+
+10.File size (in bytes), file format of the data files and relationships between files;
+	0.148MB; csv format; 3 files, 1 file for CIFAR-10 Classification, another file for MNIST and another file for ImageNet.
+
+11.Description of data file(s):version and edition: 
+	Version 1; edition 1; 
+
+12.structure of the database:
+	No database, just plain ASCII text/csv files.
+
+13.Format: 
+	ASCII text; csv.
+
+14.Describe how the data was acquired:The methodology and technique used in collecting and creating the data;
+	Data was acquired through experimental measurements and annotation.
+
+15.Description of all the sources the data originate from (What is the subject of study? E.g. periodicals, datasets created by others?) together with an explanation of how and why it got to the present place (provenance).
+	The dataset was entirely created by us. Subject of the study were figures of merit taken from the Hardware platforms.
+
+16.The methods/modes of data collection (for example):The instruments, hardware and software used to collect the data;
+	Instruments/Hardware used collecting data:Google Coral USB Accelerator EdgeTPU, TX2, ZCU102-DPU, Ultra96-DPU, NCS,ZCU104-DPU, ZCU104-FINN, ZCU104-Bismo, U96-Quadcore A53, USB COlor Display Tester: UM34C,
+
+17.Software used to collect data: 
+	Developed by us.
+
+18.Digitisation or transcription methods;
+	None
+
+19.Target population, units of observation.
+	FPGAs, CPUs and GPUs.
+
+20.Who collected the data and when? Describe the Data collector(s);
+	Michaela Blott, Johannes Kath, Lisa Halder, Alina Vasilciuc, Giulio Gambardella
+
+21.Date of data collection;
+	2018-Present
+
+22.Geographical coverage of the data (e.g. Nation).
+	Non-aplicable because 	no field sampling was involved.
+
+23.How was the data processed?	Describe your workflow and specific tools, instruments, procedures, hardware/software or protocols you might have used to process the data, like: Data editing,  Coding and classification of data.
+	Tools and instruments:EdgeTPU, TX2, ZCU102-DPU, Ultra96-DPU, NCS, ZCU104-DPU, ZCU104-FINN, ZCU104-Bismo, U96-Quadcore A53; USB COlor Testes:UM34C;
+
+24.Was any data cleaning performed: 
+	No Data cleaning performed
+
+25.What possible manipulations were done to the data? Describe if and how the data were manipulated or modified: Modifications made to data over time since their original creation and identification of different versions of datasets;
+	No modifications were made
+
+26.Other possible changes made to the data: Anonymisation;
+	No other changes or Anonymisation was made.
+
+27.For time series or longitudinal surveys: changes made to methodology, variable content, question text, variable labelling, measurements or sampling.
+	Not applicable
+
+28.What were the quality assurance procedures? Describe how the quality of the data has been assured:
+	Checking for equipment and transcription errors; Quality control of materials; Data integrity checks; Data capture resolution and repetitions; 
+
+29.How can the data be accessed? Describe the use and access conditions of the data:
+	No conditions needed to access data. Data is all open source.
+
+30.Where the data can be found (which data repository);
+	https://github.com/RCL-lab/QutibenchWeb/blob/master/_notebooks/data/cleaned_csv/experimental_data_cifar.csv
+	https://github.com/RCL-lab/QutibenchWeb/blob/master/_notebooks/data/cleaned_csv/experimental_data_imagenet.csv
+	https://github.com/RCL-lab/QutibenchWeb/blob/master/_notebooks/data/cleaned_csv/experimental_data_mnist.csv
+
+31.Permanent identifiers; 
+	https://rcl-lab.github.io/QutibenchWeb/
+
+32.Access conditions such as embargo;
+	None
+
+33.Parts of the data that are restricted or protected;
+	None
+
+34.Licences;
+	Apache License 2.0
+
+35.Data confidentiality;
+	None
+
+36.Copyright and ownership issues;
+	None
+
+37.Citation information:
+	https://dl.acm.org/doi/10.1145/3358700

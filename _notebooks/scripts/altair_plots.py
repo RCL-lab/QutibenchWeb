@@ -333,6 +333,8 @@ def rooflines(neural_network: str)->alt.vegalite.v4.api.Chart:
     """
     This function creates an Altair line chart with checkboxes. Creates a lot of them and then sums them up.
     
+    Note: Checkbox with default does not work after first click. Please keep track of when this issue is solved with this link: https://github.com/vega/vega-lite/issues/4870
+    
     Parameters
     ----------
         data: pd.DataFrame

@@ -633,13 +633,13 @@ def plot_it_now(df: pd.DataFrame, xcol: str, ycol: str, groupcol: str, title: st
     
     legend_title_groupcol ='Hardw_Datatype_Net_Prun'
     #Color Conditions for each plot
-    FINN_cond    = alt.condition(FINN_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
-    BISMO_cond   = alt.condition(BISMO_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
-    A53_cond     = alt.condition(A53_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
-    TX2_cond     = alt.condition(TX2_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
-    NCS_cond     = alt.condition(NCS_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
-    TPU_cond     = alt.condition(TPU_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
-    DPU_cond     = alt.condition(DPU_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol)),alt.value(None))
+    FINN_cond    = alt.condition(FINN_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol, symbolLimit=0)),alt.value(None))
+    BISMO_cond   = alt.condition(BISMO_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol, symbolLimit=0)),alt.value(None))
+    A53_cond     = alt.condition(A53_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol, symbolLimit=0)),alt.value(None))
+    TX2_cond     = alt.condition(TX2_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol, symbolLimit=0)),alt.value(None))
+    NCS_cond     = alt.condition(NCS_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol, symbolLimit=0)),alt.value(None))
+    TPU_cond     = alt.condition(TPU_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol, symbolLimit=0)),alt.value(None))
+    DPU_cond     = alt.condition(DPU_select, alt.Color(groupcol+':N', scale=alt.Scale(domain=domain, range=range_), legend=alt.Legend(columns=2, title = legend_title_groupcol, symbolLimit=0)),alt.value(None))
     
     #Create the charts
     FINN_chart=get_point_chart_selection(df= FINN_data, condition=FINN_cond, selection=FINN_select, color_groupcol= 'color', shape_groupcol= 'type',shapes=['cross', 'circle'], xcol= xcol, ycol= ycol, title=title, legend_title_groupcol="Hardw_Datatype_Net_Prun" )

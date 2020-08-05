@@ -835,7 +835,7 @@ def get_point_chart_selection(df: pd.DataFrame, color_groupcol: str,
     """
     domain = df[color_groupcol].unique().tolist()
     range_= spot_no_match(list_= domain)
-    points= alt.Chart(df).mark_point(size=100, opacity=1, filled =True).properties(
+    points= alt.Chart(df).mark_point(size=100, opacity=1, filled =True, color='black').properties(
             width= W,
             height= 1.3*H,
             title=title

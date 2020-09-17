@@ -43,5 +43,11 @@ Association for Computing Machinery, New York, NY, USA, 317.
 https://dl.acm.org/doi/10.1145/3373087.3375348
 Poster available here: https://github.com/michaelablott/QuTiBench/blob/master/Publications/FPGA2020_EvalCNNs_Poster.pdf
 
+
+Michaela Blott , Nicholas J. Fraser , Giulio Gambardella , Lisa Halder, Johannes Kath, Zachary Neveu, Yaman Umuroglu , Member, IEEE, Alina Vasilciuc, Miriam Leeser , Senior Member, IEEE, and Linda Doyle, "Evaluation of Optimized CNNs on Heterogeneous Accelerators using a Novel Benchmarking Approach" in IEEE Transactions on Computers, vol. , no. 01, pp. 1-1, 5555.
+https://doi.ieeecomputersociety.org/10.1109/TC.2020.3022318
+
+
+
 ## Webmaster Info
 All info on how to customize the site is located on the [fastpages github](https://github.com/fastai/fastpages). The platform is fairly new, so as changes are added to the faspages repo it's not a bad idea to update this website to reflect that. Updating instructions are available also through the fastpages github.

@@ -45,7 +45,7 @@ Poster available here: https://github.com/michaelablott/QuTiBench/blob/master/Pu
 
 
 Michaela Blott , Nicholas J. Fraser , Giulio Gambardella , Lisa Halder, Johannes Kath, Zachary Neveu, Yaman Umuroglu , Member, IEEE, Alina Vasilciuc, Miriam Leeser , Senior Member, IEEE, and Linda Doyle, "Evaluation of Optimized CNNs on Heterogeneous Accelerators using a Novel Benchmarking Approach" in IEEE Transactions on Computers, vol. , no. 01, pp. 1-1, 5555.
-https://doi.ieeecomputersociety.org/10.1109/TC.2020.3022318
+[https://doi.ieeecomputersociety.org/10.1109/TC.2020.3022318](https://doi.ieeecomputersociety.org/10.1109/TC.2020.3022318)
 
 
 

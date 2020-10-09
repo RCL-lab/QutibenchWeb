@@ -37,15 +37,15 @@ in implementing machine learning systems.
 See the [website](https://rcl-lab.github.io/QutibenchWeb/contributing/2020/04/09/Contributing_Measurements.html) for instructions on contributing.
 
 # Publications
+
+Michaela Blott , Nicholas J. Fraser , Giulio Gambardella , Lisa Halder, Johannes Kath, Zachary Neveu, Yaman Umuroglu , Member, IEEE, Alina Vasilciuc, Miriam Leeser , Senior Member, IEEE, and Linda Doyle, "Evaluation of Optimized CNNs on Heterogeneous Accelerators using a Novel Benchmarking Approach" in IEEE Transactions on Computers, to appear.  
+[https://doi.ieeecomputersociety.org/10.1109/TC.2020.3022318](https://doi.ieeecomputersociety.org/10.1109/TC.2020.3022318)
+
 Blott, Michaela, et al. "QuTiBench: Benchmarking neural networks on heterogeneous hardware." ACM Journal on Emerging Technologies in Computing Systems (JETC) 15.4 (2019): 1-38. [https://arxiv.org/pdf/1909.05009.pdf ](https://arxiv.org/pdf/1909.05009.pdf)
 
 Michaela Blott, Johannes Kath, Lisa Halder, Yaman Umuroglu, Nicholas Fraser, Giulio Gambardella, Miriam Leeser, and Linda Doyle. 2020. "Evaluation of Optimized CNNs on FPGA and non-FPGA based Accelerators using a Novel Benchmarking Approach." In The 2020 ACM/SIGDA International Symposium on Field-Programmable Gate Arrays (FPGA ’20). Association for Computing Machinery, New York, NY, USA, 317. [https://dl.acm.org/doi/10.1145/3373087.3375348 ](https://dl.acm.org/doi/10.1145/3373087.3375348).
 <br />
 Poster available [here](https://github.com/michaelablott/QuTiBench/blob/master/Publications/FPGA2020_EvalCNNs_Poster.pdf)
-
-Michaela Blott , Nicholas J. Fraser , Giulio Gambardella , Lisa Halder, Johannes Kath, Zachary Neveu, Yaman Umuroglu , Member, IEEE, Alina Vasilciuc, Miriam Leeser , Senior Member, IEEE, and Linda Doyle, "Evaluation of Optimized CNNs on Heterogeneous Accelerators using a Novel Benchmarking Approach" in IEEE Transactions on Computers, vol. , no. 01, pp. 1-1, 5555.
-[https://doi.ieeecomputersociety.org/10.1109/TC.2020.3022318](https://doi.ieeecomputersociety.org/10.1109/TC.2020.3022318)
-
 
 
 # About us

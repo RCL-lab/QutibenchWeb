@@ -352,6 +352,7 @@ def get_pareto_df(df: pd.DataFrame(), groupcol: str, xcol: str, ycol: str) -> pd
     pareto_line_df.sort_values('y', ascending=False, inplace=True)
     pareto_line_df['x'] = pareto_line_df.x.cummax()
     pareto_line_df.drop_duplicates('x', keep='first', inplace=True)
+    pareto_line_df = pareto_line_df.sort_values('x', ascending=False).drop_duplicates('y').sort_index()
     pareto_line_df['group'] = pareto_line_df.index
     return pareto_line_df
 

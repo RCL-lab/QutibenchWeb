@@ -89,7 +89,6 @@ def process_csv_for_heatmaps_plot(csv_file: str, machine_learning_task: str)->pd
     else: 
         print('The machine learning task was not recognized, please try another one.') 
         return 0
-    
     return df_out
  
 def save_not_matched_data(df, machine_learning_task):

@@ -186,7 +186,8 @@ def heatmap(csv_file: str, machine_learning_task:str, title: str)->alt.vegalite.
     csv_file: str
         File path to the file with the Theoretical predictions       
     machine_learning_task: str
-        Desired machine learning task to be plotted on the Heatmaps
+        Desired machine learning task to be plotted on the Heatmaps. Options:
+            imagenet; mnist; cifar-10; 
     title: str
         Title to give to the plot
     Returns

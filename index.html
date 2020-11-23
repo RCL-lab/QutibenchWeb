@@ -78,27 +78,23 @@ window.onload = wrap_img;
 
 <p>QuTiBench is a novel multi-tiered benchmarking methodology that helps system developers understand the benefits and limitations of the broad spectrum of novel compute architectures that emerge in the space of CNN inference. It is specifically designed to provide systematic benchmarking results capturing throughput, latency and power, on a system level as well as on an accelerator level, across a large spectrum of deployment options such as power modes, batch sizes etc. In particular, QuTibench provides the necessary support for comparing different networks with algorithmic optimizations such as quantization and pruning, which are commonplace for CNN inference in the embedded space. Furthermore, it is unique in that it leverages a theoretical analysis (using UCB’s roofline analysis) to provide performance predictions and efficiency analysis. As such, we hope it can bring the necessary insights for system designers to understand the pros and cons of the various new architectures emerging in this space. We invite the community to contribute to QuTiBench in order to be able to support the full spectrum of choices for implementing machine learning systems.</p>
 
-<p>Benchmark results can be found below separated by machine learning task. Specific benchmark results can also be found using the <code class="highlighter-rouge">Tags</code> and <code class="highlighter-rouge">Search</code> pages in the top right corner. For more information about the project, see the <code class="highlighter-rouge">About This Work</code> page.</p>
+<p>We only record level-0 and level-3 results here in the web portal. The benchmark results can be found below separated by machine learning task. Specific benchmark results can also be found using the <code class="highlighter-rouge">Tags</code> and <code class="highlighter-rouge">Search</code> pages in the top right corner. For more information about the project, see the <code class="highlighter-rouge">About This Work</code> page.</p>
 
 <p>We have adhered to the FAIR data principles by making data open and freely available, providing associated meta-data with each data point, and a trusted and persistent repository with a unique and persistent identifier. More on this topic can be found in the “FAIR and Open Data” page.</p>
 
 <p>As part of the QuTiBench effort, we have carried out a large number of experiments as well as a broad theoretical analysis. The table below holds the current statistics of the currently submitted data points, both theoretical and measured.</p>
 
-<table style="width: 49.883%;"><tbody>
+<table style="width:49.883%; margin-left:auto; margin-right:auto"><tbody>
 <tr style="height: 22px;">
 <td style="height: 22px; width: 92%;">&nbsp;Total Amount of Hardware Platforms</td>
 <td style="height: 22px; width: 10.0587%;">   9&nbsp;</td>
 </tr>
 <tr style="height: 22px;">
-<td style="height: 22px; width: 92%;">&nbsp;Total Amount of Deployment Settings</td>
-<td style="height: 22px; width: 10.0587%;">&nbsp;   5</td>
-</tr>
-<tr style="height: 22px;">
-<td style="height: 22px; width: 92%;">&nbsp;Total Amount of CNN Topologies</td>
+<td style="height: 22px; width: 92%;">&nbsp;Total Amount of CNN Topology Variants</td>
 <td style="height: 22px; width: 10.0587%;">&nbsp;   9</td>
 </tr>
 <tr style="height: 22px;">
-<td style="height: 22px; width: 92%;">&nbsp;Total Amount of Trained Topologies</td>
+<td style="height: 22px; width: 92%;">&nbsp;Total Amount of Trained CNN Models</td>
 <td style="height: 22px; width: 10.0587%;">&nbsp;  45</td>
 </tr>
 <tr style="height: 22px;">
@@ -107,8 +103,13 @@ window.onload = wrap_img;
 </tr>
 <tr style="height: 22px;">
 <td style="height: 22px; width: 92%;">Total Amount of Experiments</td>
+<td style="height: 22px; width: 10.0587%;">&nbsp;974</td>
+</tr>
+<tr style="height: 22px;">
+<td style="height: 22px; width: 92%;">Total Amount of Datapoints</td>
 <td style="height: 22px; width: 10.0587%;">&nbsp;9782</td>
-</tr></tbody></table>
+</tr>
+</tbody></table>
 
 
 
@@ -122,12 +123,12 @@ window.onload = wrap_img;
         <img class="image-preview " src="/QutibenchWeb/images/fair.png" />
       </div><div class="col-8 d-table-cell p-3">
         <h3>
-          <a class="post-link" href="/QutibenchWeb/fair_data/2020/11/19/FAIR-data.html">
+          <a class="post-link" href="/QutibenchWeb/fair_data/2020/11/22/FAIR-data.html">
             FAIR and Open Data
           </a>
         </h3>
         <p class="post-meta-description">FAIR and Open Data</p>
-          <p class="post-meta">Nov 19, 2020</p>
+          <p class="post-meta">Nov 22, 2020</p>
       </div>
   </div></li><li><div class="Box box-shadow-medium rounded-1 col-12"><div class="col-4 d-table-cell p-3 v-align-middle">
         <img class="image-preview " src="/QutibenchWeb/images/roofline.png" />

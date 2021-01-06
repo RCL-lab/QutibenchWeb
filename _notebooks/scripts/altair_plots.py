@@ -550,7 +550,15 @@ def get_pareto_df_improved(df: pd.DataFrame(), groupcol: str, xcol: str, ycol: s
     return pareto_line_df
 
 
-def pareto_graph(df: pd.DataFrame(), groupcol: str , xcol: str, ycol: str, W: int, H: int, title: str ) -> alt.vegalite.v4.api.Chart:
+def pareto_graph(df: pd.DataFrame(), 
+                 groupcol: str , 
+                 xcol: str, 
+                 x_title: str,
+                 ycol: str,
+                 y_title: str,
+                 W: int, 
+                 H: int, 
+                 title: str ) -> alt.vegalite.v4.api.Chart:
     """
     Creates a pareto graph with the inputs given.
     
@@ -578,8 +586,8 @@ def pareto_graph(df: pd.DataFrame(), groupcol: str , xcol: str, ycol: str, W: in
     df_pareto = get_pareto_df_improved(df, groupcol, xcol, ycol)
 
     df_lines = alt.Chart(df).mark_line(point=True).encode(
-        x=xcol,
-        y=alt.Y(ycol + ":Q", scale=alt.Scale(zero=False)),
+        x=alt.X(xcol, title = x_title),
+        y=alt.Y(ycol + ":Q", title = y_title, scale=alt.Scale(zero=False)),
         color=alt.Color(groupcol, legend=alt.Legend(columns=1, title = "Hardware_Quantization_Pruning")),
         #tooltip=["HWType", "Precision", "PruningFactor", "batch/thread/stream", ycol, xcol],
         tooltip=[groupcol, ycol, xcol],

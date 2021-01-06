@@ -840,8 +840,8 @@ def get_point_chart_selection(df: pd.DataFrame, color_groupcol: str,
             height= 1.3*H,
             title=title
         ).encode(
-            x= alt.X(xcol,  scale=alt.Scale(type="log")),
-            y=alt.Y(ycol + ":Q", scale=alt.Scale(zero=False)),
+            x= alt.X(xcol, title = "fps-comp [fps]",  scale=alt.Scale(type="log")),
+            y=alt.Y(ycol + ":Q", title="top1 [%]", scale=alt.Scale(zero=False)),
             color=condition,
             shape=alt.Shape(shape_groupcol, scale=alt.Scale(range=shapes), legend=alt.Legend(title = 'Datapoint Type')),
             tooltip=['hardw_datatype_net_prun',color_groupcol, shape_groupcol, xcol, ycol],
@@ -1072,7 +1072,7 @@ def faceted_bar_chart(df: pd.DataFrame, xcol: str, ycol:str, colorcol: str, text
     """
     bars = alt.Chart().mark_bar().encode(
         x=alt.X(xcol +':N', sort=['predicted','measured'], title=''),
-        y=alt.Y(ycol +':Q', scale= alt.Scale(type='log', domain = (0.01,100000000))),
+        y=alt.Y(ycol +':Q', title="fps-comp [fps]" ,scale= alt.Scale(type='log', domain = (0.01,100000000))),
         color=alt.Color(colorcol +':N', title='Datapoint Type'),
     )
     text = bars.mark_text(

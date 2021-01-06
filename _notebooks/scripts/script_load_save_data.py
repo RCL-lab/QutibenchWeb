@@ -35,7 +35,7 @@ def get_df_by_column(filename, column):
         Subsets of the bigger dataframe, subsetted by the column's unique values
     """    
     df = pd.read_csv(filename)
-    df = change_column_names(df) #this will change the column names to include the 
+    df = change_column_names(df) #this will change the column names to include the units of the measuments
     unique_column_values = df[column].unique()
     dataframes = []
     for value in unique_column_values:

@@ -478,13 +478,26 @@ def select_color(sel: alt.vegalite.v4.api.Selection, column: str) -> dict:
                       alt.Color(column),
                       alt.value('lightgray'))
 
-def boxplot(df:pd.DataFrame(), xaxis:str, yaxis: str, color_col: str, facet_column: str, title: str)-> alt.vegalite.v4.api.Chart:
+def boxplot(df:pd.DataFrame(), 
+            xaxis: str, 
+            x_title: str, 
+            yaxis: str, 
+            y_title: str, 
+            color_col: str, 
+            color_title: str, 
+            facet_column: str,
+            facet_title: str,
+            title: str)-> alt.vegalite.v4.api.Chart:
     """ Creates a boxplot based on the df, yaxis and title """
     return alt.Chart(df).mark_boxplot().encode(
-        x=alt.X(xaxis + ':O'),
-        y=alt.Y(yaxis, scale=alt.Scale(type="log"), title=yaxis),
-        color=alt.Color(color_col + ':O', title='Pruning Factor'),
-    ).facet(column=facet_column).properties(
+        x=alt.X(xaxis + ':O', 
+                title= x_title),
+        y=alt.Y(yaxis, 
+                scale=alt.Scale(type="log"), 
+                title= y_title),
+        color=alt.Color(color_col + ':O', 
+                        title= color_title),
+    ).facet(alt.Facet(facet_column, title=facet_title)).properties(
         title = title,
     ).interactive()
 
@@ -651,7 +664,7 @@ def delete_unique_values(df: pd.DataFrame(), col_a: str, col_b:str)->pd.DataFram
     #drop all duplicated values of colB
     df = df[~df.duplicated(col_b)]
     #create new column that has the number of diferent values that column A has
-    df['count'] = df.groupby(col_a)[col_a].transform('count')
+    df.loc[:,'count'] = df.groupby(col_a)[col_a].transform('count')
     #delete rows that only have 1 data value ( eg.: only 1 power value)
     df = df.query('count!= 1')
     del df['count']

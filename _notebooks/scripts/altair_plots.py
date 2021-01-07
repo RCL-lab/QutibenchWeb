@@ -320,7 +320,7 @@ def line_chart_w_checkbox(data: pd.DataFrame, condition: dict, selection: alt.ve
               scale = alt.Scale(type='log', domain = (0.1,maxX) )
              ),
         alt.Y('performance:Q', 
-              title = 'PERFORMANCE (TOPS/S)', 
+              title = 'PERFORMANCE (TOP/sec)', 
               scale=alt.Scale(type='log', domain = (0.2,40) )
              ),    
         color=condition,

@@ -94,7 +94,7 @@ def process_csv_for_heatmaps_plot(csv_file: str, machine_learning_task: str)->pd
 def save_not_matched_data(df, machine_learning_task):
     """Method that saves the dataframe to a file."""
     df = df.sort_values(by='pairs')
-    df.to_csv('data/no_match_3_' + machine_learning_task + '.csv')
+    #df.to_csv('data/no_match_3_' + machine_learning_task + '.csv')
 
 #utils functions------------------------------------
 
@@ -319,8 +319,8 @@ def get_line_chart(df: pd.DataFrame, groupcol: str, xcol: str, ycol:str, color:s
         
     """
     return alt.Chart(df).interactive().mark_line(point=True).encode(
-        x=alt.X(xcol, scale=alt.Scale(type='log')),
-        y=alt.Y(ycol + ":Q", scale=alt.Scale(zero=False)),
+        x=alt.X(xcol, title="fps-comp [fps]", scale=alt.Scale(type='log')),
+        y=alt.Y(ycol + ":Q", title="top1 [%]", scale=alt.Scale(zero=False)),
         color=alt.value(color),
         tooltip=[groupcol, xcol, ycol],
     )

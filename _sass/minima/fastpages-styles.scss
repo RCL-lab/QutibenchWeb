@@ -195,13 +195,15 @@ h6:hover .anchor-link {
   color: #2e0137;
   font-weight:bold;
 }
+.output_html {
+    overflow-y: scroll;
+}
 
 // Handle Overflow With Table Output
 
 table {
   display: block !important;
   overflow-x: auto;
-  overflow-y: scroll;
   white-space: nowrap;
   font-size: 75%;
   border:none;

@@ -411,8 +411,6 @@ h1:hover .anchor-link, h2:hover .anchor-link, h3:hover .anchor-link, h4:hover .a
 
 .search-result-highlight { color: #2e0137; font-weight: bold; }
 
-.output_html { overflow-y: scroll; }
-
 table { display: block !important; overflow-x: auto; white-space: nowrap; font-size: 75%; border: none; }
 
 table th { text-align: center !important; }

@@ -6,61 +6,12 @@ pd.set_option('max_colwidth', 80)
 import altair as alt
 import csv
 import re
-#from overlapped_pareto import *
 
+import util as util
 
-
-#--------------------
-#utils functions
-def replace_data_df(df_: pd.DataFrame(), column:str, list_tuples_data_to_replace: list )-> pd.DataFrame():
-    """Method to replace a substring inside a cell inside a dataframe
-    Given a dataframe and a specific column, this method replaces a string for another, both from the list of tuples
-       
-    Parameters
-    ----------
-     df_: pd.DataFrame()
-        Dataframe with data to be replaced.
-    column: str
-        Column whithin dataframe where all replacements will take place.
-    list_tuples_data_to_replace: list
-        List with tuples which will contain what to replace by what.
-        Eg.:list_tuples_data_to_replace = [(a,b), (c,d), (...) ] -> 'a' will be replaced by 'b', 'c' will be replaced by 'd', and so on.
-
-    Returns
-    -------
-    df_out: pd.DataFrame()
-       Dataframe with all indicated values replaced.
-        
-    """
-    df_out = df_.copy()
-    for j, k in list_tuples_data_to_replace:
-        df_out[column] = df_out[column].str.replace(j, k)
-    return df_out
-
-def dataframe_contains(input_df: pd.DataFrame, column: str, value: str)->pd.DataFrame:
-    """
-    Given a dataframe, this function returns a subset of that dataframe by column
-    
-    Parameters
-    ----------
-    input_df : pd.DataFrame
-        Input dataframe from which the subset will be taken.       
-    column : str
-        Column name by which the subsetting will be taken.  
-    value : str
-        String that contains what we need from the column. 
-        Eg.:'dog'
-            'banana|apple|peach'
-
-    Returns
-    -------
-    output_df:  pd.DataFrame
-        This dataframe will be a subset from the input dataframe according to the column value given.  
-        
-    """
-    output_df = input_df[input_df[column].str.contains(pat=value, case=False)]
-    return output_df
-
+#--------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------HEATMAPS-------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------
 def process_csv_for_heatmaps_plot(csv_file: str, machine_learning_task: str)->pd.DataFrame:
     """This method gets the csv for the theoretical predictions file and melts it to make it presentable in the heatmaps plot"""
     
@@ -78,13 +29,13 @@ def process_csv_for_heatmaps_plot(csv_file: str, machine_learning_task: str)->pd
    
      # Choose the neural networks corresponding to the Machine Learning task asked for.
     if re.search(machine_learning_task, 'imagenet', re.IGNORECASE):
-        df_out = dataframe_contains(input_df= df_out, column='x', value='goog|mob|res|effic')
+        df_out = util.dataframe_contains(input_df= df_out, column='x', value='goog|mob|res|effic')
 
     elif re.search(machine_learning_task, 'mnist', re.IGNORECASE):
-        df_out = dataframe_contains(input_df= df_out, column='x', value='mlp')
+        df_out = util.dataframe_contains(input_df= df_out, column='x', value='mlp')
 
     elif re.search(machine_learning_task, 'cifar-10', re.IGNORECASE):
-        df_out = dataframe_contains(input_df= df_out, column='x', value='cnv')
+        df_out = util.dataframe_contains(input_df= df_out, column='x', value='cnv')
     
     else: 
         print('The machine learning task was not recognized, please try another one.') 
@@ -92,9 +43,6 @@ def process_csv_for_heatmaps_plot(csv_file: str, machine_learning_task: str)->pd
     
     return df_out
 
-#--------------------------------------------------------------------------------------------------------------------------------
-#--------------------------------------------------HEATMAPS-------------------------------------------
-#--------------------------------------------------------------------------------------------------------------------------------
 def heatmap_rect(df: pd.DataFrame, 
                  title: str, 
                  mouseover_selection: alt.vegalite.v4.api.Selection, 
@@ -356,7 +304,7 @@ def rooflines(neural_network: str)->alt.vegalite.v4.api.Chart:
                         path_hardware='data/peakPerfBandHardPlatf.csv')
 
     
-    #to select data to be plotted according to user input
+    #select data to be plotted according to user input
     if neural_network in 'imagenet':
         nn_df   = nn_df[nn_df['Name'].str.contains("GoogLeNetv1|MobileNetv1|ResNet|EfficientNet")]
     elif neural_network in 'cifar':
@@ -368,11 +316,11 @@ def rooflines(neural_network: str)->alt.vegalite.v4.api.Chart:
 
         
     #regex expression replace for all MLPs because they overlapp in the plot because they have the same value for MLP100%,MLP50%..
-    #nn_df['Name']=nn_df['Name'].replace(r'.*MLP.*', 'MLP', regex=True)
-    nn_df = replace_data_df(nn_df, 'Name',[('MLP 100%','MLP*'),('MLP 50%','MLP*'),('MLP 25%','MLP*'), ('MLP 12.5%','MLP*')])
+    nn_df = util.replace_data_df(nn_df, 'Name',[('MLP 100%','MLP*'),('MLP 50%','MLP*'),('MLP 25%','MLP*'), ('MLP 12.5%','MLP*')])
     nn_df= nn_df.drop_duplicates()
     
-    #This part is to create all plots binded to checkboes-------------
+    #---------------Next part is to create all plots binded to checkboes-------------
+    
     #Selecting data for each checkbox, from dataset. Each checkbox will be tied to each one of these data        
     FPGA_data   = hw_df[hw_df['Name'].str.contains("Ultra96 DPU|ZCU")]
     NVIDIA_data = hw_df[hw_df['Name'].str.contains("TX2")]
@@ -386,48 +334,44 @@ def rooflines(neural_network: str)->alt.vegalite.v4.api.Chart:
     FP32_data     = nn_df[nn_df['Name'].str.contains("FP32")]
     
     
-    #To say that the binding type will be a checkbox
-    #BindCheckbox({ input: 'checkbox'})
+    #Stating that the binding type will be a checkbox
     filter_checkbox = alt.binding_checkbox()
 
     #To create all checkboxes with the specifications info for each set
-    #Selection('FPGAs:', SelectionDef({ bind: BindCheckbox({ input: 'checkbox' }), fields: ['Ultra96 DPU,ZCU104,ZCU102,ZCU104 FINN,ZCU104 BISMO'], type: 'single' }))
     FPGA_select   = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="FPGAs  Ultra96  DPU  ZCU  ")                 
     NVIDIA_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="INVIDIA  TX2  maxn, maxp, maxq  ")
     GOOGLE_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="GOOGLE  EdgeTPU, fast, slow  ")
     INTEL_select  = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="INTEL  NCS  ")
 
-    INT2_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="INT2")
+    INT2_select    = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="INT2")
     INT4_select    = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="INT4")   
     INT8_select    = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="INT8")   
-    FP16_select = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="FP16")
-    FP32_select     = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="FP32")
+    FP16_select    = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="FP16")
+    FP32_select    = alt.selection_single( fields=["Hide"], bind=filter_checkbox, name="FP32")
 
-    #Color Condiotions for each plot
-    #{'condition': {'selection': 'FPGAs:', 'type': 'nominal', 'field': 'Name'}, 'value': 'lightgray'}
-    FPGA_cond     = alt.condition(FPGA_select, alt.Color("Name:N"), alt.value("lightgray"))
+    #Color Conditions for each plot
+    FPGA_cond     = alt.condition(FPGA_select,   alt.Color("Name:N"), alt.value("lightgray"))
     NVIDIA_cond   = alt.condition(NVIDIA_select, alt.Color("Name:N"), alt.value("lightgray"))
     GOOGLE_cond   = alt.condition(GOOGLE_select, alt.Color("Name:N"), alt.value("lightgray"))
-    INTEL_cond    = alt.condition(INTEL_select, alt.Color("Name:N"), alt.value("lightgray"))
+    INTEL_cond    = alt.condition(INTEL_select,  alt.Color("Name:N"), alt.value("lightgray"))
 
-    INT2_cond = alt.condition(INT2_select, alt.Color("Name:N"), alt.value("lightgray"))
-    INT4_cond    = alt.condition(INT4_select, alt.Color("Name:N"), alt.value("lightgray"))
-    INT8_cond    = alt.condition(INT8_select, alt.Color("Name:N"), alt.value("lightgray"))
-    FP16_cond = alt.condition(FP16_select, alt.Color("Name:N"), alt.value("lightgray"))
+    INT2_cond     = alt.condition(INT2_select, alt.Color("Name:N"), alt.value("lightgray"))
+    INT4_cond     = alt.condition(INT4_select, alt.Color("Name:N"), alt.value("lightgray"))
+    INT8_cond     = alt.condition(INT8_select, alt.Color("Name:N"), alt.value("lightgray"))
+    FP16_cond     = alt.condition(FP16_select, alt.Color("Name:N"), alt.value("lightgray"))
     FP32_cond     = alt.condition(FP32_select, alt.Color("Name:N"), alt.value("lightgray"))
 
-    #Creating all plots 
-    
+    #Creating all plots     
     FPGA_chart     = line_chart_w_checkbox(FPGA_data,     FPGA_cond,    FPGA_select)
     NVIDIA_chart   = line_chart_w_checkbox(NVIDIA_data,   NVIDIA_cond,  NVIDIA_select)
     GOOGLE_chart   = line_chart_w_checkbox(GOOGLE_data,   GOOGLE_cond,  GOOGLE_select)                         
     INTEL_chart    = line_chart_w_checkbox(INTEL_data,    INTEL_cond,   INTEL_select)
 
-    INT2_chart =    line_chart_w_checkbox(INT2_data, INT2_cond, INT2_select)
-    INT4_chart    = line_chart_w_checkbox(INT4_data,    INT4_cond,    INT4_select)
-    INT8_chart    = line_chart_w_checkbox(INT8_data,    INT8_cond,    INT8_select)
-    FP16_chart =    line_chart_w_checkbox(FP16_data, FP16_cond, FP16_select)
-    FP32_chart     = line_chart_w_checkbox(FP32_data,     FP32_cond,     FP32_select)
+    INT2_chart     = line_chart_w_checkbox(INT2_data,    INT2_cond, INT2_select)
+    INT4_chart     = line_chart_w_checkbox(INT4_data,    INT4_cond, INT4_select)
+    INT8_chart     = line_chart_w_checkbox(INT8_data,    INT8_cond, INT8_select)
+    FP16_chart     = line_chart_w_checkbox(FP16_data,    FP16_cond, FP16_select)
+    FP32_chart     = line_chart_w_checkbox(FP32_data,    FP32_cond, FP32_select)
 
    
     #--------------------------------------------------------------------------------------------------
@@ -439,29 +383,24 @@ def rooflines(neural_network: str)->alt.vegalite.v4.api.Chart:
     )
     
     
-        #Create the selection which chooses nearest point on mouse hoover
-    selection = alt.selection(type='single', nearest=True, on='mouseover', fields=['arith_intens']) #to leave suggestions on, just replace arith_intens wiith anything else
+    #Create the selection which chooses nearest point on mouse hoover
+    selection = alt.selection(type='single', nearest=True, on='mouseover', fields=['arith_intens']) 
+    #to leave suggestions on, just replace arith_intens wiith anything else
    
-        #Create text plot to show the text values on mouse hoovering
+    #Create text plot to show the text values on mouse hoovering
     text = (line_chart).mark_text(align='left', dx=3, dy=-3,clip=True).encode(  text=alt.condition(selection, 'Name:N', alt.value(' ')))
 
     #Creates the points plot for the NNs. The points will be invisible
-    selectors = alt.Chart().mark_point(clip=True).encode(
+    selectors = alt.Chart().add_selection(selection).mark_point(clip=True).encode(
                 alt.X('arith_intens:Q'), 
                 alt.Y('performance:Q'),
-                opacity=alt.value(0),
-    ).add_selection(selection)
-    
-
-    
+                opacity=alt.value(0),)
+     
     chart_all = (pd.Series([INT2_chart, INT4_chart, INT8_chart, FP16_chart, FP32_chart], name="charts")).to_frame()
-    
-    #Chart = alt.layer(FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart + INT2_chart + INT4_chart + INT8_chart + FP16_chart+ FP32_chart
-    #Chart = alt.layer(chart_filtered.squeeze() + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, selectors, text, data=dataframe, width=700, height=500)
+      
     Chart = alt.layer(chart_all.charts.sum(numeric_only = False) + FPGA_chart + NVIDIA_chart + GOOGLE_chart + INTEL_chart, 
                       selectors, text, data= pd.concat([nn_df,hw_df]), width=700, height=500)
     
-    #return nn_df
     return Chart
 #----------------------------------------------------------------------------------------------------------------------------------
     # PROCESSING FOR PERFORMANCE PLOTS (LINE PLOT, BOXPLOT, PARETO GRAPH)
@@ -803,3 +742,134 @@ def get_peak_perf_bar_chart(csv_file)->alt.vegalite.v4.api.Chart:
     return alt.layer(bars, text, data=df).facet(columns=5, facet=alt.Facet('Hardware Platforms:N', title='Hardware Platforms')).properties(title='Peak Performance and Memory Bandwidth for All Hardware Platforms')
 
 #-------------------------------------------------------------------------------------------------------
+
+
+#hide_input
+def faceted_bar_chart(df: pd.DataFrame(), 
+                      xcol:str, 
+                      xtitle:str, 
+                      ycol:str, 
+                      ytitle:str, 
+                      colorcol:str, 
+                      textcol:str, 
+                      title:str, 
+                      columncol:str, 
+                      legend_title="Hardware")-> alt.vegalite.v4.api.FacetChart:
+    """
+    Method that outputs a raw faceted bar chart. This does not process the input df, so it has to come already processed.
+    Parameters
+    ----------
+    df_: str
+        dataframe from which the bar chart will be created.
+    xcol: str
+        dataframe column name that will be used for the x axis of the plot.
+    xtitle:str
+        title of the x-axis.
+    ycol: str
+        dataframe column name that will be used for the y axis of the plot.
+    ytitle:str
+        title of the y-axis.
+    colorcol:str
+        dataframe column name that which will hold the separation between colors.
+    textcol: str
+        dataframe column name that will be used for the displaying the numeric values inside the plot.
+    columncol:str
+        dataframe column name which holds the separation between all the faceted charts, x axis above plot.
+    title: str
+        Chart title.
+
+    Returns
+    -------
+    alt.vegalite.v4.api.Chart
+        Faceted bar chart created from the input dataframe.
+    """
+    bars = alt.Chart().mark_bar().encode(
+        x=alt.X(xcol +':N', title=xtitle),
+        y=alt.Y(ycol + ':Q',  title=ytitle),
+        color=alt.Color(colorcol +':N', title=legend_title),
+    )
+    text = bars.mark_text(
+        angle=270,
+        align='left',
+        baseline='middle',
+        dx=10  # Nudges text to right so it doesn't appear on top of the bar
+    ).encode(
+        text= alt.Text(ycol + ':Q', format='.1f')
+    )
+    return alt.layer(bars, text, data=df).facet(
+        column=alt.Column(columncol+':N', header=alt.Header(labelAngle=-85, labelAlign='right'), title=title)
+    ).interactive()
+
+
+def power_faceted_chart(df_: pd.DataFrame(),                                                
+                        ycol: str, 
+                        ytitle:str, 
+                        textcol: str, 
+                        title:str, 
+                        xcol: str ="NN_Topology",
+                        xtitle:str = "",
+                        hardware_column:str ="HWType",
+                        datatype_column:str ="Datatype",
+                        pruning_column:str ="PruningFactor",
+                        power_column:str = "Full_Pwr_W",
+                        legend_title:str = "Hardware") -> alt.vegalite.v4.api.FacetChart:
+    """
+    Method that creates a faceted bar chart. 
+    First, it organizes the dataframe and then calls faceted_bar_chart() to create the plot.
+   
+    Parameters
+    ----------
+    df_: str
+        dataframe from which the bar chart will be created.
+    xcol: str
+        dataframe column name that will be used for the x axis of the plot.
+    xtitle:str
+        title of the x-axis.
+    ycol: str
+        dataframe column name that will be used for the y axis of the plot.
+    ytitle:str
+        title of the y-axis.
+    textcol: str
+        dataframe column name that will be used for the displaying the numeric values inside the plot.
+    title: str
+        Chart title.
+
+    Returns
+    -------
+    alt.vegalite.v4.api.Chart
+        Faceted bar chart created from the input dataframe.
+    """
+    df = df_.copy()
+    
+    if ycol == "fps-comp":         
+        df = df.loc[:,[xcol, ycol, hardware_column, datatype_column, pruning_column, power_column]]
+        df[ycol] = df[power_column] / df[ycol] * 1000
+    else:
+        df = df.loc[:,[xcol, ycol, hardware_column, datatype_column, pruning_column]]
+        
+    df.loc[:,xcol] = df[xcol] + '_' + df[pruning_column].astype(str)    
+    df['hardw_opmode_datatype'] =df[hardware_column]  +'_'+ df[datatype_column]
+    df = df.groupby([xcol, hardware_column, datatype_column, 'hardw_opmode_datatype'])[ycol].mean().reset_index()
+
+    return faceted_bar_chart(df=df, 
+                             xcol=xcol, 
+                             xtitle=xtitle, 
+                             ycol=ycol, 
+                             ytitle=ytitle, 
+                             title=title, 
+                             textcol=textcol,                               
+                             colorcol='hardw_opmode_datatype', 
+                             columncol='hardw_opmode_datatype',
+                             legend_title = legend_title)
+
+
+
+
+
+
+
+
+
+
+
+

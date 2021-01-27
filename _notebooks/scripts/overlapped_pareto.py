@@ -7,94 +7,12 @@ import re
 import altair as alt
 import warnings
 
+import rooflines_heatmaps as rooflines_heatmaps_script
+import util as util
+
 W = 600
 H = 480
 
-#utils functions------------------------------------
-def replace_data_df(df_: pd.DataFrame(), column:str, list_tuples_data_to_replace: list )-> pd.DataFrame():
-    """Method to replace a substring inside a cell inside a dataframe
-    Given a dataframe and a specific column, this method replaces a string for another, both from the list of tuples
-       
-    Parameters
-    ----------
-     df_: pd.DataFrame()
-        Dataframe with data to be replaced.
-    column: str
-        Column whithin dataframe where all replacements will take place.
-    list_tuples_data_to_replace: list
-        List with tuples which will contain what to replace by what.
-        Eg.:list_tuples_data_to_replace = [(a,b), (c,d), (...) ] -> 'a' will be replaced by 'b', 'c' will be replaced by 'd', and so on.
-
-    Returns
-    -------
-    df_out: pd.DataFrame()
-       Dataframe with all indicated values replaced.
-        
-    """
-    df_out = df_.copy()
-    for j, k in list_tuples_data_to_replace:
-        df_out[column] = df_out[column].str.replace(j, k)
-    return df_out
-
-def dataframe_contains(input_df: pd.DataFrame, column: str, value: str)->pd.DataFrame:
-    """
-    Given a dataframe, this function returns a subset of that dataframe by column
-    
-    Parameters
-    ----------
-    input_df : pd.DataFrame
-        Input dataframe from which the subset will be taken.       
-    column : str
-        Column name by which the subsetting will be taken.  
-    value : str
-        String that contains what we need from the column. 
-        Eg.:'dog'
-            'banana|apple|peach'
-
-    Returns
-    -------
-    output_df:  pd.DataFrame
-        This dataframe will be a subset from the input dataframe according to the column value given.  
-        
-    """
-    output_df = input_df[input_df[column].str.contains(pat=value, case=False)]
-    return output_df
-
-
-def process_csv_for_heatmaps_plot(csv_file: str, machine_learning_task: str)->pd.DataFrame:
-    """This method gets the csv for the theoretical predictions file and melts it to make it presentable in the heatmaps plot"""
-    
-    ## Reading csv file and converting data to (Neural network, Platform, Value)
-    df = pd.read_csv(csv_file)
-
-    df_out = pd.DataFrame()
-    columns = (df.loc[:, df.columns!='HWType']).columns #select all columns except first
-    for column in columns:
-        df_=pd.melt(df, id_vars=['HWType'], value_vars=column) #melt df1 into a df1 of 2 columns
-        df_out=pd.concat([df_out,df_])
-    df_out.columns= ['y','x','values'] #setting new column names
-    #replace 0s for NaN values because with 0s the grid doesn't show up
-    df_out['values'] = df_out['values'].replace({ 0.0:np.nan})
-   
-     # Choose the neural networks corresponding to the Machine Learning task asked for.
-    if re.search(machine_learning_task, 'imagenet', re.IGNORECASE):
-        df_out = dataframe_contains(input_df= df_out, column='x', value='goog|mob|res|effic')
-
-    elif re.search(machine_learning_task, 'mnist', re.IGNORECASE):
-        df_out = dataframe_contains(input_df= df_out, column='x', value='mlp')
-
-    elif re.search(machine_learning_task, 'cifar-10', re.IGNORECASE):
-        df_out = dataframe_contains(input_df= df_out, column='x', value='cnv')
-    
-    else: 
-        print('The machine learning task was not recognized, please try another one.') 
-        return 0
-    return df_out
- 
-def save_not_matched_data(df, machine_learning_task):
-    """Method that saves the dataframe to a file."""
-    df = df.sort_values(by='pairs')
-    #df.to_csv('data/no_match_3_' + machine_learning_task + '.csv')
 
 #utils functions------------------------------------
 
@@ -148,7 +66,7 @@ def process_theo_fps(df_top1_theo:pd.DataFrame(), csv_file:str) -> pd.DataFrame(
         
     """
     
-    df_fps_theo = process_csv_for_heatmaps_plot(csv_file)
+    df_fps_theo = rooflines_heatmaps_script.process_csv_for_heatmaps_plot(csv_file)
     df_fps_theo.columns=['HWType','net_prun_datatype','fps']
     
     #    remove rows that have 'nan' in the 'values' column
@@ -415,8 +333,8 @@ def process_measured_df(df_theoret: pd.DataFrame(), csv_measured: str )-> pd.Dat
     
     df_measured= pd.read_csv(csv_measured)
     #   fix samll stuff in the measured dataframe so things match
-    df_measured = replace_data_df(df_=df_measured, column='hardw_datatype_net_prun', list_tuples_data_to_replace=[("RN50", "ResNet50"),("MNv1", "MobileNetv1"),('GNv1','GoogLeNetv1'),('100.0','100')])
-    df_measured = replace_data_df(df_=df_measured, column='NN_Topology', list_tuples_data_to_replace=[("RN50", "ResNet50"),("MNv1", "MobileNetv1"),('GNv1','GoogLeNetv1')])
+    df_measured = util.replace_data_df(df_=df_measured, column='hardw_datatype_net_prun', list_tuples_data_to_replace=[("RN50", "ResNet50"),("MNv1", "MobileNetv1"),('GNv1','GoogLeNetv1'),('100.0','100')])
+    df_measured = util.replace_data_df(df_=df_measured, column='NN_Topology', list_tuples_data_to_replace=[("RN50", "ResNet50"),("MNv1", "MobileNetv1"),('GNv1','GoogLeNetv1')])
     #  concatenate both measured with theoretical
     df_out = pd.concat([df_theoret, df_measured])
     
@@ -486,7 +404,7 @@ def fix_small_stuff_df(df: pd.DataFrame(), col_to_drop: list, ) -> pd.DataFrame(
     #    Some cells have [top1 (top5)] accuracies, create col only with top1 acc
     df_out['top1'] = df_out['top1'].str.split(' ').str[0] #take top5 acc out
     #    separate by underscore instead of space
-    df_out = replace_data_df(df_=df_out, column='net_prun_datatype', list_tuples_data_to_replace=[(' ','_')])
+    df_out = util.replace_data_df(df_=df_out, column='net_prun_datatype', list_tuples_data_to_replace=[(' ','_')])
     return df_out
 
 #--------------------------------------------------------
@@ -683,7 +601,7 @@ def get_df_theo_fps_top1(machine_learning_task: str) -> pd.DataFrame():
     df_top1_theo = process_theo_top1(csv_theor_accuracies ='data/cnn_topologies_accuracy.csv')
     
     # 2. Get Theoretical FPS to match with that Theoretical TOP1 - from Performance Predictions
-    df_fps_theo = process_csv_for_heatmaps_plot("data/performance_predictions_imagenet_mnist_cifar.csv", machine_learning_task)
+    df_fps_theo = rooflines_heatmaps_script.process_csv_for_heatmaps_plot("data/performance_predictions_imagenet_mnist_cifar.csv", machine_learning_task)
     df_fps_theo.columns=['hardw_datatype','net_prun_datatype','fps-comp']
     
     # 3. Merge Theoretical top1 + Theoretical fps
@@ -736,7 +654,7 @@ def get_overlapped_pareto(machine_learning_task: str, title:str):
     overlapped_pareto = identify_pairs_nonpairs(df=overlapped_pareto, column='hardw_datatype_net_prun')
     
     overlapped_pareto= overlapped_pareto.sort_values(by='pairs')
-    save_not_matched_data(overlapped_pareto, machine_learning_task)
+    #util.save_not_matched_data(overlapped_pareto, machine_learning_task)
     
     # 9. Delete all with no match
     overlapped_pareto = overlapped_pareto.loc[(overlapped_pareto.color !='measured_no_match') &(overlapped_pareto.color !='predicted_no_match')  ]
@@ -886,7 +804,7 @@ def theor_pareto(machine_learning_task, title: str) ->alt.vegalite.v4.api.Chart:
     df_top1_theo = process_theo_top1(csv_theor_accuracies ='data/cnn_topologies_accuracy.csv')
     
     # 2. Get Theoretical FPS to match with that Theoretical TOP1 - from Performance Predictions
-    df_fps_theo = process_csv_for_heatmaps_plot("data/performance_predictions_imagenet_mnist_cifar.csv", machine_learning_task)
+    df_fps_theo = rooflines_heatmaps_script.process_csv_for_heatmaps_plot("data/performance_predictions_imagenet_mnist_cifar.csv", machine_learning_task)
     df_fps_theo.columns=['hardw_datatype','net_prun_datatype','fps-comp']
     
     # 3. Merge Theoretical top1 + Theoretical fps
@@ -1025,7 +943,7 @@ def get_peak_perf_gops_df(df_: pd.DataFrame ) ->pd.DataFrame:
     gops_df= gops_df.iloc[1:,:]
     # remove %, correct ResNet-50 to ResNet50...
     #comentei a linha abaixo agora
-    #gops_df = replace_data_df(df_=gops_df, column= 'NN_Topology', list_tuples_data_to_replace= [('%',''),('ResNet-50','ResNet50'),('EfficientNet Edge L','EfficientNetL'),('EfficientNet Edge S','EfficientNetS'),('EfficientNet Edge M','EfficientNetM')])
+    #gops_df = util.replace_data_df(df_=gops_df, column= 'NN_Topology', list_tuples_data_to_replace= [('%',''),('ResNet-50','ResNet50'),('EfficientNet Edge L','EfficientNetL'),('EfficientNet Edge S','EfficientNetS'),('EfficientNet Edge M','EfficientNetM')])
     #create dictionary out of the df
     gops_dict=pd.Series(gops_df.gops.values,index=gops_df.NN_Topology).to_dict()
     #create a new column with the GOPs values

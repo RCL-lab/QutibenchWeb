@@ -17,14 +17,19 @@ See [Writing Blog Posts With Jupyter](https://github.com/fastai/fastpages#writin
 ### Adding New Measurements
 	If you want to add new measurements you must add the measurements to the file: 
 		- data/cleaned_csv/backup.csv
-	This file owns all data that is processed in the website.
-	To add new measurements you can use a handy script that fills up 3 columns of that csv file automatically, which is:
-		-scripts/script_add_columns
-		-please verify of all data in that script is correctly filled up.
+			This csv file owns all data from all measurements that is processed in the website.
+			Be careful with the names of the platforms/CNNs. They need to be the same as in other csv files because they are linked.
+			To add new measurements you can use a handy script that fills up 3 columns of that the backup.csv file automatically, which is:
+				-scripts/script_add_columns.py
+					-please verify if all data (throughput values, etc...) in script_add_columns.py is correctly filled up, and make all modifications necessary.
+			
 
 
 ### Website structure
 	-Most code to generate plots resides in 3 scripts:
-		-overlapped_pareto.py : this script owns all methods to create the pareto plots and the overlapped pareto plots
-		-rooflines_heatmaps.py : containsa ll methods to create heatmaps
-		-util.py : contains utility methods
+		-overlapped_pareto.py : this script owns all methods to create the pareto plots, the overlapped pareto plots and efficiency bar charts
+		-rooflines_heatmaps.py : contains all methods to create the rooflines and heatmaps
+		-util.py : contains some utility methods. 
+		
+	-FAIR data documentation resides in data/FAIR_data
+	

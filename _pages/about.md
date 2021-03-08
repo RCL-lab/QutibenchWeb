@@ -47,6 +47,7 @@ Michaela Blott, Johannes Kath, Lisa Halder, Yaman Umuroglu, Nicholas Fraser, Giu
 <br />
 Poster available [here](https://github.com/michaelablott/QuTiBench/blob/master/Publications/FPGA2020_EvalCNNs_Poster.pdf)
 
+M. Blott, A. Vasilciuc, M. Leeser and L. Doyle, "Evaluating Theoretical Baselines for ML Benchmarking Across Different Accelerators," in IEEE Design & Test, doi: 10.1109/MDAT.2021.3063340. [https://ieeexplore.ieee.org/document/9367248 ](https://ieeexplore.ieee.org/document/9367248)
 
 # About us
 
@@ -95,6 +96,6 @@ Contact: zachary.neveu@gmail.com
  
 ### Alina Vasilciuc 
 <img align="left" src="../images/alina_vasilciuc.png" alt="drawing" style="width:200px;height:193px;padding-right: 15px;"/> 
-Alina Vasilciuc is an undergraduate student at [Nova University of Lisbon](https://www.unl.pt/en), currently working on her Master’s degree in collaboration with Xilinx Research, where she is currently doing an internship.
+Alina Vasilciuc is an postgraduate student at [Nova School of Science and Technology ](https://www.fct.unl.pt/en). Her professional interests are Computer Architecture, FPGA design and Machine Learning. During her Master's degree she did an internship at Xilinx Research Labs and wrote her thesis about Data Visualization for Benchmarking Neural Networks in Different Hardware Platforms. Her her [website is available here](https://alinavasilciuc.github.io/my_fastpages_blog/) and her [Linkedin is available here](https://www.linkedin.com/in/alina-vasilciuc).
 <br />
-Contact: [alina.vasilciuc@hotmail.com](https://pt.linkedin.com/in/alina-vasilciuc).
+Contact: alina.vasilciuc@hotmail.com

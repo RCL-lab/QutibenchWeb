@@ -38,7 +38,10 @@ See the [website](https://rcl-lab.github.io/QutibenchWeb/contributing/2020/04/09
 
 # Publications
 
-Michaela Blott , Nicholas J. Fraser , Giulio Gambardella , Lisa Halder, Johannes Kath, Zachary Neveu, Yaman Umuroglu , Member, IEEE, Alina Vasilciuc, Miriam Leeser , Senior Member, IEEE, and Linda Doyle, "Evaluation of Optimized CNNs on Heterogeneous Accelerators using a Novel Benchmarking Approach" in IEEE Transactions on Computers, to appear.  
+Michaela Blott, Alina Vasilciuc, Miriam Leeser and Linda Doyle, "Evaluating Theoretical Baselines for ML Benchmarking Across Different Accelerators," in IEEE Design & Test, to appear.
+[https://ieeexplore.ieee.org/document/9367248 ](https://ieeexplore.ieee.org/document/9367248)
+
+Michaela Blott , Nicholas J. Fraser , Giulio Gambardella , Lisa Halder, Johannes Kath, Zachary Neveu, Yaman Umuroglu , Member, IEEE, Alina Vasilciuc, Miriam Leeser , Senior Member, IEEE, and Linda Doyle, "Evaluation of Optimized CNNs on Heterogeneous Accelerators using a Novel Benchmarking Approach" in IEEE Transactions on Computers, to appear. 
 [https://doi.ieeecomputersociety.org/10.1109/TC.2020.3022318](https://doi.ieeecomputersociety.org/10.1109/TC.2020.3022318)
 
 Blott, Michaela, et al. "QuTiBench: Benchmarking neural networks on heterogeneous hardware." ACM Journal on Emerging Technologies in Computing Systems (JETC) 15.4 (2019): 1-38. [https://arxiv.org/pdf/1909.05009.pdf ](https://arxiv.org/pdf/1909.05009.pdf)
@@ -47,7 +50,6 @@ Michaela Blott, Johannes Kath, Lisa Halder, Yaman Umuroglu, Nicholas Fraser, Giu
 <br />
 Poster available [here](https://github.com/michaelablott/QuTiBench/blob/master/Publications/FPGA2020_EvalCNNs_Poster.pdf)
 
-M. Blott, A. Vasilciuc, M. Leeser and L. Doyle, "Evaluating Theoretical Baselines for ML Benchmarking Across Different Accelerators," in IEEE Design & Test, doi: 10.1109/MDAT.2021.3063340. [https://ieeexplore.ieee.org/document/9367248 ](https://ieeexplore.ieee.org/document/9367248)
 
 # About us
 
